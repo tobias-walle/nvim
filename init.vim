@@ -1,0 +1,1 @@
+/Users/tobias.walle/Projects/c0nfig/configs/.config/nvim/init.vim
