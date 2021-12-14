@@ -1,12 +1,6 @@
-require 'general'
+require 'cfg.general'
 require 'plugins'
-require 'plugin-config'
-
-vim.cmd [[
-source $HOME/.config/nvim/cfg/explorer.vim
-source $HOME/.config/nvim/cfg/telescope.vim
-source $HOME/.config/nvim/cfg/git.vim
-]]
+require 'cfg.plugins'
 
 -- Themes
 require'onedark'.setup()
