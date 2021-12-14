@@ -18,7 +18,9 @@ local lspconfig = require 'lspconfig'
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-  local function boption(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+  local function boption(...)
+    vim.api.nvim_buf_set_option(bufnr, ...)
+  end
 
   local function bnmap(alias, definition)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', alias, definition, {noremap = true, silent = true})
@@ -56,7 +58,11 @@ lspconfig.jsonls.setup {on_attach = on_attach}
 
 local cmp = require 'cmp'
 cmp.setup({
-  snippet = {expand = function(args) require('luasnip').lsp_expand(args.body) end},
+  snippet = {
+    expand = function(args)
+      require('luasnip').lsp_expand(args.body)
+    end
+  },
   on_attach = on_attach,
   mapping = {
     ['<C-p>'] = cmp.mapping.select_prev_item(),
@@ -77,16 +83,16 @@ cmp.setup({
   }
 })
 
-require("null-ls").setup {
+require('null-ls').setup {
   sources = {
-    require("null-ls").builtins.formatting.rustfmt,
-    require("null-ls").builtins.formatting.prettierd,
-    require("null-ls").builtins.formatting.eslint_d,
-    require("null-ls").builtins.formatting.lua_format
+    require('null-ls').builtins.formatting.rustfmt,
+    require('null-ls').builtins.formatting.prettierd,
+    require('null-ls').builtins.formatting.eslint_d,
+    require('null-ls').builtins.formatting.lua_format
   },
   on_attach = function(client)
     if client.resolved_capabilities.document_formatting then
-      vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()")
+      vim.cmd('autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()')
     end
   end
 }
@@ -97,24 +103,24 @@ require('rust-tools').setup({
     hover_with_actions = true,
     inlay_hints = {
       show_parameter_hints = false,
-      parameter_hints_prefix = "",
-      other_hints_prefix = ""
+      parameter_hints_prefix = '',
+      other_hints_prefix = ''
     }
   },
 
   server = {
     on_attach = on_attach,
-    settings = {["rust-analyzer"] = {checkOnSave = {command = "clippy"}}}
+    settings = {['rust-analyzer'] = {checkOnSave = {command = 'clippy'}}}
   }
 })
 
 lspconfig.tsserver.setup({
   -- Needed for inlayHints. Merge this table with your settings or copy
   -- it from the source if you want to add your own init_options.
-  init_options = require("nvim-lsp-ts-utils").init_options,
+  init_options = require('nvim-lsp-ts-utils').init_options,
   --
   on_attach = function(client, bufnr)
-    local ts_utils = require("nvim-lsp-ts-utils")
+    local ts_utils = require('nvim-lsp-ts-utils')
 
     -- defaults
     ts_utils.setup({
@@ -140,7 +146,7 @@ lspconfig.tsserver.setup({
 
       -- inlay hints
       auto_inlay_hints = true,
-      inlay_hints_highlight = "Comment",
+      inlay_hints_highlight = 'Comment',
 
       -- update imports on file move
       update_imports_on_move = false,
