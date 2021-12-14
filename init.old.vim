@@ -82,7 +82,7 @@ set pastetoggle=<F2>
 command Reload :source $MYVIMRC
 
 " Copy/Paste
-vmap <Leader>y "+y
+vmap('<Leader>y', '"+y')
 
 " Other
 source $HOME/.config/nvim/cfg/treesitter.lua
