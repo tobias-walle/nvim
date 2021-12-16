@@ -6,4 +6,7 @@ require 'cfg.plugins'
 require'onedark'.setup()
 
 -- Lualine
-require'lualine'.setup {options = {theme = 'onedark'}}
+require'lualine'.setup {
+  options = {theme = 'onedark'},
+  sections = {lualine_c = {{'filename', file_status = true, path = 1}}}
+}
