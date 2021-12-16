@@ -15,6 +15,8 @@ set shortmess+=c
 -- See https://github.com/simrat39/rust-tools.nvim#configuration
 local lspconfig = require 'lspconfig'
 
+require'lsp_signature'.setup()
+
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
@@ -33,17 +35,14 @@ local on_attach = function(client, bufnr)
   bnmap('gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
   bnmap('K', '<cmd>lua vim.lsp.buf.hover()<CR>')
   bnmap('gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
-  bnmap('<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
-  bnmap('<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>')
-  bnmap('<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>')
-  bnmap('<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>')
-  bnmap('<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
-  bnmap('<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>')
-  bnmap('<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>')
+  bnmap('<space>k', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
   bnmap('gr', '<cmd>lua vim.lsp.buf.references()<CR>')
-  bnmap('<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>')
   bnmap('[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
   bnmap(']d', '<cmd>lua vim.diagnostic.goto_next()<CR>')
+  bnmap('<space>d', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
+  bnmap('<space>r', '<cmd>lua vim.lsp.buf.rename()<CR>')
+  bnmap('<space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>')
+  bnmap('<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>')
   bnmap('<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>')
   bnmap('<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>')
 end
@@ -70,8 +69,6 @@ cmp.setup({
     -- Add tab support
     ['<S-Tab>'] = cmp.mapping.select_prev_item(),
     ['<Tab>'] = cmp.mapping.select_next_item(),
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.close(),
     ['<CR>'] = cmp.mapping.confirm({behavior = cmp.ConfirmBehavior.Insert, select = true})
@@ -85,16 +82,11 @@ cmp.setup({
 
 require('null-ls').setup {
   sources = {
-    require('null-ls').builtins.formatting.rustfmt,
-    require('null-ls').builtins.formatting.prettierd,
+    -- require('null-ls').builtins.formatting.rustfmt,
+    -- require('null-ls').builtins.formatting.prettierd,
     require('null-ls').builtins.formatting.eslint_d,
     require('null-ls').builtins.formatting.lua_format
-  },
-  on_attach = function(client)
-    if client.resolved_capabilities.document_formatting then
-      vim.cmd('autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()')
-    end
-  end
+  }
 }
 
 require('rust-tools').setup({
@@ -145,7 +137,7 @@ lspconfig.tsserver.setup({
       filter_out_diagnostics_by_code = {},
 
       -- inlay hints
-      auto_inlay_hints = true,
+      auto_inlay_hints = false,
       inlay_hints_highlight = 'Comment',
 
       -- update imports on file move

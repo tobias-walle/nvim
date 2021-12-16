@@ -5,7 +5,7 @@ return require'packer'.startup(function(use)
   use 'nvim-lua/plenary.nvim'
   use 'kyazdani42/nvim-web-devicons'
 
-  -- Autocompletion & Completion
+  -- Autocompletion & Diagnostics
   use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
   use 'neovim/nvim-lspconfig'
 
@@ -17,12 +17,18 @@ return require'packer'.startup(function(use)
   use 'simrat39/rust-tools.nvim'
   use {'saecki/crates.nvim', tag = 'v0.1.0'}
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
+  use 'ray-x/lsp_signature.nvim'
 
   use 'L3MON4D3/LuaSnip'
   use 'saadparwaiz1/cmp_luasnip'
 
+  use 'folke/trouble.nvim'
+
   -- Fuzzy Finder
   use 'nvim-telescope/telescope.nvim'
+
+  -- Undo
+  use 'mbbill/undotree'
 
   -- Git
   use 'sindrets/diffview.nvim'
