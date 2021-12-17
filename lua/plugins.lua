@@ -44,7 +44,6 @@ return require'packer'.startup(function(use)
   -- Style
   use 'navarasu/onedark.nvim'
   use 'nvim-lualine/lualine.nvim'
-  use 'romgrk/barbar.nvim'
 
   -- Autoclose brackets
   use 'windwp/nvim-autopairs'
