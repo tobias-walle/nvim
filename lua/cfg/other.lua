@@ -20,8 +20,4 @@ u.map('n', '<F5>', ':UndotreeToggle<CR>')
 require('which-key').setup {}
 
 -- Other
-require 'cfg.treesitter'
-require 'cfg.completion'
-require 'cfg.explorer'
-require 'cfg.telescope'
-require 'cfg.git'
+
