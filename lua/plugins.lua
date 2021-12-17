@@ -41,11 +41,10 @@ return require'packer'.startup(function(use)
   -- File Explorer
   use 'kyazdani42/nvim-tree.lua'
 
-  -- Statusbar
-  use 'nvim-lualine/lualine.nvim'
-
-  -- Themes
+  -- Style
   use 'navarasu/onedark.nvim'
+  use 'nvim-lualine/lualine.nvim'
+  use 'romgrk/barbar.nvim'
 
   -- Autoclose brackets
   use 'windwp/nvim-autopairs'

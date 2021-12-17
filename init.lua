@@ -1,12 +1,11 @@
 require 'cfg.general'
+
 require 'plugins'
-require 'cfg.plugins'
 
--- Themes
-require'onedark'.setup()
-
--- Lualine
-require'lualine'.setup {
-  options = {theme = 'onedark'},
-  sections = {lualine_c = {{'filename', file_status = true, path = 1}}}
-}
+require 'cfg.treesitter'
+require 'cfg.completion'
+require 'cfg.explorer'
+require 'cfg.telescope'
+require 'cfg.git'
+require 'cfg.other'
+require 'cfg.style'
