@@ -6,6 +6,7 @@ vim.opt.hidden = true
 vim.opt.wrap = false
 vim.opt.termguicolors = true
 vim.opt.splitbelow = true
+vim.opt.splitright = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.smarttab = true
