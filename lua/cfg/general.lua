@@ -22,6 +22,8 @@ vim.opt.cursorcolumn = true
 vim.opt.backup = false
 vim.opt.writebackup = false
 vim.opt.updatetime = 300
+vim.opt.timeoutlen = 300
+vim.opt.scrolloff = 15
 
 -- Disable autocomments
 vim.cmd 'autocmd BufNewFile,BufWinEnter * setlocal formatoptions-=cro'

@@ -24,6 +24,9 @@ return require'packer'.startup(function(use)
 
   use 'folke/trouble.nvim'
 
+  -- Help/Docs
+  use 'folke/which-key.nvim'
+
   -- Fuzzy Finder
   use 'nvim-telescope/telescope.nvim'
 
