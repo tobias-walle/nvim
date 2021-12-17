@@ -16,6 +16,9 @@ require('trouble').setup {}
 -- Undo Tree
 u.map('n', '<F5>', ':UndotreeToggle<CR>')
 
+-- Which key
+require('which-key').setup {}
+
 -- Other
 require 'cfg.treesitter'
 require 'cfg.completion'
