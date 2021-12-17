@@ -16,14 +16,7 @@ let g:nvim_tree_show_icons = {
     \ 'files': 1,
     \ 'folder_arrows': 1,
     \ }
-" highlight NvimTreeGitDirty guifg=cyan
 ]]
-
-local u = require 'utils'
-
-u.map('n', '<C-n>', ':NvimTreeToggle<CR>')
-u.map('n', '<leader>r', ':NvimTreeRefresh<CR>')
-u.map('n', '<leader>n', ':NvimTreeFindFileToggle<CR>')
 
 -- following options are the default
 -- each of these are documented in `:help nvim-tree.OPTION_NAME`

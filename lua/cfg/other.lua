@@ -1,23 +1,32 @@
-local u = require 'utils'
-
 -- Hop
-require'hop'.setup()
-u.map('n', 's', ':HopWord<CR>')
+require'hop'.setup {}
 
 -- Spectre (Search & Replace)
 require'spectre'.setup {}
 
 -- Autopairs
-require'nvim-autopairs'.setup {enable_moveright = false, ignored_next_char = '%S'}
+require'nvim-autopairs'.setup {enable_moveright = false}
 
 -- Trouble
 require('trouble').setup {}
 
--- Undo Tree
-u.map('n', '<F5>', ':UndotreeToggle<CR>')
-
 -- Which key
 require('which-key').setup {}
 
--- Other
+-- Gitsigns
+require('gitsigns').setup {}
+
+-- Telescope
+require('telescope').setup {pickers = {find_files = {hidden = true}}}
+
+-- Treesitter
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = 'maintained',
+  sync_install = false,
+  highlight = {
+    enable = true,
+    disable = {},
+    additional_vim_regex_highlighting = false
+  }
+}
 
