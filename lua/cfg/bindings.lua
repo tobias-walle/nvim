@@ -40,7 +40,8 @@ map('n', '<leader>n', ':NvimTreeFindFileToggle<CR>')
 map('n', '<C-p>', '<cmd>lua require("telescope.builtin").find_files()<cr>')
 map('n', '<C-f>', '<cmd>lua require("telescope.builtin").live_grep()<cr>')
 map('n', '<C-c>', '<cmd>lua require("telescope.builtin").commands()<cr>')
-map('n', '<C-b>', '<cmd>lua require("telescope.builtin").buffers()<cr>')
+map('n', '<C-b>', '<cmd>lua require("telescope").buffers()<cr>')
+-- map('n', '', '<cmd>lua require("telescope.builtin").extensions.neoclip.default()<cr>')
 
 -- Completion
 M.attach_completion = function(bufnr)

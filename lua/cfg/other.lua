@@ -19,6 +19,9 @@ require('gitsigns').setup {}
 -- Telescope
 require('telescope').setup {pickers = {find_files = {hidden = true}}}
 
+-- Neoclip
+require('neoclip').setup {}
+
 -- Treesitter
 require'nvim-treesitter.configs'.setup {
   ensure_installed = 'maintained',

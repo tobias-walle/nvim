@@ -44,6 +44,9 @@ return require'packer'.startup(function(use)
   -- File Explorer
   use 'kyazdani42/nvim-tree.lua'
 
+  -- Clipboard
+  use 'AckslD/nvim-neoclip.lua'
+
   -- Style
   use 'navarasu/onedark.nvim'
   use 'nvim-lualine/lualine.nvim'
