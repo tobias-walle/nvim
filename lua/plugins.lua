@@ -33,6 +33,9 @@ return require'packer'.startup(function(use)
   -- Undo
   use 'mbbill/undotree'
 
+  -- Colorizer
+  use 'lilydjwg/colorizer'
+
   -- Git
   use 'sindrets/diffview.nvim'
   use 'tpope/vim-fugitive'
@@ -44,6 +47,7 @@ return require'packer'.startup(function(use)
   -- Style
   use 'navarasu/onedark.nvim'
   use 'nvim-lualine/lualine.nvim'
+  use 'alvarosevilla95/luatab.nvim'
 
   -- Autoclose brackets
   use 'windwp/nvim-autopairs'
