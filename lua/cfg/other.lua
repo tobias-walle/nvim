@@ -17,19 +17,21 @@ require('which-key').setup {}
 require('gitsigns').setup {}
 
 -- Telescope
-require('telescope').setup {pickers = {find_files = {hidden = true}}}
+require('telescope').setup {
+  defaults = {file_ignore_patterns = {'.git/'}},
+  pickers = {find_files = {hidden = true}}
+}
 
 -- Neoclip
 require('neoclip').setup {}
+
+-- Cargo Toml
+vim.cmd [[ autocmd BufRead Cargo.toml call crates#toggle() ]]
 
 -- Treesitter
 require'nvim-treesitter.configs'.setup {
   ensure_installed = 'maintained',
   sync_install = false,
-  highlight = {
-    enable = true,
-    disable = {},
-    additional_vim_regex_highlighting = false
-  }
+  highlight = {enable = true, disable = {}, additional_vim_regex_highlighting = false}
 }
 
