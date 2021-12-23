@@ -23,6 +23,7 @@ vim.opt.updatetime = 300
 vim.opt.timeoutlen = 500
 vim.opt.scrolloff = 15
 vim.opt.showtabline = 2
+vim.opt.guifont = 'JetBrainsMono Nerd Font'
 
 -- Disable autocomments
 vim.cmd 'autocmd BufNewFile,BufWinEnter * setlocal formatoptions-=cro'
