@@ -27,29 +27,34 @@ map('n', 'tc', ':tabclose<CR>')
 map('v', '<Leader>y', '"+y')
 
 -- Pane Switching
-map('n', 'J', '<C-W>j')
-map('n', 'K', '<C-W>k')
-map('n', 'H', '<C-W>h')
-map('n', 'L', '<C-W>l')
+map('n', '<C-j>', '<C-W>j')
+map('n', '<C-k>', '<C-W>k')
+map('n', '<C-h>', '<C-W>h')
+map('n', '<C-l>', '<C-W>l')
 
 -- Local list
-map('n', '<C-j>', ':lnext<cr>')
-map('n', '<C-k>', ':lprevious<cr>')
+map('n', 'J', ':lnext<cr>')
+map('n', 'K', ':lprevious<cr>')
 
 -- Quick Fix List
 map('n', '<M-j>', ':cnext<cr>')
 map('n', '<M-k>', ':cprevious<cr>')
+
+-- File Tree
+map('n', '<leader>ee', ':NvimTreeToggle<CR>')
+map('n', '<leader>ef', ':NvimTreeFindFileToggle<CR>')
+map('n', '<leader>er', ':NvimTreeRefresh<CR>')
+
+-- Git
+map('n', '<leader>gs', ':G<cr>')
+map('n', '<leader>gh', ':diffget //2<cr>')
+map('n', '<leader>gl', ':diffget //3<cr>')
 
 -- HopL
 map('n', 's', ':HopWord<CR>')
 
 -- Undo Tree
 map('n', '<F1>', ':UndotreeToggle<CR>')
-
--- File Tree
-map('n', '<C-n>', ':NvimTreeToggle<CR>')
-map('n', '<leader>r', ':NvimTreeRefresh<CR>')
-map('n', '<leader>n', ':NvimTreeFindFileToggle<CR>')
 
 -- Telescope
 map('n', '<C-p>', '<cmd>lua require("telescope.builtin").find_files()<cr>')
