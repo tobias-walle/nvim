@@ -11,11 +11,11 @@ let g:nvim_tree_special_files = {
   \ 'cargo.toml': 1 
   \ }
 let g:nvim_tree_show_icons = {
-    \ 'git': 1,
-    \ 'folders': 1,
-    \ 'files': 1,
-    \ 'folder_arrows': 1,
-    \ }
+  \ 'git': 1,
+  \ 'folders': 1,
+  \ 'files': 1,
+  \ 'folder_arrows': 1,
+  \ }
 ]]
 
 -- following options are the default
@@ -23,6 +23,6 @@ let g:nvim_tree_show_icons = {
 require'nvim-tree'.setup {
   auto_close = true,
   git = {enable = true, ignore = false, timeout = 1000},
-  view = {width = 50, height = 30, number = true, relativenumber = true},
+  view = {width = 40, height = 30, number = true, relativenumber = true},
   trash = {cmd = 'trash', require_confirm = true}
 }
