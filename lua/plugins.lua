@@ -35,9 +35,10 @@ return require'packer'.startup(function(use)
   use 'mbbill/undotree'
 
   -- Git
-  use 'sindrets/diffview.nvim'
-  use 'tpope/vim-fugitive'
   use 'lewis6991/gitsigns.nvim'
+  use 'tpope/vim-fugitive'
+  use 'samoshkin/vim-mergetool'
+  use 'sindrets/diffview.nvim'
 
   -- File Explorer
   use 'kyazdani42/nvim-tree.lua'

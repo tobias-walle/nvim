@@ -16,6 +16,10 @@ require('which-key').setup {}
 -- Gitsigns
 require('gitsigns').setup {}
 
+-- Git Merge Tool
+vim.g.mergetool_layout = 'mr'
+vim.g.mergetool_prefer_revision = 'local'
+
 -- Telescope
 require('telescope').setup {
   defaults = {file_ignore_patterns = {'.git/'}},
