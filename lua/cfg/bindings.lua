@@ -50,6 +50,7 @@ map('n', '<leader>er', ':NvimTreeRefresh<CR>')
 map('n', '<leader>dg', ':diffget<cr>')
 map('n', '<leader>dp', ':diffput<cr>')
 map('n', '<leader>df', ':DiffviewFileHistory<cr>')
+map('n', '<leader>dc', ':DiffviewOpen <C-r><C-w><cr>')
 
 -- Git
 map('n', '<leader>gs', ':G<cr>')
