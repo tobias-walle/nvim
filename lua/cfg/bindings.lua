@@ -22,6 +22,7 @@ map('n', 'tl', ':tabnext<CR>')
 map('n', 'tn', ':tabnew<CR>')
 map('n', 'ts', ':tab split<CR>')
 map('n', 'tc', ':tabclose<CR>')
+map('n', 'tb', '<C-W>T')
 
 -- Copy/Pasta
 map('v', '<Leader>y', '"+y')
@@ -45,10 +46,20 @@ map('n', '<leader>ee', ':NvimTreeToggle<CR>')
 map('n', '<leader>ef', ':NvimTreeFindFileToggle<CR>')
 map('n', '<leader>er', ':NvimTreeRefresh<CR>')
 
+-- Diffs
+map('n', '<leader>dg', ':diffget<cr>')
+map('n', '<leader>dp', ':diffput<cr>')
+map('n', '<leader>df', ':DiffviewFileHistory<cr>')
+
 -- Git
 map('n', '<leader>gs', ':G<cr>')
-map('n', '<leader>gh', ':diffget //2<cr>')
-map('n', '<leader>gl', ':diffget //3<cr>')
+
+-- Merge
+map('n', '<leader>mt', ':MergetoolToggle<cr>')
+map('n', '<leader>mla', ':MergetoolToggleLayout lmr<cr>')
+map('n', '<leader>mlb', ':MergetoolToggleLayout blr,m<cr>')
+map('n', '<leader>mpl', ':MergetoolPreferLocal<cr>')
+map('n', '<leader>mpr', ':MergetoolPreferRemote<cr>')
 
 -- HopL
 map('n', 's', ':HopWord<CR>')
