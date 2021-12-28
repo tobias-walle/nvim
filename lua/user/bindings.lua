@@ -1,28 +1,16 @@
 local M = {}
 
+local wk = require('which-key')
+
 -- Utils
 local function map(mode, shortcut, command)
   vim.api.nvim_set_keymap(mode, shortcut, command, {noremap = true, silent = true})
-end
-
-local function map_for_buffer(bufnr)
-  return function(mode, shortcut, command)
-    vim.api.nvim_buf_set_keymap(bufnr, mode, shortcut, command, {noremap = true, silent = true})
-  end
 end
 
 -- Leader
 map('', '<Space>', '<Nop>')
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-
--- Tabs
-map('n', 'th', ':tabprev<CR>')
-map('n', 'tl', ':tabnext<CR>')
-map('n', 'tn', ':tabnew<CR>')
-map('n', 'ts', ':tab split<CR>')
-map('n', 'tc', ':tabclose<CR>')
-map('n', 'tb', '<C-W>T')
 
 -- Copy/Pasta
 map('v', '<Leader>y', '"+y')
@@ -34,75 +22,153 @@ map('n', '<C-h>', '<C-W>h')
 map('n', '<C-l>', '<C-W>l')
 
 -- Local list
-map('n', 'J', ':lnext<cr>')
-map('n', 'K', ':lprevious<cr>')
+map('n', '<M-j>', ':lnext<cr>')
+map('n', '<M-k>', ':lprevious<cr>')
 
 -- Quick Fix List
-map('n', '<M-j>', ':cnext<cr>')
-map('n', '<M-k>', ':cprevious<cr>')
-
--- File Tree
-map('n', '<leader>ee', ':NvimTreeToggle<CR>')
-map('n', '<leader>ef', ':NvimTreeFindFileToggle<CR>')
-map('n', '<leader>er', ':NvimTreeRefresh<CR>')
-
--- Diffs
-map('n', '<leader>dg', ':diffget<cr>')
-map('n', '<leader>dp', ':diffput<cr>')
-map('n', '<leader>df', ':DiffviewFileHistory<cr>')
-map('n', '<leader>dc', ':DiffviewOpen <C-r><C-w><cr>')
-
--- Git
-map('n', '<leader>gs', ':G<cr>')
-
--- Merge
-map('n', '<leader>mt', ':MergetoolToggle<cr>')
-map('n', '<leader>mla', ':MergetoolToggleLayout lmr<cr>')
-map('n', '<leader>mlb', ':MergetoolToggleLayout blr,m<cr>')
-map('n', '<leader>mpl', ':MergetoolPreferLocal<cr>')
-map('n', '<leader>mpr', ':MergetoolPreferRemote<cr>')
-
--- Harpoon
+map('n', '<M-J>', ':cnext<cr>')
+map('n', '<M-K>', ':cprevious<cr>')
 
 -- HopL
 map('n', 's', ':HopWord<CR>')
 
+-- Harpoon
+wk.register {
+  ['<leader>h'] = {
+    name = 'Harpoon',
+    h = {function() require('harpoon.mark').add_file() end, 'Add file'},
+    m = {function() require('harpoon.ui').toggle_quick_menu() end, 'Quick Menu'},
+  },
+  -- Navigation
+  ['<M-a>'] = {function() require('harpoon.ui').nav_file(1) end, 'Go to File 1'},
+  ['<M-s>'] = {function() require('harpoon.ui').nav_file(2) end, 'Go to File 2'},
+  ['<M-d>'] = {function() require('harpoon.ui').nav_file(3) end, 'Go to File 3'},
+  ['<M-f>'] = {function() require('harpoon.ui').nav_file(4) end, 'Go to File 4'}
+}
+
 -- Undo Tree
 map('n', '<F1>', ':UndotreeToggle<CR>')
 
--- Telescope
-map('n', '<C-p>', '<cmd>lua require("telescope.builtin").find_files()<cr>')
-map('n', '<leader>sf', '<cmd>lua require("telescope.builtin").find_files()<cr>')
-map('n', '<leader>sF', '<cmd>lua require("user.telescope").find_files_all()<cr>')
-map('n', '<leader>ss', '<cmd>lua require("telescope.builtin").live_grep()<cr>')
-map('n', '<leader>sS', '<cmd>lua require("user.telescope").live_grep_all()<cr>')
-map('n', '<leader>sc', '<cmd>lua require("telescope.builtin").commands()<cr>')
-map('n', '<leader>sgs', '<cmd>lua require("telescope.builtin").git_status()<cr>')
-map('n', '<leader>sb', '<cmd>lua require("telescope").buffers()<cr>')
+-- Tabs
+wk.register {
+  t = {
+    name = 'Tabs',
+    h = {':tabprev<CR>', 'Previous Tab'},
+    l = {':tabnext<CR>', 'Next Tab'},
+    n = {':tabnew<CR>', 'New Tab'},
+    s = {':tab split<CR>', 'Split (Clone) Tab'},
+    c = {':tabclose<CR>', 'Close Tab'},
+    b = {'<C-W>T', 'Open Current Buffer as Tab'}
+  }
+}
+
+-- File Explorer
+wk.register {
+  ['<leader>e'] = {
+    name = 'File Explorer',
+    e = {':NvimTreeToggle<CR>', 'Open Explorer'},
+    f = {':NvimTreeFindFileToggle<CR>', 'Open Explorer and focus current file'},
+    r = {':NvimTreeRefresh<CR>', 'Refresh Explorer'}
+  }
+}
+
+-- Diffs
+wk.register {
+  ['<leader>d'] = {
+    name = 'Diffs',
+    g = {':diffget<cr>', 'Apply from other buffer'},
+    p = {':diffput<cr>', 'Apply to other buffer'},
+    f = {':DiffviewFileHistory<cr>', 'Get see history of current file'},
+    c = {':DiffviewOpen <C-r><C-w><cr>', 'Open diff between HEAD and commit under cursor'}
+  }
+}
+
+-- Git
+wk.register {
+  ['<leader>g'] = {
+    name = 'Git',
+    s = {':G<cr>', 'Git Status'},
+    p = {'<cmd>Gitsigns preview_hunk<CR>', 'Preview Hunk'},
+    r = {'<cmd>Gitsigns reset_hunk<CR>', 'Reset Hunk'},
+    b = {function() require'gitsigns'.blame_line {full = true} end, 'Blame Line'}
+  }
+}
+-- LuaFormatter off
+wk.register({
+  ['<leader>g'] = {
+    name = 'Git',
+    r = {'<cmd>Gitsigns reset_hunk<CR>', 'Reset Hunk'},
+  }
+}, { mode = 'v' })
+-- LuaFormatter on
+
+-- Merge
+wk.register {
+  ['<leader>m'] = {
+    name = 'Git Merge',
+    t = {':MergetoolToggle<cr>', 'Toggle Mergetool'},
+    l = {
+      name = 'Layout',
+      a = {':MergetoolToggleLayout lmr<cr>', 'Toggle lmr layout'},
+      b = {':MergetoolToggleLayout blr,m<cr>', 'Toggle blr,m layout'}
+    },
+    p = {
+      name = 'Preference',
+      l = {':MergetoolPreferLocal<cr>', 'Prefer local revision'},
+      r = {':MergetoolPreferRemote<cr>', 'Prefer remote revision'}
+    }
+  }
+}
+
+-- Search
+wk.register {
+  ['<leader>s'] = {
+    name = 'Search',
+    f = {function() require('telescope.builtin').find_files() end, 'Find files'},
+    F = {function() require('user.telescope').find_files_all() end, 'Find files (include ignored)'},
+    s = {function() require('telescope.builtin').live_grep() end, 'Find text'},
+    S = {function() require('user.telescope').live_grep_all() end, 'Find text (include ignored)'},
+    c = {function() require('telescope.builtin').commands() end, 'Find command'},
+    b = {function() require('telescope.builtin').buffers() end, 'Find buffer'},
+    g = {
+      name = 'Git',
+      s = {function() require('telescope.builtin').git_status() end, 'Find staged files'}
+    }
+  },
+  ['<C-p>'] = {function() require('telescope.builtin').find_files() end, 'Find files'},
+  ['?'] = {':nohl<CR>', 'Hide search highlight'}
+}
 
 -- Completion
 M.attach_completion = function(bufnr)
-  local bmap = map_for_buffer(bufnr)
-  bmap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>')
-  bmap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
-  bmap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
-  bmap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
-  bmap('n', '<leader><leader>h', '<cmd>lua vim.lsp.buf.hover()<CR>')
-  bmap('n', '<leader><leader>s', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
-  bmap('n', '<leader><leader>r', '<cmd>lua vim.lsp.buf.rename()<CR>')
-  bmap('n', '<leader><leader>a', '<cmd>lua vim.lsp.buf.code_action()<CR>')
-  bmap('n', '<leader><leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>')
-  bmap('n', '<leader><leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>')
-  bmap('n', '<leader><leader>f', '<cmd>lua vim.lsp.buf.formatting()<CR>')
+  local bmap = function(action, name) return {action, name, buffer = bufnr} end
+
+  wk.register {
+    g = {
+      name = 'Go to',
+      D = bmap(function() vim.lsp.buf.declaration() end, 'Go to declaration'),
+      d = bmap(function() vim.lsp.buf.definition() end, 'Go to definition'),
+      i = bmap(function() vim.lsp.buf.implementation() end, 'Go to implementation'),
+      r = bmap(function() vim.lsp.buf.references() end, 'Go to references')
+    },
+    ['<leader><leader>'] = {
+      name = 'Language Server',
+      h = bmap(function() vim.lsp.buf.hover() end, 'Hover'),
+      s = bmap(function() vim.lsp.buf.signature_help() end, 'Signature Help'),
+      r = bmap(function() vim.lsp.buf.rename() end, 'Rename'),
+      a = bmap(function() vim.lsp.buf.code_action() end, 'Code Actions'),
+      e = bmap(function() vim.diagnostic.open_float() end, 'Show Errors'),
+      q = bmap(function() vim.diagnostic.setloclist() end, 'Save Errors to Loclist'),
+      f = bmap(function() vim.lsp.buf.formatting() end, 'Format Buffer'),
+      t = {name = 'Typescript', r = '<cmd>TSLspRenameFile<CR>'}
+    }
+  }
 end
 
 M.cmp_mapping = function(cmp)
   return {
-    ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<C-n>'] = cmp.mapping.select_next_item(),
     ['<S-Tab>'] = cmp.mapping.select_prev_item(),
     ['<Tab>'] = cmp.mapping.select_next_item(),
-    ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.close(),
     ['<CR>'] = cmp.mapping.confirm({behavior = cmp.ConfirmBehavior.Insert, select = true})
   }
