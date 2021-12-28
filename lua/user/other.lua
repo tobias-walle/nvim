@@ -14,7 +14,9 @@ require('trouble').setup {}
 require('which-key').setup {}
 
 -- Gitsigns
-require('gitsigns').setup {}
+require('gitsigns').setup {
+  keymaps = {}
+}
 
 -- Git Merge Tool
 vim.g.mergetool_layout = 'mr'
