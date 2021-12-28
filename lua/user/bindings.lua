@@ -120,6 +120,15 @@ wk.register {
   }
 }
 
+-- Debugging (WIP)
+wk.register {
+  ['<leader>b'] = {
+    name = "Debugging (WIP)",
+    b = {function() require('dap').toggle_breakpoint() end, 'Toggle Breakpoint'},
+    c = {function() require('dap').continue() end, 'Continue'},
+  }
+}
+
 -- Testing
 wk.register {
   ['<leader>t'] = {
