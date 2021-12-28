@@ -62,6 +62,8 @@ map('n', '<leader>mlb', ':MergetoolToggleLayout blr,m<cr>')
 map('n', '<leader>mpl', ':MergetoolPreferLocal<cr>')
 map('n', '<leader>mpr', ':MergetoolPreferRemote<cr>')
 
+-- Harpoon
+
 -- HopL
 map('n', 's', ':HopWord<CR>')
 
@@ -71,7 +73,9 @@ map('n', '<F1>', ':UndotreeToggle<CR>')
 -- Telescope
 map('n', '<C-p>', '<cmd>lua require("telescope.builtin").find_files()<cr>')
 map('n', '<leader>sf', '<cmd>lua require("telescope.builtin").find_files()<cr>')
+map('n', '<leader>sF', '<cmd>lua require("user.telescope").find_files_all()<cr>')
 map('n', '<leader>ss', '<cmd>lua require("telescope.builtin").live_grep()<cr>')
+map('n', '<leader>sS', '<cmd>lua require("user.telescope").live_grep_all()<cr>')
 map('n', '<leader>sc', '<cmd>lua require("telescope.builtin").commands()<cr>')
 map('n', '<leader>sgs', '<cmd>lua require("telescope.builtin").git_status()<cr>')
 map('n', '<leader>sb', '<cmd>lua require("telescope").buffers()<cr>')
@@ -83,13 +87,13 @@ M.attach_completion = function(bufnr)
   bmap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
   bmap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
   bmap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
-  bmap('n', 'H', '<cmd>lua vim.lsp.buf.hover()<CR>')
-  bmap('n', '<leader>h', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
-  bmap('n', '<leader>r', '<cmd>lua vim.lsp.buf.rename()<CR>')
-  bmap('n', '<leader>a', '<cmd>lua vim.lsp.buf.code_action()<CR>')
-  bmap('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>')
-  bmap('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>')
-  bmap('n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<CR>')
+  bmap('n', '<leader><leader>h', '<cmd>lua vim.lsp.buf.hover()<CR>')
+  bmap('n', '<leader><leader>s', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
+  bmap('n', '<leader><leader>r', '<cmd>lua vim.lsp.buf.rename()<CR>')
+  bmap('n', '<leader><leader>a', '<cmd>lua vim.lsp.buf.code_action()<CR>')
+  bmap('n', '<leader><leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>')
+  bmap('n', '<leader><leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>')
+  bmap('n', '<leader><leader>f', '<cmd>lua vim.lsp.buf.formatting()<CR>')
 end
 
 M.cmp_mapping = function(cmp)

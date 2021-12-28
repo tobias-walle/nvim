@@ -28,8 +28,10 @@ return require'packer'.startup(function(use)
   -- Help/Docs
   use 'folke/which-key.nvim'
 
-  -- Fuzzy Finder
+  -- Navigation
   use 'nvim-telescope/telescope.nvim'
+  use 'ThePrimeagen/harpoon'
+  use 'windwp/nvim-spectre'
 
   -- Undo
   use 'mbbill/undotree'
@@ -53,9 +55,6 @@ return require'packer'.startup(function(use)
 
   -- Autoclose brackets
   use 'windwp/nvim-autopairs'
-
-  -- Search & Replace
-  use 'windwp/nvim-spectre'
 
   -- Commands
   use 'tpope/vim-surround'
