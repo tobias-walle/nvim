@@ -5,7 +5,7 @@ set shortmess+=c
 
 -- See https://github.com/simrat39/rust-tools.nvim#configuration
 local lspconfig = require 'lspconfig'
-local bindings = require 'cfg.bindings'
+local bindings = require 'user.bindings'
 
 require'lsp_signature'.setup()
 

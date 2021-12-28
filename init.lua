@@ -1,9 +1,9 @@
-require 'cfg.bindings'
-require 'cfg.general'
+require 'user.bindings'
+require 'user.general'
 
-require 'plugins'
+require 'user.plugins'
 
-require 'cfg.completion'
-require 'cfg.explorer'
-require 'cfg.other'
-require 'cfg.style'
+require 'user.completion'
+require 'user.explorer'
+require 'user.other'
+require 'user.style'
