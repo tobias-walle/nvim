@@ -59,4 +59,7 @@ return require'packer'.startup(function(use)
   -- Commands
   use 'tpope/vim-surround'
   use 'phaazon/hop.nvim'
+
+  -- Tests
+  use {'rcarriga/vim-ultest', requires = {'vim-test/vim-test'}, run = ':UpdateRemotePlugins'}
 end)

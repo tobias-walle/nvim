@@ -37,7 +37,7 @@ wk.register {
   ['<leader>h'] = {
     name = 'Harpoon',
     h = {function() require('harpoon.mark').add_file() end, 'Add file'},
-    m = {function() require('harpoon.ui').toggle_quick_menu() end, 'Quick Menu'},
+    m = {function() require('harpoon.ui').toggle_quick_menu() end, 'Quick Menu'}
   },
   -- Navigation
   ['<M-a>'] = {function() require('harpoon.ui').nav_file(1) end, 'Go to File 1'},
@@ -84,6 +84,7 @@ wk.register {
 }
 
 -- Git
+-- LuaFormatter off
 wk.register {
   ['<leader>g'] = {
     name = 'Git',
@@ -93,7 +94,6 @@ wk.register {
     b = {function() require'gitsigns'.blame_line {full = true} end, 'Blame Line'}
   }
 }
--- LuaFormatter off
 wk.register({
   ['<leader>g'] = {
     name = 'Git',
@@ -116,6 +116,23 @@ wk.register {
       name = 'Preference',
       l = {':MergetoolPreferLocal<cr>', 'Prefer local revision'},
       r = {':MergetoolPreferRemote<cr>', 'Prefer remote revision'}
+    }
+  }
+}
+
+-- Testing
+wk.register {
+  ['<leader>t'] = {
+    name = 'Testing',
+    s = {':UltestSummary<cr>', 'Toggle Test Summary'},
+    q = {':UltestStop<cr>', 'Stop running tests'},
+    l = {':UltestLast<cr>', 'Run previous test again'},
+    t = {':Ultest<cr>', 'Run tests in file'},
+    n = {':UltestNearest<cr>', 'Run test close to cursor'},
+    d = {
+      name = 'Debug',
+      t = {':UltestDebug<cr>', 'Debug tests in file'},
+      n = {':UltestDebugNearest<cr>', 'Debug test close to cursor'}
     }
   }
 }
