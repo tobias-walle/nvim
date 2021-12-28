@@ -154,6 +154,8 @@ wk.register {
     F = {function() require('user.telescope').find_files_all() end, 'Find files (include ignored)'},
     s = {function() require('telescope.builtin').live_grep() end, 'Find text'},
     S = {function() require('user.telescope').live_grep_all() end, 'Find text (include ignored)'},
+    r = {function() require('spectre').open_file_search() end, 'Search & Replace in file'},
+    R = {function() require('spectre').open() end, 'Search & Replace globally'},
     c = {function() require('telescope.builtin').commands() end, 'Find command'},
     b = {function() require('telescope.builtin').buffers() end, 'Find buffer'},
     g = {
