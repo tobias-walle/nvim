@@ -32,6 +32,11 @@ map('n', '<M-K>', ':cprevious<cr>')
 -- HopL
 map('n', 's', ':HopWord<CR>')
 
+-- Nvim Development
+wk.register {
+  ['<leader>r'] = {require'user.reload'.reload, 'Reload vim config'}
+}
+
 -- Harpoon
 wk.register {
   ['<leader>h'] = {
