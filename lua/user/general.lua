@@ -26,6 +26,10 @@ vim.opt.showtabline = 2
 vim.opt.guifont = 'JetBrainsMono Nerd Font'
 -- see https://github.com/sindrets/diffview.nvim/issues/35
 vim.opt.fillchars = vim.opt.fillchars + 'diff:╱'
+-- Folding with Treesitter
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.opt.foldenable = false
 
 -- Disable autocomments
 vim.cmd 'autocmd BufNewFile,BufWinEnter * setlocal formatoptions-=cro'
