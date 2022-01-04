@@ -21,15 +21,18 @@ lspconfig.sumneko_lua.setup {
   on_attach = on_attach,
   settings = {Lua = {diagnostics = {globals = {'vim'}}}}
 }
-lspconfig.jsonls.setup {on_attach = on_attach}
+lspconfig.jsonls.setup {
+  on_attach = function(client, bufnr)
+    client.resolved_capabilities.document_formatting = false
+    on_attach(client, bufnr)
+  end
+}
+lspconfig.jedi_language_server.setup {on_attach = on_attach}
+lspconfig.taplo.setup {on_attach = on_attach}
 
 local cmp = require 'cmp'
 cmp.setup({
-  snippet = {
-    expand = function(args)
-      require('luasnip').lsp_expand(args.body)
-    end
-  },
+  snippet = {expand = function(args) require('luasnip').lsp_expand(args.body) end},
   on_attach = on_attach,
   mapping = bindings.cmp_mapping(cmp),
 
@@ -65,7 +68,6 @@ require('rust-tools').setup({
     settings = {['rust-analyzer'] = {checkOnSave = {command = 'clippy'}}}
   }
 })
-
 
 -- Typescript
 lspconfig.tsserver.setup({

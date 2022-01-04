@@ -30,7 +30,12 @@ map('n', '<M-J>', ':cnext<cr>')
 map('n', '<M-K>', ':cprevious<cr>')
 
 -- HopL
-map('n', 's', ':HopWord<CR>')
+map('n', 's', '<cmd>HopChar1<CR>')
+map('v', 's', '<cmd>HopChar1<CR>')
+map('o', 's', '<cmd>HopChar1<CR>')
+map('n', 'S', '<cmd>HopWord<CR>')
+map('v', 'S', '<cmd>HopWord<CR>')
+map('o', 'S', '<cmd>HopWord<CR>')
 
 -- Nvim Development
 wk.register {
@@ -193,6 +198,7 @@ M.attach_completion = function(bufnr)
       e = bmap(function() vim.diagnostic.open_float() end, 'Show Errors'),
       q = bmap(function() vim.diagnostic.setloclist() end, 'Save Errors to Loclist'),
       f = bmap(function() vim.lsp.buf.formatting() end, 'Format Buffer'),
+      d = bmap(function() vim.lsp.buf.type_definition() end, 'Type Definition'),
       t = {name = 'Typescript', r = '<cmd>TSLspRenameFile<CR>'}
     }
   }
