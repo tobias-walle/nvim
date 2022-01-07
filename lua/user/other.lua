@@ -24,12 +24,17 @@ vim.g.mergetool_prefer_revision = 'local'
 
 -- Telescope
 require('telescope').setup {
-  defaults = {file_ignore_patterns = {'.git/'}},
+  defaults = {file_ignore_patterns = {'.git/', 'yarn.lock'}},
   pickers = {find_files = {hidden = true}}
 }
 
+-- Project Nvim
+require("project_nvim").setup {}
+require('telescope').load_extension('projects')
+
 -- Neoclip
 require('neoclip').setup {}
+
 
 -- Cargo Toml
 vim.cmd [[ autocmd BufRead Cargo.toml call crates#toggle() ]]

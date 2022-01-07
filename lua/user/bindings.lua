@@ -168,6 +168,7 @@ wk.register {
     R = {function() require('spectre').open() end, 'Search & Replace globally'},
     c = {function() require('telescope.builtin').commands() end, 'Find command'},
     b = {function() require('telescope.builtin').buffers() end, 'Find buffer'},
+    p = {function() require('telescope').extensions.projects.projects() end, 'Find buffer'},
     g = {
       name = 'Git',
       s = {function() require('telescope.builtin').git_status() end, 'Find staged files'}
