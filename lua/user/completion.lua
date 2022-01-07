@@ -49,7 +49,8 @@ require('null-ls').setup {
     require('null-ls').builtins.formatting.eslint_d,
     require('null-ls').builtins.diagnostics.eslint_d,
     require('null-ls').builtins.formatting.lua_format
-  }
+  },
+  on_attach = on_attach
 }
 
 -- Rust

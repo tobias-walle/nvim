@@ -32,6 +32,7 @@ return require'packer'.startup(function(use)
   use 'nvim-telescope/telescope.nvim'
   use 'ThePrimeagen/harpoon'
   use 'windwp/nvim-spectre'
+  use 'ahmedkhalf/project.nvim'
 
   -- Undo
   use 'mbbill/undotree'

@@ -23,6 +23,6 @@ let g:nvim_tree_show_icons = {
 require'nvim-tree'.setup {
   auto_close = true,
   git = {enable = true, ignore = false, timeout = 1000},
-  view = {width = 40, height = 30, number = true, relativenumber = true},
+  view = {width = 60, height = 30, number = true, relativenumber = true, auto_resize = true},
   trash = {cmd = 'trash', require_confirm = true}
 }
