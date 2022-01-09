@@ -6,7 +6,7 @@ local function highlight(o)
 end
 
 -- Themes
-require'onedark'.setup()
+require'onedark'.load()
 highlight {'TabLine', fg = '#5a6270', bg = '#1b1e24'}
 highlight {'TabLineFill', bg = '#1b1e24'}
 highlight {'TabLineSel', fg = '#c3ccdb', bg = '#1b1e24'}

@@ -7,6 +7,9 @@ require'spectre'.setup {}
 -- Autopairs
 require'nvim-autopairs'.setup {enable_moveright = false}
 
+-- Autotags
+require'nvim-ts-autotag'.setup {}
+
 -- Trouble
 require('trouble').setup {}
 
@@ -14,9 +17,7 @@ require('trouble').setup {}
 require('which-key').setup {}
 
 -- Gitsigns
-require('gitsigns').setup {
-  keymaps = {}
-}
+require('gitsigns').setup {keymaps = {}}
 
 -- Git Merge Tool
 vim.g.mergetool_layout = 'mr'
@@ -24,17 +25,16 @@ vim.g.mergetool_prefer_revision = 'local'
 
 -- Telescope
 require('telescope').setup {
-  defaults = {file_ignore_patterns = {'.git/', 'yarn.lock'}},
+  defaults = {file_ignore_patterns = {'.git/', 'yarn.lock', '.yarn'}},
   pickers = {find_files = {hidden = true}}
 }
 
 -- Project Nvim
-require("project_nvim").setup {}
+require('project_nvim').setup {}
 require('telescope').load_extension('projects')
 
 -- Neoclip
 require('neoclip').setup {}
-
 
 -- Cargo Toml
 vim.cmd [[ autocmd BufRead Cargo.toml call crates#toggle() ]]
