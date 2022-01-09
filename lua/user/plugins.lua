@@ -56,6 +56,7 @@ return require'packer'.startup(function(use)
 
   -- Autoclose brackets
   use 'windwp/nvim-autopairs'
+  use 'windwp/nvim-ts-autotag'
 
   -- Commands
   use 'tpope/vim-surround'
