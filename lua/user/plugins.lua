@@ -4,6 +4,8 @@ return require'packer'.startup(function(use)
   -- Dependencies
   use 'nvim-lua/plenary.nvim'
   use 'kyazdani42/nvim-web-devicons'
+  use 'lambdalisue/nerdfont.vim'
+  use 'lambdalisue/glyph-palette.vim'
 
   -- Autocompletion & Diagnostics
   use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
@@ -44,7 +46,9 @@ return require'packer'.startup(function(use)
   use 'sindrets/diffview.nvim'
 
   -- File Explorer
-  use 'kyazdani42/nvim-tree.lua'
+  use 'lambdalisue/fern.vim'
+  use 'lambdalisue/fern-hijack.vim'
+  use 'lambdalisue/fern-renderer-nerdfont.vim'
 
   -- Clipboard
   use 'AckslD/nvim-neoclip.lua'

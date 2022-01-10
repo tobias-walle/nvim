@@ -38,9 +38,7 @@ map('v', 'S', '<cmd>HopWord<CR>')
 map('o', 'S', '<cmd>HopWord<CR>')
 
 -- Nvim Development
-wk.register {
-  ['<leader>r'] = {require'user.reload'.reload, 'Reload vim config'}
-}
+wk.register {['<leader>r'] = {require'user.reload'.reload, 'Reload vim config'}}
 
 -- Harpoon
 wk.register {
@@ -76,11 +74,27 @@ wk.register {
 wk.register {
   ['<leader>e'] = {
     name = 'File Explorer',
-    e = {':NvimTreeToggle<CR>', 'Open Explorer'},
-    f = {':NvimTreeFindFileToggle<CR>', 'Open Explorer and focus current file'},
-    r = {':NvimTreeRefresh<CR>', 'Refresh Explorer'}
+    e = {':Fern . -drawer<CR>', 'Open Explorer'},
+    f = {':Fern . -drawer -reveal=%<CR>', 'Open Explorer and focus current file'},
+    c = {':FernDo close<CR>', 'Close Explorer'}
   }
 }
+
+M.attach_file_explorer = function()
+  local bmap = function(action, name) return {action, name, buffer = vim.fn.bufnr()} end
+
+  wk.register {
+    q = bmap('<cmd>q<CR>', 'Quit'),
+    l = bmap('<Plug>(fern-action-expand)', 'Expand'),
+    s = bmap('<Plug>(fern-action-mark:toggle)', 'Select'),
+    ['<C-l>'] = bmap('<C-W>l', 'Right Pane'),
+    ['<C-t>'] = bmap('<Plug>(fern-action-open:tabedit)', 'Tabedit'),
+    ['<C-v>'] = bmap('<Plug>(fern-action-open:vsplit)', 'Vsplit'),
+    ['<C-s>'] = bmap('<Plug>(fern-action-open:split)', 'Hsplit')
+  }
+end
+
+vim.cmd [[ autocmd FileType fern lua require('user.bindings').attach_file_explorer() ]]
 
 -- Diffs
 wk.register {
@@ -133,9 +147,9 @@ wk.register {
 -- Debugging (WIP)
 wk.register {
   ['<leader>b'] = {
-    name = "Debugging (WIP)",
+    name = 'Debugging (WIP)',
     b = {function() require('dap').toggle_breakpoint() end, 'Toggle Breakpoint'},
-    c = {function() require('dap').continue() end, 'Continue'},
+    c = {function() require('dap').continue() end, 'Continue'}
   }
 }
 
@@ -181,6 +195,8 @@ wk.register {
 -- Completion
 M.attach_completion = function(bufnr)
   local bmap = function(action, name) return {action, name, buffer = bufnr} end
+  local bmapnsilent =
+    function(action, name) return {action, name, buffer = bufnr, silent = false} end
 
   wk.register {
     g = {
@@ -200,7 +216,7 @@ M.attach_completion = function(bufnr)
       q = bmap(function() vim.diagnostic.setloclist() end, 'Save Errors to Loclist'),
       f = bmap(function() vim.lsp.buf.formatting() end, 'Format Buffer'),
       d = bmap(function() vim.lsp.buf.type_definition() end, 'Type Definition'),
-      t = {name = 'Typescript', r = '<cmd>TSLspRenameFile<CR>'}
+      t = {name = 'Typescript', r = bmapnsilent('<cmd>TSLspRenameFile<CR>', 'Rename TS file')}
     }
   }
 end
