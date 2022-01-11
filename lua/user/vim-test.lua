@@ -4,6 +4,7 @@ _G.configureJestTest = function()
 	vim.g['test#javascript#jest#executable'] = "yarn jest"
 	vim.g['test#javascript#runner'] = "jest"
 	vim.g['test#project_root'] = vim.fn.expand('%:p:h')
+	vim.g['test#strategy'] = "neovim"
 end
 
 vim.cmd([[

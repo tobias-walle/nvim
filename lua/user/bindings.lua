@@ -37,8 +37,9 @@ map('n', 'S', '<cmd>HopWord<CR>')
 map('v', 'S', '<cmd>HopWord<CR>')
 map('o', 'S', '<cmd>HopWord<CR>')
 
--- Nvim Development
+-- General
 wk.register {['<leader>r'] = {require'user.reload'.reload, 'Reload vim config'}}
+wk.register {['<leader>q'] = {'<cmd>:close<CR>', 'Close Window'}}
 
 -- Harpoon
 wk.register {
@@ -74,8 +75,8 @@ wk.register {
 wk.register {
   ['<leader>e'] = {
     name = 'File Explorer',
-    e = {':Fern . -drawer<CR>', 'Open Explorer'},
-    f = {':Fern . -drawer -reveal=%<CR>', 'Open Explorer and focus current file'},
+    e = {':Fern . -drawer -width=50<CR>', 'Open Explorer'},
+    f = {':Fern . -drawer -width=50 -reveal=%<CR>', 'Open Explorer and focus current file'},
     c = {':FernDo close<CR>', 'Close Explorer'}
   }
 }
@@ -157,11 +158,11 @@ wk.register {
 wk.register {
   ['<leader>t'] = {
     name = 'Testing',
-    s = {':UltestSummary<cr>', 'Toggle Test Summary'},
-    q = {':UltestStop<cr>', 'Stop running tests'},
-    l = {':UltestLast<cr>', 'Run previous test again'},
-    t = {':Ultest<cr>', 'Run tests in file'},
-    n = {':UltestNearest<cr>', 'Run test close to cursor'},
+    l = {':TestLast<cr>', 'Run previous test again'},
+    t = {':TestFile<cr>', 'Run tests in file'},
+    n = {':TestNearest<cr>', 'Run test close to cursor'},
+    v = {':TestVisit<cr>', 'Run test close to cursor'},
+    u = {name = 'Ultitest', t = {':Ultest<cr>', 'Run tests in file'}},
     d = {
       name = 'Debug',
       t = {':UltestDebug<cr>', 'Debug tests in file'},
@@ -216,7 +217,11 @@ M.attach_completion = function(bufnr)
       q = bmap(function() vim.diagnostic.setloclist() end, 'Save Errors to Loclist'),
       f = bmap(function() vim.lsp.buf.formatting() end, 'Format Buffer'),
       d = bmap(function() vim.lsp.buf.type_definition() end, 'Type Definition'),
-      t = {name = 'Typescript', r = bmapnsilent('<cmd>TSLspRenameFile<CR>', 'Rename TS file')}
+      t = {
+        name = 'Typescript',
+        r = bmapnsilent('<cmd>TSLspRenameFile<CR>', 'Rename TS file'),
+        t = bmapnsilent('<cmd>edit %:r.spec.%:e<CR>', 'Create Test')
+      }
     }
   }
 end
