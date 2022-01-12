@@ -1,7 +1,7 @@
+require 'user.plugins'
+
 require 'user.bindings'
 require 'user.general'
-
-require 'user.plugins'
 
 require 'user.completion'
 require 'user.explorer'

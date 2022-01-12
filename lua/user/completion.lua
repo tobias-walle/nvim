@@ -27,7 +27,7 @@ lspconfig.jsonls.setup {
     on_attach(client, bufnr)
   end
 }
-lspconfig.jedi_language_server.setup {on_attach = on_attach}
+lspconfig.pyright.setup {on_attach = on_attach}
 lspconfig.taplo.setup {on_attach = on_attach}
 
 local cmp = require 'cmp'
@@ -48,7 +48,8 @@ require('null-ls').setup {
     require('null-ls').builtins.formatting.prettierd,
     require('null-ls').builtins.formatting.eslint_d,
     require('null-ls').builtins.diagnostics.eslint_d,
-    require('null-ls').builtins.formatting.lua_format
+    require('null-ls').builtins.formatting.lua_format,
+    require('null-ls').builtins.formatting.black,
   },
   on_attach = on_attach
 }
