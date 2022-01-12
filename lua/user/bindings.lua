@@ -37,7 +37,9 @@ map('n', 'S', '<cmd>HopWord<CR>')
 map('v', 'S', '<cmd>HopWord<CR>')
 map('o', 'S', '<cmd>HopWord<CR>')
 
--- General
+wk.register {
+  ['<leader>o'] = {'<cmd>silent exec "!open %:p:h"<CR>', 'Open folder of current file'}
+}
 wk.register {['<leader>r'] = {require'user.reload'.reload, 'Reload vim config'}}
 wk.register {['<leader>q'] = {'<cmd>:close<CR>', 'Close Window'}}
 
