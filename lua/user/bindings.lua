@@ -21,13 +21,31 @@ map('n', '<C-k>', '<C-W>k')
 map('n', '<C-h>', '<C-W>h')
 map('n', '<C-l>', '<C-W>l')
 
+-- Line Numbers
+vim.g.relativenumber = vim.opt.relativenumber
+local function toggle_line_numbers()
+  vim.g.relativenumber = not vim.g.relativenumber
+  vim.opt.relativenumber = vim.g.relativenumber
+end
+
+wk.register {['<leader>n'] = {name = 'Linenumbers', t = {toggle_line_numbers, 'Toggle'}}}
+
 -- Local list
-map('n', '<M-j>', ':lnext<cr>')
-map('n', '<M-k>', ':lprevious<cr>')
+wk.register {
+  ['<leader>l'] = {
+    name = 'Local List',
+    j = {'<cmd>lnext<cr>', 'Next LL Item'},
+    k = {'<cmd>lprevious<cr>', 'Previous LL Item'},
+    q = {'<cmd>lclose<cr>', 'Close List'}
+  }
+}
 
 -- Quick Fix List
-map('n', '<M-J>', ':cnext<cr>')
-map('n', '<M-K>', ':cprevious<cr>')
+wk.register {
+  ['<leader>k'] = {name = 'Quick fix List', q = {'<cmd>cclose<cr>', 'Close List'}},
+  ['<M-j>'] = {'<cmd>cnext<cr>', 'Next QL Item'},
+  ['<M-k>'] = {'<cmd>cprevious<cr>', 'Previous QL Item'}
+}
 
 -- HopL
 map('n', 's', '<cmd>HopChar1<CR>')
@@ -37,9 +55,7 @@ map('n', 'S', '<cmd>HopWord<CR>')
 map('v', 'S', '<cmd>HopWord<CR>')
 map('o', 'S', '<cmd>HopWord<CR>')
 
-wk.register {
-  ['<leader>o'] = {'<cmd>silent exec "!open %:p:h"<CR>', 'Open folder of current file'}
-}
+wk.register {['<leader>o'] = {'<cmd>silent exec "!open %:p:h"<CR>', 'Open folder of current file'}}
 wk.register {['<leader>r'] = {require'user.reload'.reload, 'Reload vim config'}}
 wk.register {['<leader>q'] = {'<cmd>:close<CR>', 'Close Window'}}
 
@@ -74,12 +90,18 @@ wk.register {
 }
 
 -- File Explorer
+local function explorer_reveal_file()
+  local path = vim.fn.expand('%:p')
+  vim.cmd('Fern . -drawer -width=50 -wait')
+  vim.cmd('FernDo FernReveal ' .. path)
+end
+
 wk.register {
   ['<leader>e'] = {
     name = 'File Explorer',
-    e = {':Fern . -drawer -width=50<CR>', 'Open Explorer'},
-    f = {':Fern . -drawer -width=50 -reveal=%<CR>', 'Open Explorer and focus current file'},
-    c = {':FernDo close<CR>', 'Close Explorer'}
+    e = {'<cmd>Fern . -drawer -width=50<CR>', 'Open Explorer'},
+    f = {explorer_reveal_file, 'Open Explorer and focus current file', silent = false},
+    q = {'<cmd>FernDo close<CR>', 'Close Explorer'}
   }
 }
 
@@ -87,9 +109,9 @@ M.attach_file_explorer = function()
   local bmap = function(action, name) return {action, name, buffer = vim.fn.bufnr()} end
 
   wk.register {
-    q = bmap('<cmd>q<CR>', 'Quit'),
     l = bmap('<Plug>(fern-action-expand)', 'Expand'),
     s = bmap('<Plug>(fern-action-mark:toggle)', 'Select'),
+    c = bmap('<Plug>(fern-action-new-path)', 'New File/Folder'),
     ['<C-l>'] = bmap('<C-W>l', 'Right Pane'),
     ['<C-t>'] = bmap('<Plug>(fern-action-open:tabedit)', 'Tabedit'),
     ['<C-v>'] = bmap('<Plug>(fern-action-open:vsplit)', 'Vsplit'),

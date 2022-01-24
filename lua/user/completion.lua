@@ -7,8 +7,6 @@ set shortmess+=c
 local lspconfig = require 'lspconfig'
 local bindings = require 'user.bindings'
 
-require'lsp_signature'.setup()
-
 ---@diagnostic disable-next-line: unused-local
 local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -48,8 +46,7 @@ require('null-ls').setup {
     require('null-ls').builtins.formatting.prettierd,
     require('null-ls').builtins.formatting.eslint_d,
     require('null-ls').builtins.diagnostics.eslint_d,
-    require('null-ls').builtins.formatting.lua_format,
-    require('null-ls').builtins.formatting.black,
+    require('null-ls').builtins.formatting.lua_format, require('null-ls').builtins.formatting.black
   },
   on_attach = on_attach
 }
@@ -73,6 +70,17 @@ require('rust-tools').setup({
 })
 
 -- Typescript
+local function ts_filter(arr, fn)
+  if type(arr) ~= 'table' then return arr end
+
+  local filtered = {}
+  for k, v in pairs(arr) do if fn(v, k, arr) then table.insert(filtered, v) end end
+
+  return filtered
+end
+
+local function ts_filter_react_dts(value) return string.match(value.uri, 'react/index.d.ts') == nil end
+
 lspconfig.tsserver.setup({
   -- Needed for inlayHints. Merge this table with your settings or copy
   -- it from the source if you want to add your own init_options.
@@ -119,6 +127,16 @@ lspconfig.tsserver.setup({
     client.resolved_capabilities.document_formatting = false
 
     on_attach(client, bufnr)
-  end
+  end,
+  handlers = {
+    ['textDocument/definition'] = function(err, result, method, ...)
+      if vim.tbl_islist(result) and #result > 1 then
+        local filtered_result = ts_filter(result, ts_filter_react_dts)
+        return vim.lsp.handlers['textDocument/definition'](err, filtered_result, method, ...)
+      end
+
+      vim.lsp.handlers['textDocument/definition'](err, result, method, ...)
+    end
+  }
 })
 
