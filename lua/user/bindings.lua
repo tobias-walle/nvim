@@ -93,7 +93,7 @@ wk.register {
     l = {':tabnext<CR>', 'Next Tab'},
     n = {':tabnew<CR>', 'New Tab'},
     s = {':tab split<CR>', 'Split (Clone) Tab'},
-    c = {':tabclose<CR>', 'Close Tab'},
+    q = {':tabclose<CR>', 'Close Tab'},
     b = {'<C-W>T', 'Open Current Buffer as Tab'}
   }
 }
