@@ -121,7 +121,7 @@ M.attach_file_explorer = function()
 
   wk.register {
     s = bmap('<Plug>(fern-action-mark:toggle)', 'Select'),
-    a = bmap('<Plug>(fern-action-new-path)', 'New File/Folder'),
+    n = bmap('<Plug>(fern-action-new-path)', 'New File/Folder'),
     h = bmap('<Plug>(fern-action-collapse)', 'Collapse'),
     l = bmap('<Plug>(fern-action-expand)', 'Expand'),
     y = bmap('<Plug>(fern-action-yank:path)', 'Yank Path'),
@@ -219,6 +219,7 @@ wk.register {
 wk.register {
   ['<leader>s'] = {
     name = 'Search',
+    u = {function() require('telescope.builtin').resume() end, 'Resume'},
     f = {function() require('telescope.builtin').find_files() end, 'Find files'},
     F = {function() require('user.telescope').find_files_all() end, 'Find files (include ignored)'},
     s = {function() require('telescope.builtin').live_grep() end, 'Find text'},

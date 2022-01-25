@@ -1,8 +1,16 @@
 local M = {}
 
 require('telescope').setup {
-  defaults = {file_ignore_patterns = {'.git/', 'yarn.lock', '.yarn'}},
-  pickers = {find_files = {hidden = true}, buffers = {theme = 'dropdown'}}
+  defaults = {
+    file_ignore_patterns = {'.git/', 'yarn.lock', '.yarn'},
+    layout_strategy = 'vertical',
+    layout_config = {
+      vertical = {width = 0.9}
+    }
+  },
+  pickers = {
+    find_files = {hidden = true}
+  }
 }
 
 function M.find_files_all() require('telescope.builtin').find_files({no_ignore = true}) end

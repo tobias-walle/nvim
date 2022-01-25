@@ -1,9 +1,15 @@
+function dbg(arg)
+  print(vim.inspect(arg))
+  return arg
+end
+
 require 'user.plugins'
-require 'user.telescope'
 
 require 'user.bindings'
 require 'user.general'
 
+require 'user.make'
+require 'user.telescope'
 require 'user.completion'
 require 'user.explorer'
 require 'user.other'
