@@ -96,6 +96,7 @@ local function explorer_reveal_file()
   vim.cmd('FernDo FernReveal ' .. path)
 end
 
+vim.g['fern#disable_default_mappings'] = true
 wk.register {
   ['<leader>e'] = {
     name = 'File Explorer',
@@ -109,10 +110,19 @@ M.attach_file_explorer = function()
   local bmap = function(action, name) return {action, name, buffer = vim.fn.bufnr()} end
 
   wk.register {
-    l = bmap('<Plug>(fern-action-expand)', 'Expand'),
     s = bmap('<Plug>(fern-action-mark:toggle)', 'Select'),
-    c = bmap('<Plug>(fern-action-new-path)', 'New File/Folder'),
-    ['<C-l>'] = bmap('<C-W>l', 'Right Pane'),
+    a = bmap('<Plug>(fern-action-new-path)', 'New File/Folder'),
+    h = bmap('<Plug>(fern-action-collapse)', 'Collapse'),
+    l = bmap('<Plug>(fern-action-expand)', 'Expand'),
+    y = bmap('<Plug>(fern-action-yank:path)', 'Yank Path'),
+    z = bmap('<Plug>(fern-action-zoom)', 'Zoom'),
+    c = bmap('<Plug>(fern-action-clipboard-copy)', 'Copy'),
+    m = bmap('<Plug>(fern-action-clipboard-move)', 'Move'),
+    p = bmap('<Plug>(fern-action-clipboard-paste)', 'Paste'),
+    d = bmap('<Plug>(fern-action-remove)', 'Remove'),
+    r = bmap('<Plug>(fern-action-rename)', 'Rename'),
+    ['<CR>'] = bmap('<Plug>(fern-action-open-or-enter)', 'Open or Enter'),
+    ['<BS>'] = bmap('<Plug>(fern-action-leave)', 'Leave'),
     ['<C-t>'] = bmap('<Plug>(fern-action-open:tabedit)', 'Tabedit'),
     ['<C-v>'] = bmap('<Plug>(fern-action-open:vsplit)', 'Vsplit'),
     ['<C-s>'] = bmap('<Plug>(fern-action-open:split)', 'Hsplit')
