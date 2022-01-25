@@ -55,9 +55,18 @@ map('n', 'S', '<cmd>HopWord<CR>')
 map('v', 'S', '<cmd>HopWord<CR>')
 map('o', 'S', '<cmd>HopWord<CR>')
 
+-- Other
 wk.register {['<leader>o'] = {'<cmd>silent exec "!open %:p:h"<CR>', 'Open folder of current file'}}
-wk.register {['<leader>r'] = {require'user.reload'.reload, 'Reload vim config'}}
+wk.register {['<leader>R'] = {require'user.reload'.reload, 'Reload vim config'}}
 wk.register {['<leader>q'] = {'<cmd>:close<CR>', 'Close Window'}}
+
+-- Registers
+wk.register {
+  ['<leader>r'] = {
+    name = 'Registers',
+    y = {'<cmd>let @+=@"<CR><cmd>let @*=@"<CR>', 'Copy to system register'},
+  },
+}
 
 -- Harpoon
 wk.register {
