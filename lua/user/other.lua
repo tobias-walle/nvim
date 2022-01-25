@@ -23,12 +23,6 @@ require('gitsigns').setup {keymaps = {}}
 vim.g.mergetool_layout = 'mr'
 vim.g.mergetool_prefer_revision = 'local'
 
--- Telescope
-require('telescope').setup {
-  defaults = {file_ignore_patterns = {'.git/', 'yarn.lock', '.yarn'}},
-  pickers = {find_files = {hidden = true}}
-}
-
 -- Project Nvim
 require('project_nvim').setup {}
 require('telescope').load_extension('projects')
