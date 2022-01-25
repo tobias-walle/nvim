@@ -59,13 +59,14 @@ map('o', 'S', '<cmd>HopWord<CR>')
 wk.register {['<leader>o'] = {'<cmd>silent exec "!open %:p:h"<CR>', 'Open folder of current file'}}
 wk.register {['<leader>R'] = {require'user.reload'.reload, 'Reload vim config'}}
 wk.register {['<leader>q'] = {'<cmd>:close<CR>', 'Close Window'}}
+wk.register {['<leader>w'] = {'<cmd>:write<CR>', 'Write Window'}}
 
 -- Registers
 wk.register {
   ['<leader>r'] = {
     name = 'Registers',
-    y = {'<cmd>let @+=@"<CR><cmd>let @*=@"<CR>', 'Copy to system register'},
-  },
+    y = {'<cmd>let @+=@"<CR><cmd>let @*=@"<CR>', 'Copy to system register'}
+  }
 }
 
 -- Harpoon
@@ -225,7 +226,11 @@ wk.register {
     r = {function() require('spectre').open_file_search() end, 'Search & Replace in file'},
     R = {function() require('spectre').open() end, 'Search & Replace globally'},
     c = {function() require('telescope.builtin').commands() end, 'Find command'},
-    b = {function() require('telescope.builtin').buffers() end, 'Find buffer'},
+    b = {
+      function()
+        require('telescope.builtin').buffers {sort_lastused = true, ignore_current_buffer = true}
+      end, 'Find buffer'
+    },
     p = {function() require('telescope').extensions.projects.projects() end, 'Find buffer'},
     g = {
       name = 'Git',

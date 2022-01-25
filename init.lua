@@ -1,4 +1,5 @@
 require 'user.plugins'
+require 'user.telescope'
 
 require 'user.bindings'
 require 'user.general'
