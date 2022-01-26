@@ -29,14 +29,15 @@ lspconfig.pyright.setup {on_attach = on_attach}
 lspconfig.taplo.setup {on_attach = on_attach}
 
 local cmp = require 'cmp'
+cmp.register_source('filename', require('user.cmp-sources.filename').new())
 cmp.setup({
   snippet = {expand = function(args) require('luasnip').lsp_expand(args.body) end},
   on_attach = on_attach,
   mapping = bindings.cmp_mapping(cmp),
 
-  -- Installed sources
   sources = {
-    {name = 'nvim_lsp'}, {name = 'path'}, {name = 'luasnip'}, {name = 'buffer'}, {name = 'crates'}
+    {name = 'nvim_lsp'}, {name = 'path'}, {name = 'luasnip'}, {name = 'buffer'}, {name = 'crates'},
+    {name = 'filename'}
   }
 })
 
