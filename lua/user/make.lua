@@ -29,6 +29,6 @@ function M.typeCheck()
   })
 end
 
-vim.cmd [[ command Mtc lua require('user.make').typeCheck() ]]
+vim.cmd [[ command! Mtc lua require('user.make').typeCheck() ]]
 
 return M
