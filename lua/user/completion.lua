@@ -46,6 +46,7 @@ require('null-ls').setup {
     require('null-ls').builtins.formatting.prettierd,
     require('null-ls').builtins.formatting.eslint_d,
     require('null-ls').builtins.diagnostics.eslint_d,
+    require('null-ls').builtins.code_actions.eslint_d,
     require('null-ls').builtins.formatting.lua_format, require('null-ls').builtins.formatting.black
   },
   on_attach = on_attach
@@ -139,4 +140,3 @@ lspconfig.tsserver.setup({
     end
   }
 })
-
