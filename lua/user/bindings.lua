@@ -157,7 +157,7 @@ wk.register {
 wk.register {
   ['<leader>g'] = {
     name = 'Git',
-    s = {':G<cr>', 'Git Status'},
+    s = {':G<cr><c-w>T', 'Git Status'},
     p = {'<cmd>Gitsigns preview_hunk<CR>', 'Preview Hunk'},
     r = {'<cmd>Gitsigns reset_hunk<CR>', 'Reset Hunk'},
     b = {function() require'gitsigns'.blame_line {full = true} end, 'Blame Line'}
