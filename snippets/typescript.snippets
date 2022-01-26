@@ -1,27 +1,9 @@
-snippet neoncmp "Neon Component"
-  import React from "react";
-
-  const ${1}: React.FC = () => {
-    return ${0:${VISUAL}};
-  }
-
-snippet neoncmpp "Neon Component with Props"
-  import React from "react";
-
-  export interface ${1}Props {
-  	${2}
-  };
-
-  const ${1}: React.FC<${1}Props> = () => {
-    return ${0:${VISUAL}};
-  }
-
 snippet fun "function"
-	function ${1:function_name}(${2}) {
+	function ${1}(${2}): ${3} {
 		${0:${VISUAL}}
 	}
 
 snippet fune "function"
-	export function ${1:function_name}(${2}) {
+	export function ${1}(${2}): ${3} {
 		${0:${VISUAL}}
 	}
