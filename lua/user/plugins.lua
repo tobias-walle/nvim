@@ -71,4 +71,8 @@ return require'packer'.startup(function(use)
 
   -- Debugging
   use 'mfussenegger/nvim-dap'
+
+  -- Comments
+  use 'numToStr/Comment.nvim'
+  use 'JoosepAlviste/nvim-ts-context-commentstring'
 end)
