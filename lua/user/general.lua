@@ -32,6 +32,6 @@ vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.opt.foldenable = false
 
 -- Disable autocomments
-vim.cmd 'autocmd BufNewFile,BufWinEnter * setlocal formatoptions-=cro'
+vim.cmd 'autocmd BufNewFile,BufWinEnter * setlocal formatoptions-=o'
 
 
