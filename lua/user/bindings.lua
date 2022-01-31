@@ -59,7 +59,9 @@ map('o', 'S', '<cmd>HopWord<CR>')
 wk.register {['<leader>o'] = {'<cmd>silent exec "!open %:p:h"<CR>', 'Open folder of current file'}}
 wk.register {['<leader>R'] = {require'user.reload'.reload, 'Reload vim config'}}
 wk.register {['<leader>q'] = {'<cmd>:close<CR>', 'Close Window'}}
-wk.register {['<leader>w'] = {'<cmd>:write<CR>', 'Write Window'}}
+wk.register {
+  ['<leader>w'] = {'<cmd>lua vim.lsp.buf.formatting_sync()<CR><cmd>:write<CR>', 'Write Window'}
+}
 
 -- Registers
 wk.register {
@@ -278,14 +280,15 @@ end
 
 local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+  return col ~= 0 and
+           vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
 end
 
-local luasnip = require("luasnip")
+local luasnip = require('luasnip')
 
 M.cmp_mapping = function(cmp)
   return {
-        ["<Tab>"] = cmp.mapping(function(fallback)
+    ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       elseif luasnip.expand_or_jumpable() then
@@ -295,9 +298,9 @@ M.cmp_mapping = function(cmp)
       else
         fallback()
       end
-    end, { "i", "s" }),
+    end, {'i', 's'}),
 
-    ["<S-Tab>"] = cmp.mapping(function(fallback)
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
       elseif luasnip.jumpable(-1) then
@@ -305,7 +308,7 @@ M.cmp_mapping = function(cmp)
       else
         fallback()
       end
-    end, { "i", "s" }),
+    end, {'i', 's'}),
     ['<C-e>'] = cmp.mapping.close(),
     ['<CR>'] = cmp.mapping.confirm({behavior = cmp.ConfirmBehavior.Insert, select = true})
   }

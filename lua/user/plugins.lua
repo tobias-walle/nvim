@@ -75,4 +75,7 @@ return require'packer'.startup(function(use)
   -- Comments
   use 'numToStr/Comment.nvim'
   use 'JoosepAlviste/nvim-ts-context-commentstring'
+
+  -- Project Config
+  use 'windwp/nvim-projectconfig'
 end)
