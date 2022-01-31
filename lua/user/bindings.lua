@@ -118,6 +118,7 @@ wk.register {
   }
 }
 
+map('', '<Plug>(fern-close-drawer)', '<cmd>FernDo close -drawer -stay<CR>')
 M.attach_file_explorer = function()
   local bmap = function(action, name) return {action, name, buffer = vim.fn.bufnr()} end
 
@@ -133,11 +134,12 @@ M.attach_file_explorer = function()
     p = bmap('<Plug>(fern-action-clipboard-paste)', 'Paste'),
     d = bmap('<Plug>(fern-action-remove)', 'Remove'),
     r = bmap('<Plug>(fern-action-rename)', 'Rename'),
-    ['<CR>'] = bmap('<Plug>(fern-action-open-or-enter)', 'Open or Enter'),
+    ['e'] = bmap('<Plug>(fern-action-enter)', 'Enter'),
     ['<BS>'] = bmap('<Plug>(fern-action-leave)', 'Leave'),
-    ['<C-t>'] = bmap('<Plug>(fern-action-open:tabedit)', 'Tabedit'),
-    ['<C-v>'] = bmap('<Plug>(fern-action-open:vsplit)', 'Vsplit'),
-    ['<C-s>'] = bmap('<Plug>(fern-action-open:split)', 'Hsplit')
+    ['<CR>'] = bmap('<Plug>(fern-action-open)<Plug>(fern-close-drawer)', 'Open'),
+    ['<C-v>'] = bmap('<Plug>(fern-action-open:vsplit)<Plug>(fern-close-drawer)', 'Vsplit'),
+    ['<C-s>'] = bmap('<Plug>(fern-action-open:split)<Plug>(fern-close-drawer)', 'Hsplit'),
+    ['<C-t>'] = bmap('<Plug>(fern-action-open:vsplit)<Plug>(fern-close-drawer)<C-W>T', 'Tabedit')
   }
 end
 
