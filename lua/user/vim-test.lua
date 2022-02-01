@@ -1,10 +1,11 @@
 vim.g.ultest_use_pty = 1
 
+vim.g['test#strategy'] = 'neovim'
+
 _G.configureJestTest = function()
-	vim.g['test#javascript#jest#executable'] = "yarn jest"
-	vim.g['test#javascript#runner'] = "jest"
-	vim.g['test#project_root'] = vim.fn.expand('%:p:h')
-	vim.g['test#strategy'] = "neovim"
+  vim.g['test#javascript#jest#executable'] = 'yarn jest'
+  vim.g['test#javascript#runner'] = 'jest'
+  vim.g['test#project_root'] = vim.fn.expand('%:p:h')
 end
 
 vim.cmd([[
