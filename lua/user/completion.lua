@@ -57,7 +57,7 @@ require('null-ls').setup {
 require('rust-tools').setup({
   tools = { -- rust-tools options
     autoSetHints = true,
-    hover_with_actions = true,
+    hover_with_actions = false,
     inlay_hints = {
       show_parameter_hints = false,
       parameter_hints_prefix = '',

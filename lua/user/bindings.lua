@@ -270,6 +270,12 @@ M.attach_completion = function(bufnr)
       q = bmap(function() vim.diagnostic.setloclist() end, 'Save Errors to Loclist'),
       f = bmap(function() vim.lsp.buf.formatting() end, 'Format Buffer'),
       d = bmap(function() vim.lsp.buf.type_definition() end, 'Type Definition'),
+      w = {
+        name = 'Workspaces',
+        a = bmapnsilent(function() vim.lsp.buf.add_workspace_folder() end, 'Add Workspace'),
+        d = bmapnsilent(function() vim.lsp.buf.remove_workspace_folder() end, 'Remove Workspace'),
+        l = bmapnsilent(function() dbg(vim.lsp.buf.list_workspace_folders()) end, 'List Workspaces')
+      },
       t = {
         name = 'Typescript',
         r = bmapnsilent('<cmd>TSLspRenameFile<CR>', 'Rename TS file'),

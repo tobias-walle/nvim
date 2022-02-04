@@ -16,7 +16,7 @@ vim.opt.relativenumber = true
 vim.opt.mouse = 'a'
 vim.opt.pastetoggle = '<F2>'
 vim.opt.cursorline = true
-vim.opt.cursorcolumn = true
+-- vim.opt.cursorcolumn = true
 vim.opt.backup = false
 vim.opt.writebackup = false
 vim.opt.updatetime = 300
@@ -33,5 +33,3 @@ vim.opt.foldenable = false
 
 -- Disable autocomments
 vim.cmd 'autocmd BufNewFile,BufWinEnter * setlocal formatoptions-=o'
-
-
