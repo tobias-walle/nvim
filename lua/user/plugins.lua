@@ -49,6 +49,7 @@ return require'packer'.startup(function(use)
   use 'lambdalisue/fern.vim'
   use 'lambdalisue/fern-hijack.vim'
   use 'lambdalisue/fern-renderer-nerdfont.vim'
+  use 'lambdalisue/fern-git-status.vim'
 
   -- Clipboard
   use 'AckslD/nvim-neoclip.lua'
@@ -78,4 +79,7 @@ return require'packer'.startup(function(use)
 
   -- Project Config
   use 'windwp/nvim-projectconfig'
+
+  -- Scrollbar
+  use 'petertriho/nvim-scrollbar'
 end)
