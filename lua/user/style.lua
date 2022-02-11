@@ -6,10 +6,9 @@ local function highlight(o)
 end
 
 -- Themes
-if not vim.fn.has('macunix') then
-  vim.g.onedark_transparent_background = true
-end
+if not vim.fn.has('macunix') then vim.g.onedark_transparent_background = true end
 require'onedark'.load()
+local colors = require('onedark.colors')
 highlight {'TabLine', fg = '#5a6270', bg = '#1b1e24'}
 highlight {'TabLineFill', bg = '#1b1e24'}
 highlight {'TabLineSel', fg = '#c3ccdb', bg = '#1b1e24'}
@@ -22,3 +21,16 @@ require'lualine'.setup {
   options = {theme = 'onedark'},
   sections = {lualine_c = {{'filename', file_status = true, path = 1}}}
 }
+
+-- Scrollbar
+require('scrollbar').setup({
+  handle = {color = colors.bg2},
+  marks = {
+    Search = {color = colors.orange},
+    Error = {color = colors.error},
+    Warn = {color = colors.warning},
+    Info = {color = colors.info},
+    Hint = {color = colors.hint},
+    Misc = {color = colors.purple}
+  }
+})
