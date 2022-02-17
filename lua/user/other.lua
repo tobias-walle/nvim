@@ -33,6 +33,9 @@ require('neoclip').setup {}
 -- Cargo Toml
 vim.cmd [[ autocmd BufRead Cargo.toml call crates#toggle() ]]
 
+-- Neoterm
+vim.g.neoterm_default_mod = 'belowright'
+
 -- Treesitter
 require'nvim-treesitter.configs'.setup {
   ensure_installed = 'maintained',
