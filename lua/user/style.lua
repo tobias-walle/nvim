@@ -6,7 +6,6 @@ local function highlight(o)
 end
 
 -- Themes
-if not vim.fn.has('macunix') then vim.g.onedark_transparent_background = true end
 require'onedark'.load()
 local colors = require('onedark.colors')
 highlight {'TabLine', fg = '#5a6270', bg = '#1b1e24'}
