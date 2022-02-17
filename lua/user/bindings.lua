@@ -30,6 +30,15 @@ end
 
 wk.register {['<leader>n'] = {name = 'Linenumbers', t = {toggle_line_numbers, 'Toggle'}}}
 
+-- Terminal
+wk.register {
+  ['<leader>x'] = {
+    name = 'Terminal',
+    x = {'<cmd>Ttoggle<cr>', 'Toggle terminal'},
+    c = {'<cmd>Tclear<cr>', 'Clear terminal'}
+  }
+}
+
 -- Local list
 wk.register {
   ['<leader>l'] = {
@@ -161,7 +170,7 @@ wk.register {
 wk.register {
   ['<leader>g'] = {
     name = 'Git',
-    s = {':G<cr><c-w>T', 'Git Status'},
+    s = {'<cmd>G<cr><cmd>only<cr>', 'Git Status'},
     p = {'<cmd>Gitsigns preview_hunk<CR>', 'Preview Hunk'},
     r = {'<cmd>Gitsigns reset_hunk<CR>', 'Reset Hunk'},
     b = {function() require'gitsigns'.blame_line {full = true} end, 'Blame Line'}
@@ -206,10 +215,10 @@ wk.register {
 wk.register {
   ['<leader>t'] = {
     name = 'Testing',
-    l = {':TestLast<cr>', 'Run previous test again'},
-    t = {':TestFile<cr>', 'Run tests in file'},
-    n = {':TestNearest<cr>', 'Run test close to cursor'},
-    v = {':TestVisit<cr>', 'Run test close to cursor'},
+    l = {'<cmd>Tclear!<cr><cmd>TestLast<cr>', 'Run previous test again'},
+    t = {'<cmd>Tclear!<cr><cmd>TestFile<cr>', 'Run tests in file'},
+    n = {'<cmd>Tclear!<cr><cmd>TestNearest<cr>', 'Run test close to cursor'},
+    v = {'<cmd>Tclear!<cr><cmd>TestVisit<cr>', 'Run test close to cursor'},
     u = {name = 'Ultitest', t = {':Ultest<cr>', 'Run tests in file'}},
     d = {
       name = 'Debug',

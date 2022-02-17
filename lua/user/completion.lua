@@ -41,6 +41,9 @@ cmp.setup({
   }
 })
 
+-- Signature Help
+require'lsp_signature'.setup {hint_enable = false}
+
 -- Null Ls
 require('null-ls').setup {
   sources = {

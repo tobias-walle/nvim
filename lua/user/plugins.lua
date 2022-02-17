@@ -82,4 +82,7 @@ return require'packer'.startup(function(use)
 
   -- Scrollbar
   use 'petertriho/nvim-scrollbar'
+
+  -- Terminal
+  use 'kassio/neoterm'
 end)
