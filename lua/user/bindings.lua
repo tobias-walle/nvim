@@ -35,7 +35,8 @@ wk.register {
   ['<leader>x'] = {
     name = 'Terminal',
     x = {'<cmd>Ttoggle<cr>', 'Toggle terminal'},
-    c = {'<cmd>Tclear<cr>', 'Clear terminal'}
+    c = {'<cmd>Tclear<cr>', 'Clear terminal'},
+    f = {'<cmd>T cd %:p:h<cr>', 'Change working dir to current file'}
   }
 }
 
