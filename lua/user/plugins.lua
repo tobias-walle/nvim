@@ -56,6 +56,7 @@ return require'packer'.startup(function(use)
 
   -- Style
   use 'navarasu/onedark.nvim'
+  use 'folke/tokyonight.nvim'
   use 'nvim-lualine/lualine.nvim'
   use 'alvarosevilla95/luatab.nvim'
 

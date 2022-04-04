@@ -22,7 +22,7 @@ vim.opt.writebackup = false
 vim.opt.updatetime = 300
 vim.opt.timeoutlen = 500
 vim.opt.scrolloff = 15
-vim.opt.showtabline = 2
+vim.opt.showtabline = 1
 vim.opt.guifont = 'JetBrainsMono Nerd Font'
 -- see https://github.com/sindrets/diffview.nvim/issues/35
 vim.opt.fillchars = vim.opt.fillchars + 'diff:╱'
