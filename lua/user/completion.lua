@@ -26,7 +26,7 @@ lspconfig.jsonls.setup {
   end
 }
 lspconfig.pyright.setup {on_attach = on_attach}
-lspconfig.taplo.setup {on_attach = on_attach}
+lspconfig.taplo.setup {cmd = {'taplo', 'lsp', 'stdio'}, on_attach = on_attach}
 
 local cmp = require 'cmp'
 cmp.register_source('filename', require('user.cmp-sources.filename').new())
