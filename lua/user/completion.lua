@@ -13,6 +13,10 @@ local on_attach = function(client, bufnr)
   bindings.attach_completion(bufnr)
 end
 
+-- Enable (broadcasting) snippet capability for completion
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
 lspconfig.kotlin_language_server.setup {on_attach = on_attach}
 lspconfig.yamlls.setup {on_attach = on_attach}
 lspconfig.sumneko_lua.setup {
@@ -20,6 +24,8 @@ lspconfig.sumneko_lua.setup {
   settings = {Lua = {diagnostics = {globals = {'vim'}}}}
 }
 lspconfig.jsonls.setup {
+  capabilities = capabilities,
+  settings = {json = {schemas = require('schemastore').json.schemas()}},
   on_attach = function(client, bufnr)
     client.resolved_capabilities.document_formatting = false
     on_attach(client, bufnr)

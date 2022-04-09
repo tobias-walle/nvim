@@ -10,6 +10,9 @@ return require'packer'.startup(function(use)
   -- Autocompletion & Diagnostics
   use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
   use 'neovim/nvim-lspconfig'
+  use 'NoahTheDuke/vim-just'
+
+  use 'b0o/schemastore.nvim'
 
   use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-nvim-lsp'
