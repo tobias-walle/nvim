@@ -68,13 +68,14 @@ require('rust-tools').setup({
     autoSetHints = true,
     hover_with_actions = false,
     inlay_hints = {
-      show_parameter_hints = false,
+      show_parameter_hints = true,
       parameter_hints_prefix = '',
       other_hints_prefix = ''
     }
   },
 
   server = {
+    standalone = false,
     on_attach = on_attach,
     settings = {['rust-analyzer'] = {checkOnSave = {command = 'clippy'}}}
   }

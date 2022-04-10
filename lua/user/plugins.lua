@@ -21,7 +21,7 @@ return require'packer'.startup(function(use)
   use 'hrsh7th/cmp-path'
   use 'simrat39/rust-tools.nvim'
   use 'mhinz/vim-crates'
-  use {'saecki/crates.nvim', tag = 'v0.1.0'}
+  use 'saecki/crates.nvim'
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   use 'ray-x/lsp_signature.nvim'
 
