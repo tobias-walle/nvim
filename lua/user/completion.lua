@@ -17,8 +17,14 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
+local on_attach_disable_formatting = function(client, bufnr)
+    client.resolved_capabilities.document_formatting = false
+    on_attach(client, bufnr)
+end
+
 lspconfig.kotlin_language_server.setup {on_attach = on_attach}
 lspconfig.yamlls.setup {on_attach = on_attach}
+lspconfig.hls.setup {on_attach = on_attach_disable_formatting}
 lspconfig.sumneko_lua.setup {
   on_attach = on_attach,
   settings = {Lua = {diagnostics = {globals = {'vim'}}}}
@@ -26,10 +32,7 @@ lspconfig.sumneko_lua.setup {
 lspconfig.jsonls.setup {
   capabilities = capabilities,
   settings = {json = {schemas = require('schemastore').json.schemas()}},
-  on_attach = function(client, bufnr)
-    client.resolved_capabilities.document_formatting = false
-    on_attach(client, bufnr)
-  end
+  on_attach = on_attach_disable_formatting
 }
 lspconfig.pyright.setup {on_attach = on_attach}
 lspconfig.taplo.setup {cmd = {'taplo', 'lsp', 'stdio'}, on_attach = on_attach}
