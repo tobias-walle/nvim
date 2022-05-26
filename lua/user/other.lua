@@ -24,7 +24,7 @@ vim.g.mergetool_layout = 'mr'
 vim.g.mergetool_prefer_revision = 'local'
 
 -- Project Nvim
-require('project_nvim').setup {}
+require('project_nvim').setup {manual_mode = true}
 require('telescope').load_extension('projects')
 
 -- Neoclip
