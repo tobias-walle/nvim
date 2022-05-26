@@ -26,7 +26,7 @@ lspconfig.kotlin_language_server.setup {on_attach = on_attach}
 lspconfig.yamlls.setup {on_attach = on_attach}
 lspconfig.hls.setup {on_attach = on_attach_disable_formatting}
 lspconfig.sumneko_lua.setup {
-  on_attach = on_attach,
+  on_attach = on_attach_disable_formatting,
   settings = {Lua = {diagnostics = {globals = {'vim'}}}}
 }
 lspconfig.jsonls.setup {
@@ -60,7 +60,8 @@ require('null-ls').setup {
     require('null-ls').builtins.formatting.eslint_d,
     require('null-ls').builtins.diagnostics.eslint_d,
     require('null-ls').builtins.code_actions.eslint_d,
-    require('null-ls').builtins.formatting.lua_format, require('null-ls').builtins.formatting.black
+    require('null-ls').builtins.formatting.lua_format,
+    require('null-ls').builtins.formatting.black
   },
   on_attach = on_attach
 }

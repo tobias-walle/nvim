@@ -89,4 +89,7 @@ return require'packer'.startup(function(use)
 
   -- Terminal
   use 'kassio/neoterm'
+
+  -- Color Codes
+  use {'RRethy/vim-hexokinase', run = 'make hexokinase'}
 end)
