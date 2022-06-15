@@ -97,6 +97,11 @@ end
 
 local function ts_filter_react_dts(value) return string.match(value.uri, 'react/index.d.ts') == nil end
 
+lspconfig.denols.setup {
+  on_attach = on_attach,
+  root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+}
+
 lspconfig.tsserver.setup({
   -- Needed for inlayHints. Merge this table with your settings or copy
   -- it from the source if you want to add your own init_options.
@@ -144,6 +149,7 @@ lspconfig.tsserver.setup({
 
     on_attach(client, bufnr)
   end,
+
   handlers = {
     ['textDocument/definition'] = function(err, result, method, ...)
       if vim.tbl_islist(result) and #result > 1 then
@@ -153,5 +159,7 @@ lspconfig.tsserver.setup({
 
       vim.lsp.handlers['textDocument/definition'](err, result, method, ...)
     end
-  }
+  },
+
+  root_dir = lspconfig.util.root_pattern("package.json"),
 })
