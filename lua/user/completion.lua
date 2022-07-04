@@ -18,8 +18,8 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local on_attach_disable_formatting = function(client, bufnr)
-    client.resolved_capabilities.document_formatting = false
-    on_attach(client, bufnr)
+  client.resolved_capabilities.document_formatting = false
+  on_attach(client, bufnr)
 end
 
 lspconfig.kotlin_language_server.setup {on_attach = on_attach}
@@ -57,11 +57,13 @@ require'lsp_signature'.setup {hint_enable = false}
 require('null-ls').setup {
   sources = {
     require('null-ls').builtins.formatting.prettierd,
-    require('null-ls').builtins.formatting.eslint_d,
-    require('null-ls').builtins.diagnostics.eslint_d,
+    require('null-ls').builtins.diagnostics.eslint_d.with {
+      condition = function(utils)
+        return utils.root_has_file({'.eslintrc.js', '.eslintrc.yml', '.eslintrc.json'})
+      end
+    }, require('null-ls').builtins.formatting.eslint_d,
     require('null-ls').builtins.code_actions.eslint_d,
-    require('null-ls').builtins.formatting.lua_format,
-    require('null-ls').builtins.formatting.black
+    require('null-ls').builtins.formatting.lua_format, require('null-ls').builtins.formatting.black
   },
   on_attach = on_attach
 }
@@ -99,7 +101,7 @@ local function ts_filter_react_dts(value) return string.match(value.uri, 'react/
 
 lspconfig.denols.setup {
   on_attach = on_attach,
-  root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+  root_dir = lspconfig.util.root_pattern('deno.json', 'deno.jsonc')
 }
 
 lspconfig.tsserver.setup({
@@ -161,5 +163,5 @@ lspconfig.tsserver.setup({
     end
   },
 
-  root_dir = lspconfig.util.root_pattern("package.json"),
+  root_dir = lspconfig.util.root_pattern('package.json')
 })
