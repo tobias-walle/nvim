@@ -1,6 +1,8 @@
 vim.cmd [[
 set completeopt=menuone,noinsert,noselect
 set shortmess+=c
+
+autocmd BufNewFile,BufRead tsconfig*.json setlocal filetype=jsonc
 ]]
 
 -- See https://github.com/simrat39/rust-tools.nvim#configuration
@@ -22,6 +24,13 @@ local on_attach_disable_formatting = function(client, bufnr)
   on_attach(client, bufnr)
 end
 
+local pid = vim.fn.getpid()
+local omnisharp_bin = '/usr/local/bin/omnisharp-run'
+require'lspconfig'.omnisharp.setup {
+  cmd = {omnisharp_bin, '--languageserver', '--hostPID', tostring(pid)},
+  on_attach = on_attach
+}
+
 lspconfig.kotlin_language_server.setup {on_attach = on_attach}
 lspconfig.yamlls.setup {on_attach = on_attach}
 lspconfig.hls.setup {on_attach = on_attach_disable_formatting}
@@ -36,6 +45,7 @@ lspconfig.jsonls.setup {
 }
 lspconfig.pyright.setup {on_attach = on_attach}
 lspconfig.taplo.setup {cmd = {'taplo', 'lsp', 'stdio'}, on_attach = on_attach}
+lspconfig.angularls.setup {on_attach = on_attach}
 
 local cmp = require 'cmp'
 cmp.register_source('filename', require('user.cmp-sources.filename').new())
@@ -165,3 +175,7 @@ lspconfig.tsserver.setup({
 
   root_dir = lspconfig.util.root_pattern('package.json')
 })
+
+-- Better diagnostics
+require('lsp_lines').setup()
+vim.diagnostic.config({virtual_text = false})
