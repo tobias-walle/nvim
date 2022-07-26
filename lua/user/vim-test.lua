@@ -1,5 +1,3 @@
-vim.g.ultest_use_pty = 1
-
 vim.g['test#strategy'] = 'neoterm'
 
 _G.configureJestTest = function()

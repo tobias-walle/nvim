@@ -10,9 +10,6 @@ require'nvim-autopairs'.setup {enable_moveright = false}
 -- Autotags
 require'nvim-ts-autotag'.setup {}
 
--- Trouble
-require('trouble').setup {}
-
 -- Which key
 require('which-key').setup {}
 

@@ -22,10 +22,8 @@ map('n', '<C-h>', '<C-W>h')
 map('n', '<C-l>', '<C-W>l')
 
 -- Line Numbers
-vim.g.relativenumber = vim.opt.relativenumber
 local function toggle_line_numbers()
-  vim.g.relativenumber = not vim.g.relativenumber
-  vim.opt.relativenumber = vim.g.relativenumber
+  vim.opt.relativenumber = not vim.opt.relativenumber._value
 end
 
 wk.register {['<leader>n'] = {name = 'Linenumbers', t = {toggle_line_numbers, 'Toggle'}}}

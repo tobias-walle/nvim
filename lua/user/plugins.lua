@@ -28,7 +28,7 @@ return require'packer'.startup(function(use)
   use 'L3MON4D3/LuaSnip'
   use 'saadparwaiz1/cmp_luasnip'
 
-  use 'folke/trouble.nvim'
+  use 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
 
   -- Help/Docs
   use 'folke/which-key.nvim'
@@ -49,10 +49,10 @@ return require'packer'.startup(function(use)
   use 'sindrets/diffview.nvim'
 
   -- File Explorer
-  use 'lambdalisue/fern.vim'
-  use 'lambdalisue/fern-hijack.vim'
-  use 'lambdalisue/fern-renderer-nerdfont.vim'
-  use 'lambdalisue/fern-git-status.vim'
+  use {'lambdalisue/fern.vim', branch = 'main'}
+  use {'lambdalisue/fern-hijack.vim', branch = 'master'}
+  use {'lambdalisue/fern-renderer-nerdfont.vim', branch = 'master'}
+  use {'lambdalisue/fern-git-status.vim', branch = 'master'}
 
   -- Clipboard
   use 'AckslD/nvim-neoclip.lua'
@@ -72,7 +72,7 @@ return require'packer'.startup(function(use)
   use 'phaazon/hop.nvim'
 
   -- Tests
-  use {'rcarriga/vim-ultest', requires = {'vim-test/vim-test'}, run = ':UpdateRemotePlugins'}
+  use {'vim-test/vim-test', run = ':UpdateRemotePlugins'}
 
   -- Debugging
   use 'mfussenegger/nvim-dap'
