@@ -61,7 +61,7 @@ cmp.setup({
 })
 
 -- Signature Help
-require'lsp_signature'.setup {hint_enable = false}
+require'lsp_signature'.setup {hint_enable = true, floating_window = false, hint_prefix = ''}
 
 -- Null Ls
 require('null-ls').setup {
@@ -109,10 +109,10 @@ end
 
 local function ts_filter_react_dts(value) return string.match(value.uri, 'react/index.d.ts') == nil end
 
-lspconfig.denols.setup {
-  on_attach = on_attach,
-  root_dir = lspconfig.util.root_pattern('deno.json', 'deno.jsonc')
-}
+-- lspconfig.denols.setup {
+--   on_attach = on_attach,
+--   root_dir = lspconfig.util.root_pattern('deno.json', 'deno.jsonc')
+-- }
 
 lspconfig.tsserver.setup({
   -- Needed for inlayHints. Merge this table with your settings or copy
@@ -178,4 +178,5 @@ lspconfig.tsserver.setup({
 
 -- Better diagnostics
 require('lsp_lines').setup()
+require('lsp_lines').toggle()
 vim.diagnostic.config({virtual_text = false})

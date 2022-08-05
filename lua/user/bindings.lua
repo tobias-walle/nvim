@@ -22,9 +22,7 @@ map('n', '<C-h>', '<C-W>h')
 map('n', '<C-l>', '<C-W>l')
 
 -- Line Numbers
-local function toggle_line_numbers()
-  vim.opt.relativenumber = not vim.opt.relativenumber._value
-end
+local function toggle_line_numbers() vim.opt.relativenumber = not vim.opt.relativenumber._value end
 
 wk.register {['<leader>n'] = {name = 'Linenumbers', t = {toggle_line_numbers, 'Toggle'}}}
 
@@ -278,6 +276,7 @@ M.attach_completion = function(bufnr)
       q = bmap(function() vim.diagnostic.setloclist() end, 'Save Errors to Loclist'),
       f = bmap(function() vim.lsp.buf.formatting() end, 'Format Buffer'),
       d = bmap(function() vim.lsp.buf.type_definition() end, 'Type Definition'),
+      l = bmap(function() require('lsp_lines').toggle() end, 'Toggle diagnostic lines'),
       w = {
         name = 'Workspaces',
         a = bmapnsilent(function() vim.lsp.buf.add_workspace_folder() end, 'Add Workspace'),
