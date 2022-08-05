@@ -36,10 +36,57 @@ wk.register {
   }
 }
 
+-- Lists
+local active_list = 'quick_fix'
+
+local function activate_list(list)
+  print('Activate ' .. list)
+  active_list = list
+end
+
+local function toggle_active_list()
+  local list
+  if active_list == 'quick_fix' then
+    list = 'local'
+  elseif active_list == 'local' then
+    list = 'quick_fix'
+  end
+  print('Activate ' .. list)
+  active_list = list
+end
+
+local function cmd(cmd_to_run)
+  local ok, result = pcall(vim.cmd, cmd_to_run)
+  print(result)
+end
+
+local function next_in_active_list()
+  if active_list == 'quick_fix' then
+    cmd [[ cnext ]]
+  elseif active_list == 'local' then
+    cmd [[ lnext ]]
+  end
+end
+
+local function previous_in_active_list()
+  if active_list == 'quick_fix' then
+    cmd [[ cprevious ]]
+  elseif active_list == 'local' then
+    cmd [[ lprevious ]]
+  end
+end
+
+wk.register {
+  ['<M-t>'] = {toggle_active_list, 'Toggle active list'},
+  ['<M-j>'] = {next_in_active_list, 'Next QL Item'},
+  ['<M-k>'] = {previous_in_active_list, 'Previous QL Item'}
+}
+
 -- Local list
 wk.register {
   ['<leader>l'] = {
     name = 'Local List',
+    a = {function() activate_list('local') end, 'Activate LL for shortcut'},
     j = {'<cmd>lnext<cr>', 'Next LL Item'},
     k = {'<cmd>lprevious<cr>', 'Previous LL Item'},
     q = {'<cmd>lclose<cr>', 'Close List'}
@@ -48,9 +95,11 @@ wk.register {
 
 -- Quick Fix List
 wk.register {
-  ['<leader>k'] = {name = 'Quick fix List', q = {'<cmd>cclose<cr>', 'Close List'}},
-  ['<M-j>'] = {'<cmd>cnext<cr>', 'Next QL Item'},
-  ['<M-k>'] = {'<cmd>cprevious<cr>', 'Previous QL Item'}
+  ['<leader>c'] = {
+    name = 'Quick fix List',
+    a = {function() activate_list('quick_fix') end, 'Activate QL for shortcut'},
+    q = {'<cmd>cclose<cr>', 'Close List'}
+  }
 }
 
 -- HopL
