@@ -45,7 +45,12 @@ lspconfig.jsonls.setup {
 }
 lspconfig.pyright.setup {on_attach = on_attach}
 lspconfig.taplo.setup {cmd = {'taplo', 'lsp', 'stdio'}, on_attach = on_attach}
-lspconfig.angularls.setup {on_attach = on_attach}
+lspconfig.angularls.setup {
+  on_attach = function(client, bufnr)
+    client.resolved_capabilities.rename = false
+    on_attach(client, bufnr)
+  end
+}
 
 local cmp = require 'cmp'
 cmp.register_source('filename', require('user.cmp-sources.filename').new())

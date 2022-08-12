@@ -21,6 +21,14 @@ map('n', '<C-k>', '<C-W>k')
 map('n', '<C-h>', '<C-W>h')
 map('n', '<C-l>', '<C-W>l')
 
+-- Files
+wk.register {
+  ['<leader>f'] = {
+    name = 'Files',
+    D = {'<cmd>!rm %<cr><cmd>bd!<cr>', 'Delete file of current buffer'}
+  }
+}
+
 -- Line Numbers
 local function toggle_line_numbers() vim.opt.relativenumber = not vim.opt.relativenumber._value end
 
