@@ -8,12 +8,17 @@ autocmd BufNewFile,BufRead tsconfig*.json setlocal filetype=jsonc
 -- See https://github.com/simrat39/rust-tools.nvim#configuration
 local lspconfig = require 'lspconfig'
 local bindings = require 'user.bindings'
+local lspInlayhints = require 'lsp-inlayhints';
 
----@diagnostic disable-next-line: unused-local
+require('mason').setup()
+
 local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
   bindings.attach_completion(bufnr)
+  lspInlayhints.on_attach(bufnr, client, false)
 end
+
+lspInlayhints.setup {}
 
 -- Enable (broadcasting) snippet capability for completion
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -34,10 +39,16 @@ require'lspconfig'.omnisharp.setup {
 lspconfig.kotlin_language_server.setup {on_attach = on_attach}
 lspconfig.yamlls.setup {on_attach = on_attach}
 lspconfig.hls.setup {on_attach = on_attach_disable_formatting}
-lspconfig.sumneko_lua.setup {
-  on_attach = on_attach_disable_formatting,
-  settings = {Lua = {diagnostics = {globals = {'vim'}}}}
+lspconfig.tailwindcss.setup {on_attach = on_attach}
+
+local luadev = require('lua-dev').setup {
+  lspconfig = {
+    on_attach = on_attach_disable_formatting
+    -- settings = {Lua = {diagnostics = {globals = {'vim'}}}}
+  }
 }
+lspconfig.sumneko_lua.setup(luadev)
+
 lspconfig.jsonls.setup {
   capabilities = capabilities,
   settings = {json = {schemas = require('schemastore').json.schemas()}},
@@ -85,15 +96,7 @@ require('null-ls').setup {
 
 -- Rust
 require('rust-tools').setup({
-  tools = { -- rust-tools options
-    autoSetHints = true,
-    hover_with_actions = false,
-    inlay_hints = {
-      show_parameter_hints = true,
-      parameter_hints_prefix = '',
-      other_hints_prefix = ''
-    }
-  },
+  tools = {autoSetHints = false, hover_with_actions = false},
 
   server = {
     standalone = false,
@@ -119,66 +122,44 @@ local function ts_filter_react_dts(value) return string.match(value.uri, 'react/
 --   root_dir = lspconfig.util.root_pattern('deno.json', 'deno.jsonc')
 -- }
 
-lspconfig.tsserver.setup({
-  -- Needed for inlayHints. Merge this table with your settings or copy
-  -- it from the source if you want to add your own init_options.
-  init_options = require('nvim-lsp-ts-utils').init_options,
-  --
-  on_attach = function(client, bufnr)
-    local ts_utils = require('nvim-lsp-ts-utils')
+local ts_inlay_hint_options = {
+  includeInlayParameterNameHints = 'all',
+  includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+  includeInlayFunctionParameterTypeHints = true,
+  includeInlayVariableTypeHints = true,
+  includeInlayPropertyDeclarationTypeHints = true,
+  includeInlayFunctionLikeReturnTypeHints = true,
+  includeInlayEnumMemberValueHints = true
+}
 
-    -- defaults
-    ts_utils.setup({
-      debug = false,
-      disable_commands = false,
-      enable_import_on_completion = true,
+require('typescript').setup({
+  server = {
 
-      -- import all
-      import_all_timeout = 5000, -- ms
-      -- lower numbers = higher priority
-      import_all_priorities = {
-        same_file = 1, -- add to existing import statement
-        local_files = 2, -- git files or files with relative path markers
-        buffer_content = 3, -- loaded buffer content
-        buffers = 4 -- loaded buffer names
-      },
-      import_all_scan_buffers = 100,
-      import_all_select_source = false,
+    on_attach = function(client, bufnr)
+      client.resolved_capabilities.document_formatting = false
 
-      -- filter diagnostics
-      filter_out_diagnostics_by_severity = {},
-      filter_out_diagnostics_by_code = {},
+      on_attach(client, bufnr)
+    end,
 
-      -- inlay hints
-      auto_inlay_hints = true,
-      inlay_hints_highlight = 'Comment',
+    handlers = {
+      ['textDocument/definition'] = function(err, result, method, ...)
+        print('HERE')
+        if vim.tbl_islist(result) and #result > 1 then
+          local filtered_result = ts_filter(result, ts_filter_react_dts)
+          return vim.lsp.handlers['textDocument/definition'](err, filtered_result, method, ...)
+        end
 
-      -- update imports on file move
-      update_imports_on_move = false,
-      require_confirmation_on_move = false,
-      watch_dir = nil
-    })
-
-    -- required to fix code action ranges and filter diagnostics
-    ts_utils.setup_client(client)
-
-    client.resolved_capabilities.document_formatting = false
-
-    on_attach(client, bufnr)
-  end,
-
-  handlers = {
-    ['textDocument/definition'] = function(err, result, method, ...)
-      if vim.tbl_islist(result) and #result > 1 then
-        local filtered_result = ts_filter(result, ts_filter_react_dts)
-        return vim.lsp.handlers['textDocument/definition'](err, filtered_result, method, ...)
+        vim.lsp.handlers['textDocument/definition'](err, result, method, ...)
       end
+    },
 
-      vim.lsp.handlers['textDocument/definition'](err, result, method, ...)
-    end
-  },
+    root_dir = lspconfig.util.root_pattern('package.json'),
 
-  root_dir = lspconfig.util.root_pattern('package.json')
+    settings = {
+      typescript = {inlayHints = ts_inlay_hint_options},
+      javascript = {inlayHints = ts_inlay_hint_options}
+    }
+  }
 })
 
 -- Better diagnostics

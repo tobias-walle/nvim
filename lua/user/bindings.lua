@@ -127,12 +127,7 @@ wk.register {
 }
 
 -- Registers
-wk.register {
-  ['<leader>r'] = {
-    name = 'Registers',
-    y = {'<cmd>let @+=@"<CR><cmd>let @*=@"<CR>', 'Copy to system register'}
-  }
-}
+wk.register {['<leader>r'] = {'<cmd>let @+=@"<CR><cmd>let @*=@"<CR>', 'Copy to system register'}}
 
 -- Harpoon
 wk.register {
@@ -165,23 +160,16 @@ wk.register {
 }
 
 -- File Explorer
-local function explorer_reveal_file()
-  local path = vim.fn.expand('%:p')
-  vim.cmd('Fern . -drawer -width=50 -wait')
-  vim.cmd('FernDo FernReveal ' .. path)
-end
-
-vim.g['fern#disable_default_mappings'] = true
 wk.register {
   ['<leader>e'] = {
     name = 'File Explorer',
-    e = {'<cmd>Fern . -drawer -width=50<CR>', 'Open Explorer'},
-    f = {explorer_reveal_file, 'Open Explorer and focus current file', silent = false},
-    q = {'<cmd>FernDo close<CR>', 'Close Explorer'}
+    e = {'<cmd>Neotree toggle<CR>', 'Open Explorer'},
+    f = {'<cmd>Neotree reveal<CR>', 'Open Explorer and focus current file', silent = false},
+    q = {'<cmd>Neotree close<CR>', 'Close Explorer'}
   }
 }
 
-map('', '<Plug>(fern-close-drawer)', '<cmd>FernDo close -drawer -stay<CR>')
+-- map('', '<Plug>(fern-close-drawer)', '<cmd>FernDo close -drawer -stay<CR>')
 M.attach_file_explorer = function()
   local bmap = function(action, name) return {action, name, buffer = vim.fn.bufnr()} end
 
@@ -189,6 +177,9 @@ M.attach_file_explorer = function()
     s = bmap('<Plug>(fern-action-mark:toggle)', 'Select'),
     n = bmap('<Plug>(fern-action-new-path)', 'New File/Folder'),
     h = bmap('<Plug>(fern-action-collapse)', 'Collapse'),
+    H = bmap(
+      '<Plug>(fern-action-collapse)(fern-action-collapse)(fern-action-collapse)(fern-action-collapse)(fern-action-collapse)',
+      'Collapse'),
     l = bmap('<Plug>(fern-action-expand)', 'Expand'),
     y = bmap('<Plug>(fern-action-yank:path)', 'Yank Path'),
     z = bmap('<Plug>(fern-action-zoom)', 'Zoom'),
@@ -206,16 +197,17 @@ M.attach_file_explorer = function()
   }
 end
 
-vim.cmd [[ autocmd FileType fern lua require('user.bindings').attach_file_explorer() ]]
+-- vim.cmd [[ autocmd FileType fern lua require('user.bindings').attach_file_explorer() ]]
 
 -- Diffs
 wk.register {
   ['<leader>d'] = {
     name = 'Diffs',
-    g = {':diffget<cr>', 'Apply from other buffer'},
-    p = {':diffput<cr>', 'Apply to other buffer'},
-    f = {':DiffviewFileHistory<cr>', 'Get see history of current file'},
-    c = {':DiffviewOpen <C-r><C-w><cr>', 'Open diff between HEAD and commit under cursor'}
+    g = {'<cmd>diffget<cr>', 'Apply from other buffer'},
+    p = {'<cmd>diffput<cr>', 'Apply to other buffer'},
+    f = {'<cmd>DiffviewFileHistory<cr>', 'Get see history of current file'},
+    c = {'<cmd>DiffviewOpen <C-r><C-w><cr>', 'Open diff between HEAD and commit under cursor'},
+    l = {'<cmd>vnew +read\\ # | windo diffthis<cr>', 'Diff with local file'}
   }
 }
 
@@ -342,8 +334,9 @@ M.attach_completion = function(bufnr)
       },
       t = {
         name = 'Typescript',
-        r = bmapnsilent('<cmd>TSLspRenameFile<CR>', 'Rename TS file'),
-        i = bmapnsilent('<cmd>TSLspImportAll<CR>', 'Import All'),
+        r = bmapnsilent('<cmd>TypescriptRenameFile<CR>', 'Rename TS file'),
+        i = bmapnsilent('<cmd>TypescriptAddMissingImports<CR><cmd>TypescriptOrganizeImports<CR>',
+                        'Import All & Organize Imports'),
         t = bmapnsilent('<cmd>edit %:r.spec.%:e<CR>', 'Create Test')
       }
     }
