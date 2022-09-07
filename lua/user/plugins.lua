@@ -6,9 +6,14 @@ return require'packer'.startup(function(use)
   use 'kyazdani42/nvim-web-devicons'
   use 'lambdalisue/nerdfont.vim'
   use 'lambdalisue/glyph-palette.vim'
+  use 'MunifTanjim/nui.nvim'
+
+  -- UI
+  use 'stevearc/dressing.nvim'
 
   -- Autocompletion & Diagnostics
   use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+  use 'nvim-treesitter/playground'
   use 'neovim/nvim-lspconfig'
   use 'NoahTheDuke/vim-just'
 
@@ -22,13 +27,19 @@ return require'packer'.startup(function(use)
   use 'simrat39/rust-tools.nvim'
   use 'mhinz/vim-crates'
   use 'saecki/crates.nvim'
-  use 'jose-elias-alvarez/nvim-lsp-ts-utils'
+  use 'jose-elias-alvarez/typescript.nvim'
   use 'ray-x/lsp_signature.nvim'
+  use 'lvimuser/lsp-inlayhints.nvim'
 
   use 'L3MON4D3/LuaSnip'
   use 'saadparwaiz1/cmp_luasnip'
 
   use 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
+
+  use 'folke/lua-dev.nvim'
+
+  -- Lsp Installation
+  use 'williamboman/mason.nvim'
 
   -- Help/Docs
   use 'folke/which-key.nvim'
@@ -52,7 +63,9 @@ return require'packer'.startup(function(use)
   use {'lambdalisue/fern.vim', branch = 'main'}
   use {'lambdalisue/fern-hijack.vim', branch = 'master'}
   use {'lambdalisue/fern-renderer-nerdfont.vim', branch = 'master'}
-  use {'lambdalisue/fern-git-status.vim', branch = 'master'}
+  -- use {'lambdalisue/fern-git-status.vim', branch = 'master'}
+
+  use {'nvim-neo-tree/neo-tree.nvim', branch = 'v2.x'}
 
   -- Clipboard
   use 'AckslD/nvim-neoclip.lua'
