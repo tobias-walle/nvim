@@ -15,7 +15,7 @@ require('mason').setup()
 local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
   bindings.attach_completion(bufnr)
-  lspInlayhints.on_attach(bufnr, client, false)
+  lspInlayhints.on_attach(client, bufnr, false)
 end
 
 lspInlayhints.setup {}
@@ -39,7 +39,11 @@ require'lspconfig'.omnisharp.setup {
 lspconfig.kotlin_language_server.setup {on_attach = on_attach}
 lspconfig.yamlls.setup {on_attach = on_attach}
 lspconfig.hls.setup {on_attach = on_attach_disable_formatting}
-lspconfig.tailwindcss.setup {on_attach = on_attach}
+--[[ lspconfig.tailwindcss.setup {on_attach = on_attach} ]]
+
+local cssls_capabilities = vim.lsp.protocol.make_client_capabilities()
+cssls_capabilities.textDocument.completion.completionItem.snippetSupport = true
+lspconfig.cssls.setup {on_attach = on_attach_disable_formatting, capabilities = cssls_capabilities}
 
 local luadev = require('lua-dev').setup {
   lspconfig = {
@@ -50,7 +54,7 @@ local luadev = require('lua-dev').setup {
 lspconfig.sumneko_lua.setup(luadev)
 
 lspconfig.jsonls.setup {
-  capabilities = capabilities,
+  capabilities = cssls_capabilities,
   settings = {json = {schemas = require('schemastore').json.schemas()}},
   on_attach = on_attach_disable_formatting
 }

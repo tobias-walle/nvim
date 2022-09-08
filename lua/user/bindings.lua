@@ -21,6 +21,9 @@ map('n', '<C-k>', '<C-W>k')
 map('n', '<C-h>', '<C-W>h')
 map('n', '<C-l>', '<C-W>l')
 
+-- Increment
+map('n', '<C-n>', '<C-a>')
+
 -- Files
 wk.register {
   ['<leader>f'] = {
