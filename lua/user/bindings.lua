@@ -123,7 +123,7 @@ map('o', 'S', '<cmd>HopWord<CR>')
 
 -- Other
 wk.register {['<leader>o'] = {'<cmd>silent exec "!open %:p:h"<CR>', 'Open folder of current file'}}
-wk.register {['<leader>R'] = {require'user.reload'.reload, 'Reload vim config'}}
+wk.register {['<leader><CR>'] = {require'user.reload'.reload, 'Reload vim config'}}
 wk.register {['<leader>q'] = {'<cmd>:close<CR>', 'Close Window'}}
 wk.register {
   ['<leader>w'] = {'<cmd>lua vim.lsp.buf.formatting_sync()<CR><cmd>:write<CR>', 'Write Window'}
