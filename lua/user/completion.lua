@@ -30,7 +30,7 @@ local on_attach_disable_formatting = function(client, bufnr)
 end
 
 local pid = vim.fn.getpid()
-local omnisharp_bin = '/usr/local/bin/omnisharp-run'
+local omnisharp_bin = '/usr/local/bin/omnisharp'
 require'lspconfig'.omnisharp.setup {
   cmd = {omnisharp_bin, '--languageserver', '--hostPID', tostring(pid)},
   on_attach = on_attach
@@ -168,5 +168,5 @@ require('typescript').setup({
 
 -- Better diagnostics
 require('lsp_lines').setup()
-require('lsp_lines').toggle()
+vim.diagnostic.config({virtual_lines = false})
 vim.diagnostic.config({virtual_text = false})

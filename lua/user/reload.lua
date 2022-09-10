@@ -1,11 +1,12 @@
 local M = {}
 
 function M.reload()
-  require'plenary.reload'.reload_module('user', true)
-  require'plenary.reload'.reload_module('replace', true)
-  local path = vim.env.MYVIMRC
-  print('Reload ' .. path)
-  vim.cmd('source ' .. path)
+  for name, _ in pairs(package.loaded) do
+    if name:match('^user') then package.loaded[name] = nil end
+  end
+
+  dofile(vim.env.MYVIMRC)
+  vim.notify('Nvim configuration reloaded!', vim.log.levels.INFO)
 end
 
 return M

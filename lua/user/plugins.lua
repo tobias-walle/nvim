@@ -41,6 +41,9 @@ return require'packer'.startup(function(use)
   -- Lsp Installation
   use 'williamboman/mason.nvim'
 
+  -- Focus Areas
+  use 'hoschi/yode-nvim'
+
   -- Help/Docs
   use 'folke/which-key.nvim'
 

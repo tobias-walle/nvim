@@ -81,3 +81,7 @@ require('Comment').setup {
     }
   end
 }
+
+-- Yode
+--[[ require('yode-nvim.helper').getIndentCount = function(text) return 0 end ]]
+--[[ require('yode-nvim').setup({}) ]]
