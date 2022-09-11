@@ -35,6 +35,22 @@ local function run_command_on_file(state)
   end)
 end
 
+local function clipboard(state)
+  local node = state.tree:get_node()
+  local file = vim.fn.fnamemodify(node:get_id(), ':.')
+  print('Copy "' .. file .. '" to clipboard')
+  vim.fn.setreg('*', file, 'c')
+  vim.fn.setreg('+', file, 'c')
+end
+
+local function clipboard_full(state)
+  local node = state.tree:get_node()
+  local file = node:get_id()
+  print('Copy "' .. file .. '" to clipboard')
+  vim.fn.setreg('*', file, 'c')
+  vim.fn.setreg('+', file, 'c')
+end
+
 local function rename_visual(state, selected_nodes)
   if selected_nodes == nil then return end
   local sources = U.map(selected_nodes, function(node)
@@ -90,14 +106,18 @@ require('neo-tree').setup({
         ['.'] = 'set_root',
         ['o'] = 'system_open',
         ['i'] = 'run_command_in_folder',
-        ['I'] = 'run_command_on_file'
+        ['I'] = 'run_command_on_file',
+        ['y'] = 'clipboard',
+        ['Y'] = 'clipboard_full'
       }
     },
     commands = {
       system_open = system_open,
       run_command_in_folder = run_command_in_folder,
       run_command_on_file = run_command_on_file,
-      rename_visual = rename_visual
+      rename_visual = rename_visual,
+      clipboard = clipboard,
+      clipboard_full = clipboard_full
     }
   },
   buffers = {
@@ -139,10 +159,9 @@ require('neo-tree').setup({
       ['A'] = 'add_directory', -- also accepts the optional config.show_path option like "add".
       ['d'] = 'delete',
       ['r'] = 'rename',
-      ['y'] = 'copy_to_clipboard',
+      ['c'] = 'copy_to_clipboard',
       ['x'] = 'cut_to_clipboard',
       ['p'] = 'paste_from_clipboard',
-      ['c'] = 'copy',
       ['m'] = 'move',
       ['q'] = 'close_window',
       ['R'] = 'refresh',
