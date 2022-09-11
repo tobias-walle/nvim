@@ -59,6 +59,10 @@ function M.file_move(source, destination)
   vim.api.nvim_command('silent !mv "' .. source .. '" "' .. destination .. '"')
 end
 
+--- @param content string
+--- @return string
+function M.quote(content) return '\'' .. content .. '\'' end
+
 --- @param title string
 --- @param content string[]
 --- @param callback fun (edited_content: string[]): nil
@@ -66,6 +70,7 @@ end
 function M.show_edit_popup(title, content, callback)
   local popup = Popup({
     enter = true,
+    relative = 'editor',
     border = {style = 'rounded', text = {top = ' ' .. title .. ' '}},
     position = '50%',
     size = {width = '90%', height = '60%'},
@@ -85,8 +90,77 @@ function M.show_edit_popup(title, content, callback)
   end)
 end
 
---[[ function M.smart_rename_file(source, destination) ]]
---[[   vim.api.nvim_create_buf ]]
---[[ end ]]
+--- @param title string
+--- @param command string
+--- @param callback nil | fun (): nil
+--- @return nil
+function M.show_terminal_popup(title, command, callback)
+  local popup = Popup({
+    enter = true,
+    relative = 'editor',
+    border = {style = 'rounded', text = {top = ' ' .. title .. ' '}},
+    position = '50%',
+    size = {width = '90%', height = '90%'},
+    buf_options = {modifiable = true, readonly = false},
+    win_options = {winhighlight = 'Normal:Normal,FloatBorder:SpecialChar'}
+  })
+  popup:mount()
+
+  local termclose_au = vim.api.nvim_create_autocmd('TermClose', {
+    pattern = '*',
+    once = true,
+    callback = function()
+      vim.schedule(function()
+        popup:unmount()
+        if (callback ~= nil) then callback() end
+      end)
+    end
+  })
+
+  popup:on({event.BufLeave}, function()
+    popup:unmount()
+    vim.api.nvim_del_autocmd(termclose_au)
+    if (callback ~= nil) then callback() end
+  end, {once = true})
+
+  vim.api.nvim_command('terminal ' .. command)
+  vim.api.nvim_input('a')
+end
+
+--- @param source string
+--- @param destination string
+--- @param callback nil | fun (): nil
+function M.refactor_file_usages_exact_filename(source, destination, callback)
+  local source_file_name = vim.fn.fnamemodify(source, ':t')
+  local destination_file_name = vim.fn.fnamemodify(destination, ':t')
+  local regex = string.gsub(source_file_name, '%.', '\\.') .. '(["\\\'])'
+  local replacement = destination_file_name .. '$1'
+  local command = 'fastmod ' .. M.quote(regex) .. ' ' .. M.quote(replacement)
+  print(command)
+  M.show_terminal_popup('Rename ' .. source_file_name .. ' (1)', command, callback)
+end
+
+--- @param source string
+--- @param destination string
+--- @param callback nil | fun (): nil
+function M.refactor_file_usages_without_ending(source, destination, callback)
+  local source_file_name = vim.fn.fnamemodify(source, ':t:r')
+  local destination_file_name = vim.fn.fnamemodify(destination, ':t:r')
+  if (source_file_name == destination_file_name) then return end
+
+  local regex = '/' .. string.gsub(source_file_name, '%.', '\\.') .. '(["\\\'])'
+  local replacement = '/' .. destination_file_name .. '$1'
+  local command = 'fastmod ' .. M.quote(regex) .. ' ' .. M.quote(replacement)
+  print(command)
+  M.show_terminal_popup('Rename ' .. source_file_name .. ' (2)', command, callback)
+end
+
+--- @param source string
+--- @param destination string
+function M.refactor_file_usages(source, destination)
+  M.refactor_file_usages_exact_filename(source, destination, function()
+    M.refactor_file_usages_without_ending(source, destination)
+  end)
+end
 
 return M

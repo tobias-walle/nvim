@@ -75,9 +75,19 @@ local function rename_visual(state, selected_nodes)
       end
     end
   end)
+end
 
-  --[[ local old_name = vim.fn.fnamemodify(old_path, ':t') ]]
-
+local function smart_rename(state)
+  local node = state.tree:get_node()
+  local source_file = node:get_id()
+  vim.ui.input({prompt = 'Smart Rename: ', default = vim.fn.fnamemodify(source_file, ':t')},
+               function(new_name)
+    if (new_name ~= '' and new_name ~= nil) then
+      local destination_file = U.join_path(vim.fn.fnamemodify(source_file, ':h'), new_name)
+      U.file_move(source_file, destination_file)
+      U.refactor_file_usages(source_file, destination_file)
+    end
+  end)
 end
 
 require('neo-tree').setup({
@@ -108,7 +118,8 @@ require('neo-tree').setup({
         ['i'] = 'run_command_in_folder',
         ['I'] = 'run_command_on_file',
         ['y'] = 'clipboard',
-        ['Y'] = 'clipboard_full'
+        ['Y'] = 'clipboard_full',
+        ['R'] = 'smart_rename'
       }
     },
     commands = {
@@ -116,6 +127,7 @@ require('neo-tree').setup({
       run_command_in_folder = run_command_in_folder,
       run_command_on_file = run_command_on_file,
       rename_visual = rename_visual,
+      smart_rename = smart_rename,
       clipboard = clipboard,
       clipboard_full = clipboard_full
     }
