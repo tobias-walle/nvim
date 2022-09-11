@@ -85,4 +85,8 @@ function M.show_edit_popup(title, content, callback)
   end)
 end
 
+--[[ function M.smart_rename_file(source, destination) ]]
+--[[   vim.api.nvim_create_buf ]]
+--[[ end ]]
+
 return M
