@@ -11,7 +11,7 @@ require'luatab'.setup {}
 
 -- Lualine
 require'lualine'.setup {
-  options = {theme = 'tokyonight'},
+  options = {theme = 'tokyonight', globalstatus = true},
   sections = {
     lualine_a = {{'filename', file_status = true, path = 1}},
     lualine_b = {},
