@@ -94,10 +94,10 @@ function M.show_edit_popup(title, content, callback)
 end
 
 --- @param title string
---- @param command string
+--- @param commands string[]
 --- @param callback nil | fun (): nil
 --- @return nil
-function M.show_terminal_popup(title, command, callback)
+function M.show_terminal_popup(title, commands, callback)
   local popup = Popup({
     enter = true,
     relative = 'editor',
@@ -109,61 +109,71 @@ function M.show_terminal_popup(title, command, callback)
   })
   popup:mount()
 
-  local termclose_au = vim.api.nvim_create_autocmd('TermClose', {
-    pattern = '*',
-    once = true,
-    callback = function()
-      vim.schedule(function()
-        popup:unmount()
-        if (callback ~= nil) then callback() end
-      end)
-    end
-  })
+  local termclose_au = nil
 
   popup:on({event.BufLeave}, function()
     popup:unmount()
-    vim.api.nvim_del_autocmd(termclose_au)
+    if (termclose_au ~= nil) then vim.api.nvim_del_autocmd(termclose_au) end
     if (callback ~= nil) then callback() end
   end, {once = true})
 
-  vim.api.nvim_command('terminal ' .. command)
-  vim.api.nvim_input('a')
+  local function next_command(i)
+    print(i)
+    local command = commands[i]
+
+    termclose_au = vim.api.nvim_create_autocmd('TermClose', {
+      pattern = '*',
+      once = true,
+      callback = function()
+        vim.schedule(function()
+          if (i == M.size(commands)) then
+            popup:unmount()
+            if (callback ~= nil) then callback() end
+          else
+            next_command(i + 1)
+          end
+        end)
+      end
+    })
+
+    vim.api.nvim_command('terminal ' .. command)
+    if (i == 1) then vim.api.nvim_input('a') end
+  end
+
+  next_command(1)
 end
 
 --- @param source string
 --- @param destination string
 --- @param callback nil | fun (): nil
-function M.refactor_file_usages_exact_filename(source, destination, callback)
+local function refactor_file_usages_exact_filename_command(source, destination, callback)
   local source_file_name = vim.fn.fnamemodify(source, ':t')
   local destination_file_name = vim.fn.fnamemodify(destination, ':t')
   local regex = string.gsub(source_file_name, '%.', '\\.') .. '(["\\\'])'
   local replacement = destination_file_name .. '$1'
-  local command = 'fastmod ' .. M.quote(regex) .. ' ' .. M.quote(replacement)
-  print(command)
-  M.show_terminal_popup('Rename ' .. source_file_name .. ' (1)', command, callback)
+  return 'fastmod ' .. M.quote(regex) .. ' ' .. M.quote(replacement)
 end
 
 --- @param source string
 --- @param destination string
 --- @param callback nil | fun (): nil
-function M.refactor_file_usages_without_ending(source, destination, callback)
+local function refactor_file_usages_without_ending_command(source, destination, callback)
   local source_file_name = vim.fn.fnamemodify(source, ':t:r')
   local destination_file_name = vim.fn.fnamemodify(destination, ':t:r')
   if (source_file_name == destination_file_name) then return end
 
   local regex = '/' .. string.gsub(source_file_name, '%.', '\\.') .. '(["\\\'])'
   local replacement = '/' .. destination_file_name .. '$1'
-  local command = 'fastmod ' .. M.quote(regex) .. ' ' .. M.quote(replacement)
-  print(command)
-  M.show_terminal_popup('Rename ' .. source_file_name .. ' (2)', command, callback)
+  return 'fastmod ' .. M.quote(regex) .. ' ' .. M.quote(replacement)
 end
 
 --- @param source string
 --- @param destination string
 function M.refactor_file_usages(source, destination)
-  M.refactor_file_usages_exact_filename(source, destination, function()
-    M.refactor_file_usages_without_ending(source, destination)
-  end)
+  M.show_terminal_popup('Rename', {
+    refactor_file_usages_exact_filename_command(source, destination),
+    refactor_file_usages_without_ending_command(source, destination)
+  })
 end
 
 --- @param old_name string
