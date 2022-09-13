@@ -56,7 +56,10 @@ function M.join_path(...) return M.join({...}, '/') end
 --- @param destination string
 --- @return nil
 function M.file_move(source, destination)
-  vim.api.nvim_command('silent !mv "' .. source .. '" "' .. destination .. '"')
+  local parent_folder = vim.fn.fnamemodify(destination, ':h')
+  vim.api.nvim_command('silent !mkdir -p ' .. M.quote(parent_folder))
+  vim.api.nvim_command('silent !mv -T ' .. M.quote(source) .. ' ' .. M.quote(destination))
+  vim.api.nvim_command('silent !rm -d ' .. M.quote(source))
 end
 
 --- @param content string
@@ -162,5 +165,58 @@ function M.refactor_file_usages(source, destination)
     M.refactor_file_usages_without_ending(source, destination)
   end)
 end
+
+--- @param old_name string
+--- @param new_name string
+function M.rename_top_level_declarations(old_name, new_name) end
+
+--- @param name string
+--- @return { start_pos: [integer, integer], end_pos: [integer, integer] }[]
+function M.find_top_level_declarations(name)
+  local tokens = {
+    'export_statement declaration: (_ name: (_) @name (#offset! @name))',
+    'export_statement declaration: (_ (variable_declarator name: (_) @name (#offset! @name)))'
+  }
+  local predicate = '(#eq? @name "' .. name .. '")'
+
+  local filetype = vim.bo.filetype
+  local parser = vim.treesitter.get_parser(0, filetype)
+  local test = parser:parse()
+  local root = test[1]:root()
+  local results = {}
+  for _, token_query in ipairs(tokens) do
+    local query_str = '(\n' .. token_query .. '\n' .. predicate .. '\n)'
+    local query = vim.treesitter.parse_query(filetype, query_str)
+    for _, match, metadata in query:iter_matches(root, 0) do
+      local name = vim.treesitter.get_node_text(match[1], 0)
+      local pos = metadata.content[1]
+      local start_pos = {pos[1] + 1, pos[2] + 1}
+      local end_pos = {pos[3] + 1, pos[4] + 1}
+      table.insert(results, {name, start_pos = start_pos, end_pos = end_pos})
+      break
+    end
+  end
+  return results
+end
+
+--- @param new_name string
+function M.lsp_rename_sync(new_name)
+  local params = vim.lsp.util.make_position_params()
+  params.newName = new_name
+  local responses = vim.lsp.buf_request_sync(0, 'textDocument/rename', params)
+  if (responses == nil) then
+    print('Nothing to rename')
+    return
+  end
+  for _, response in pairs(responses) do
+    vim.lsp.util.apply_workspace_edit(response.result, 'utf-8')
+  end
+  vim.api.nvim_command('wa')
+end
+
+vim.api.nvim_set_keymap('n', '<leader>.', '', {
+  noremap = true,
+  callback = function() M.find_top_level_declarations('api') end
+})
 
 return M
