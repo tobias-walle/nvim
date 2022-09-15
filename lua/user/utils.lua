@@ -58,7 +58,7 @@ function M.join_path(...) return M.join({...}, '/') end
 function M.file_move(source, destination)
   local parent_folder = vim.fn.fnamemodify(destination, ':h')
   vim.api.nvim_command('silent !mkdir -p ' .. M.quote(parent_folder))
-  vim.api.nvim_command('silent !mv -T ' .. M.quote(source) .. ' ' .. M.quote(destination))
+  vim.api.nvim_command('silent !gmv -T ' .. M.quote(source) .. ' ' .. M.quote(destination))
   vim.api.nvim_command('silent !rm -d ' .. M.quote(source))
 end
 
