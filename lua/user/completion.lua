@@ -169,4 +169,4 @@ require('typescript').setup({
 -- Better diagnostics
 require('lsp_lines').setup()
 vim.diagnostic.config({virtual_lines = false})
-vim.diagnostic.config({virtual_text = false})
+vim.diagnostic.config({virtual_text = true})

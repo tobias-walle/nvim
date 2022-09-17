@@ -1,4 +1,5 @@
 local U = require('user.utils')
+local async = require('plenary.async')
 
 vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 
@@ -52,39 +53,31 @@ local function clipboard_full(state)
 end
 
 local function rename_visual(state, selected_nodes)
-  if selected_nodes == nil then return end
-  local sources = U.map(selected_nodes, function(node)
-    local path = node:get_id()
-    return {relative = vim.fn.fnamemodify(path, ':.'), root = vim.fn.fnamemodify(path, ':h')}
-  end)
-
-  local source_paths = U.map(sources, function(f) return f.relative end)
-  U.show_edit_popup('Rename', source_paths, function(destination_paths)
-    local results = U.map(sources, function(source, i)
-      return {source = source, destination = destination_paths[i]}
+  async.run(function()
+    if selected_nodes == nil then return end
+    local sources = U.map(selected_nodes, function(node)
+      local path = node:get_id()
+      return vim.fn.fnamemodify(path, ':.')
     end)
-    table.sort(results,
-               function(a, b) return string.len(a.source.root) > string.len(b.source.root) end)
 
-    for _, result in ipairs(results) do
-      local source = result.source.relative;
-      local destination = result.destination;
-      if (destination ~= '' and source ~= destination) then
-        print('Move ' .. source .. ' to ' .. destination)
-        U.file_move(source, destination)
-      end
-    end
+    local destinations = U.show_edit_popup_async('Rename', sources)
+
+    local moves = U.map(sources, function(source, i) return source .. '::' .. destinations[i] end)
+    U.run_cmd_async({'refactor', 'move', table.unpack(moves)})
   end)
 end
 
 local function smart_rename(state)
-  local node = state.tree:get_node()
-  local source_file = node:get_id()
-  vim.ui.input({prompt = 'Smart Rename: ', default = vim.fn.fnamemodify(source_file, ':t')},
-               function(new_name)
+  async.run(function()
+    local node = state.tree:get_node()
+    local source_file = node:get_id()
+    local new_name = U.input_async({
+      prompt = 'Smart Rename: ',
+      default = vim.fn.fnamemodify(source_file, ':t')
+    });
     if (new_name ~= '' and new_name ~= nil) then
       local destination_file = U.join_path(vim.fn.fnamemodify(source_file, ':h'), new_name)
-      U.file_move(source_file, destination_file)
+      U.run_cmd_async({'refactor', 'move', source_file .. '::' .. destination_file})
       U.refactor_file_usages(source_file, destination_file)
     end
   end)

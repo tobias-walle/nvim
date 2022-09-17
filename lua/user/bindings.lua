@@ -304,6 +304,13 @@ wk.register {
   ['?'] = {':nohl<CR>', 'Hide search highlight'}
 }
 
+local function toggle_virtual_lines()
+  local config = vim.diagnostic.config()
+  if (config == nil) then return end
+  vim.diagnostic.config({virtual_lines = not config.virtual_lines})
+  vim.diagnostic.config({virtual_text = not config.virtual_text})
+end
+
 -- Completion
 M.attach_completion = function(bufnr)
   local bmap = function(action, name) return {action, name, buffer = bufnr} end
@@ -328,7 +335,7 @@ M.attach_completion = function(bufnr)
       q = bmap(function() vim.diagnostic.setloclist() end, 'Save Errors to Loclist'),
       f = bmap(function() vim.lsp.buf.formatting() end, 'Format Buffer'),
       d = bmap(function() vim.lsp.buf.type_definition() end, 'Type Definition'),
-      l = bmap(function() require('lsp_lines').toggle() end, 'Toggle diagnostic lines'),
+      l = bmap(function() toggle_virtual_lines() end, 'Toggle diagnostic lines'),
       w = {
         name = 'Workspaces',
         a = bmapnsilent(function() vim.lsp.buf.add_workspace_folder() end, 'Add Workspace'),
