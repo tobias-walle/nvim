@@ -1,5 +1,6 @@
 local M = {}
 
+local async = require 'plenary.async'
 local Popup = require('nui.popup')
 local event = require('nui.utils.autocmd').event
 
@@ -52,15 +53,27 @@ end
 --- @return string
 function M.join_path(...) return M.join({...}, '/') end
 
---- @param source string
---- @param destination string
---- @return nil
-function M.file_move(source, destination)
-  local parent_folder = vim.fn.fnamemodify(destination, ':h')
-  vim.api.nvim_command('silent !mkdir -p ' .. M.quote(parent_folder))
-  vim.api.nvim_command('silent !gmv -T ' .. M.quote(source) .. ' ' .. M.quote(destination))
-  vim.api.nvim_command('silent !rm -d ' .. M.quote(source))
+--- @param command string[]
+--- @param callback fun (): nil
+function M.run_cmd(command, callback)
+  print('> ' .. M.join(command, ' '))
+  vim.fn.jobstart(command, {
+    stdout_buffered = true,
+    stderr_buffered = true,
+    on_stdout = function(_, data) if data then print(M.join(data, '\n')) end end,
+    on_stderr = function(_, data)
+      local message = M.join(data, '\n')
+      if data ~= '' then vim.notify(message, vim.log.levels.ERROR) end
+    end,
+    on_exit = function(_) if (callback) then callback() end end
+  })
 end
+
+--- @type fun (command: string[]): nil
+M.run_cmd_async = async.wrap(M.run_cmd, 2);
+
+--- @type fun (opts: table): string
+M.input_async = async.wrap(function(opts, on_confirm) vim.ui.input(opts, on_confirm) end, 2)
 
 --- @param content string
 --- @return string
@@ -92,6 +105,9 @@ function M.show_edit_popup(title, content, callback)
     callback(edited_content)
   end)
 end
+
+--- @type fun (title: string, content: string[]): string[]
+M.show_edit_popup_async = async.wrap(M.show_edit_popup, 3);
 
 --- @param title string
 --- @param commands string[]
@@ -142,6 +158,9 @@ function M.show_terminal_popup(title, commands, callback)
 
   next_command(1)
 end
+
+--- @type fun (title: string, commands: string[]): nil
+M.show_terminal_popup_async = async.wrap(M.show_terminal_popup, 3);
 
 --- @param source string
 --- @param destination string
