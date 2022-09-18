@@ -68,16 +68,26 @@ lspconfig.angularls.setup {
 }
 
 local cmp = require 'cmp'
+local compare = cmp.config.compare;
 cmp.register_source('filename', require('user.cmp-sources.filename').new())
 cmp.setup({
   snippet = {expand = function(args) require('luasnip').lsp_expand(args.body) end},
   on_attach = on_attach,
   mapping = bindings.cmp_mapping(cmp),
 
-  sources = {
-    {name = 'nvim_lsp'}, {name = 'path'}, {name = 'luasnip'}, {name = 'buffer'}, {name = 'crates'},
-    {name = 'filename'}
-  }
+  sorting = {
+    comparators = {
+      compare.score, compare.offset, compare.exact, compare.scopes, compare.recently_used,
+      compare.locality, compare.kind, compare.sort_text, compare.length, compare.order
+    }
+  },
+
+  sources = cmp.config.sources({
+    {name = 'nvim_lsp', max_item_count = 10}, {name = 'path'}, {name = 'crates'},
+    {name = 'buffer', keyword_length = 3, max_item_count = 5}, {name = 'filename'},
+    {name = 'luasnip', max_item_count = 5}
+  }),
+  experimental = {ghost_text = true}
 })
 
 -- Signature Help

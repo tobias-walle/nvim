@@ -8,12 +8,21 @@ function S:get_keyword_pattern() return [[\k\+]] end
 
 function S:complete(params, callback)
   local name = vim.fn.expand('%:t:r')
-  if (name == nil) then return end
+  if (name == nil) then
+    callback({})
+    return
+  end
   local split = casing.splitLowerCase(name)
-  callback({
-    {kind = cmp.lsp.CompletionItemKind.File, label = casing.camelCase(split)},
-    {kind = cmp.lsp.CompletionItemKind.File, label = casing.pascalCase(split)}
-  })
+  local pc = {label = casing.pascalCase(split)};
+  local cc = {label = casing.camelCase(split)};
+  local sc = {label = casing.snakeCase(split)};
+  if (params.context.filetype == 'rust') then
+    callback({pc, sc})
+  elseif (params.context.filetype == 'python') then
+    callback({pc, sc})
+  else
+    callback({pc, cc})
+  end
 end
 
 return S

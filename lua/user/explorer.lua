@@ -1,8 +1,6 @@
 local U = require('user.utils')
 local async = require('plenary.async')
 
-vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
-
 local function system_open(state)
   local node = state.tree:get_node()
   local path = node:get_id()
@@ -67,28 +65,41 @@ local function rename_visual(state, selected_nodes)
   end)
 end
 
-local function smart_rename(state)
+local function smart_rename_visual(state, selected_nodes)
   async.run(function()
-    local node = state.tree:get_node()
-    local source_file = node:get_id()
-    local new_name = U.input_async({
-      prompt = 'Smart Rename: ',
-      default = vim.fn.fnamemodify(source_file, ':t')
-    });
-    if (new_name ~= '' and new_name ~= nil) then
-      local destination_file = U.join_path(vim.fn.fnamemodify(source_file, ':h'), new_name)
-      U.run_cmd_async({'refactor', 'move', source_file .. '::' .. destination_file})
-      U.refactor_file_usages(source_file, destination_file)
-    end
+    if selected_nodes == nil then return end
+    local sources = U.map(selected_nodes, function(node)
+      local path = node:get_id()
+      return vim.fn.fnamemodify(path, ':.')
+    end)
+
+    local destinations = U.show_edit_popup_async('Rename', sources)
+
+    local moves = U.map(sources,
+                        function(source, i) return U.quote(source .. '::' .. destinations[i]) end)
+    U.show_terminal_popup('Rename', {'refactor move --replace-usages ' .. U.join(moves, ' ')})
   end)
 end
+
+local function smart_rename(state)
+  async.run(function()
+    local path = state.tree:get_node():get_id();
+    local source = vim.fn.fnamemodify(path, ':.')
+    local destination = U.input_async({prompt = 'Smart Rename: ', default = source});
+
+    local move = U.quote(source .. '::' .. destination)
+    U.show_terminal_popup('Rename', {'refactor move --replace-usages ' .. move})
+  end)
+end
+
+vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 
 require('neo-tree').setup({
   close_if_last_window = false,
   popup_border_style = 'rounded',
   enable_git_status = true,
   enable_diagnostics = false,
-  sort_case_insensitive = false,
+  sort_case_insensitive = true,
   nesting_rules = {},
   filesystem = {
     filtered_items = {
@@ -121,6 +132,7 @@ require('neo-tree').setup({
       run_command_on_file = run_command_on_file,
       rename_visual = rename_visual,
       smart_rename = smart_rename,
+      smart_rename_visual = smart_rename_visual,
       clipboard = clipboard,
       clipboard_full = clipboard_full
     }
