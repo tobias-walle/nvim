@@ -3,6 +3,8 @@ function dbg(arg)
   return arg
 end
 
+require 'user.utils.refactor'
+
 require 'user.plugins'
 
 require 'user.bindings'
