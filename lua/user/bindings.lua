@@ -363,6 +363,7 @@ local luasnip = require('luasnip')
 
 M.cmp_mapping = function(cmp)
   return {
+    ['<C-Space>'] = cmp.mapping.complete(),
     ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()

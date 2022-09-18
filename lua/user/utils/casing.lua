@@ -1,5 +1,7 @@
 local M = {}
 
+local U = require('user.utils')
+
 --- @param names string | string[]
 --- @return string[]
 function M.splitLowerCase(names)
@@ -34,5 +36,9 @@ function M.camelCase(names)
   end
   return result
 end
+
+--- @param names string[]
+--- @return string
+function M.snakeCase(names) return U.join(names, '_') end
 
 return M

@@ -162,39 +162,6 @@ end
 --- @type fun (title: string, commands: string[]): nil
 M.show_terminal_popup_async = async.wrap(M.show_terminal_popup, 3);
 
---- @param source string
---- @param destination string
---- @param callback nil | fun (): nil
-local function refactor_file_usages_exact_filename_command(source, destination, callback)
-  local source_file_name = vim.fn.fnamemodify(source, ':t')
-  local destination_file_name = vim.fn.fnamemodify(destination, ':t')
-  local regex = string.gsub(source_file_name, '%.', '\\.') .. '(["\\\'])'
-  local replacement = destination_file_name .. '$1'
-  return 'fastmod ' .. M.quote(regex) .. ' ' .. M.quote(replacement)
-end
-
---- @param source string
---- @param destination string
---- @param callback nil | fun (): nil
-local function refactor_file_usages_without_ending_command(source, destination, callback)
-  local source_file_name = vim.fn.fnamemodify(source, ':t:r')
-  local destination_file_name = vim.fn.fnamemodify(destination, ':t:r')
-  if (source_file_name == destination_file_name) then return end
-
-  local regex = '/' .. string.gsub(source_file_name, '%.', '\\.') .. '(["\\\'])'
-  local replacement = '/' .. destination_file_name .. '$1'
-  return 'fastmod ' .. M.quote(regex) .. ' ' .. M.quote(replacement)
-end
-
---- @param source string
---- @param destination string
-function M.refactor_file_usages(source, destination)
-  M.show_terminal_popup('Rename', {
-    refactor_file_usages_exact_filename_command(source, destination),
-    refactor_file_usages_without_ending_command(source, destination)
-  })
-end
-
 --- @param old_name string
 --- @param new_name string
 function M.rename_top_level_declarations(old_name, new_name) end
