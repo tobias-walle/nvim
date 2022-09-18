@@ -312,6 +312,7 @@ local function toggle_virtual_lines()
 end
 
 -- Completion
+local refactor = require('user.utils.refactor')
 M.attach_completion = function(bufnr)
   local bmap = function(action, name) return {action, name, buffer = bufnr} end
   local bmapnsilent =
@@ -330,6 +331,7 @@ M.attach_completion = function(bufnr)
       h = bmap(function() vim.lsp.buf.hover() end, 'Hover'),
       s = bmap(function() vim.lsp.buf.signature_help() end, 'Signature Help'),
       r = bmap(function() vim.lsp.buf.rename() end, 'Rename'),
+      R = bmap(refactor.rename_prefix, 'Rename Prefix'),
       a = bmap(function() vim.lsp.buf.code_action() end, 'Code Actions'),
       e = bmap(function() vim.diagnostic.open_float() end, 'Show Errors'),
       q = bmap(function() vim.diagnostic.setloclist() end, 'Save Errors to Loclist'),
