@@ -35,7 +35,8 @@ wk.register {
 -- Line Numbers
 local function toggle_line_numbers() vim.opt.relativenumber = not vim.opt.relativenumber._value end
 
-wk.register {['<leader>n'] = {name = 'Linenumbers', t = {toggle_line_numbers, 'Toggle'}}}
+vim.api.nvim_create_user_command('ToggleLine', toggle_line_numbers, {desc = 'Toggle line numbers'})
+vim.api.nvim_create_user_command('TL', toggle_line_numbers, {desc = 'Toggle line numbers'})
 
 -- Terminal
 wk.register {

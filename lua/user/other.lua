@@ -57,6 +57,43 @@ require'nvim-treesitter.configs'.setup {
       goto_node = '<cr>',
       show_help = '?'
     }
+  },
+  textobjects = {
+    select = {
+      enable = true,
+      lookahead = true,
+
+      keymaps = {
+        ['af'] = '@function.outer',
+        ['if'] = '@function.inner',
+        ['ac'] = '@class.outer',
+        ['ic'] = '@class.inner',
+        ['ao'] = '@block.outer',
+        ['io'] = '@block.inner'
+      },
+      selection_modes = {
+        ['@parameter.outer'] = 'v',
+        ['@function.inner'] = 'V',
+        ['@function.outer'] = 'V',
+        ['@class.outer'] = 'V',
+        ['@class.inner'] = 'V'
+      },
+      include_surrounding_whitespace = true
+    },
+    swap = {
+      enable = true,
+      swap_next = {
+        ['<leader>np'] = '@parameter.inner',
+        ['<leader>nb'] = '@block.outer',
+        ['<leader>nf'] = '@function.outer'
+      },
+      swap_previous = {
+        ['<leader>Np'] = '@parameter.inner',
+        ['<leader>Nb'] = '@block.outer',
+        ['<leader>Nf'] = '@function.outer'
+      }
+
+    }
   }
 }
 

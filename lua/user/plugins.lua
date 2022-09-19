@@ -11,9 +11,12 @@ return require'packer'.startup(function(use)
   -- UI
   use 'stevearc/dressing.nvim'
 
-  -- Autocompletion & Diagnostics
+  -- treesitter
   use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
   use 'nvim-treesitter/playground'
+  use 'nvim-treesitter/nvim-treesitter-textobjects'
+
+  -- Autocompletion & Diagnostics
   use 'neovim/nvim-lspconfig'
   use 'NoahTheDuke/vim-just'
 

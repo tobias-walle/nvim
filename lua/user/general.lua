@@ -30,12 +30,16 @@ vim.opt.guifont = 'JetBrainsMono Nerd Font'
 vim.opt.fillchars = vim.opt.fillchars + 'diff:╱'
 
 -- Folding
-vim.cmd [[
-autocmd BufNewFile,BufWinEnter * 
-  \ setlocal foldlevelstart=99 |
-  \ setlocal foldmethod=indent |
-  \ setlocal nofoldenable
-]]
+local folding_au_group = vim.api.nvim_create_augroup('folding', {clear = true})
+vim.api.nvim_create_autocmd({'BufNewFile', 'BufWinEnter'}, {
+  pattern = '*',
+  group = folding_au_group,
+  callback = function()
+    vim.opt_local.foldlevelstart = 99
+    vim.opt_local.foldmethod = 'indent'
+    vim.opt_local.foldenable = false
+  end
+})
 
 -- Disable autocomments
 vim.cmd 'autocmd BufNewFile,BufWinEnter * setlocal formatoptions-=o'
