@@ -57,7 +57,7 @@ return require'packer'.startup(function(use)
   use 'ahmedkhalf/project.nvim'
 
   -- Undo
-  use 'mbbill/undotree'
+  use 'simnalamburt/vim-mundo'
 
   -- Git
   use 'lewis6991/gitsigns.nvim'
