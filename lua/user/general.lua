@@ -18,31 +18,35 @@ vim.opt.pastetoggle = '<F2>'
 vim.opt.cursorline = true
 vim.opt.autoread = true
 
--- vim.opt.cursorcolumn = true
 vim.opt.backup = false
 vim.opt.writebackup = false
 vim.opt.updatetime = 300
 vim.opt.timeoutlen = 500
 vim.opt.scrolloff = 15
 vim.opt.showtabline = 1
+vim.opt.undofile = true
 vim.opt.guifont = 'JetBrainsMono Nerd Font'
 -- see https://github.com/sindrets/diffview.nvim/issues/35
 vim.opt.fillchars = vim.opt.fillchars + 'diff:╱'
 
--- Folding
-local folding_au_group = vim.api.nvim_create_augroup('folding', {clear = true})
+local general_options_au_group = vim.api.nvim_create_augroup('general_options', {clear = true})
 vim.api.nvim_create_autocmd({'BufNewFile', 'BufWinEnter'}, {
   pattern = '*',
-  group = folding_au_group,
+  group = general_options_au_group,
   callback = function()
+    -- Folding
     vim.opt_local.foldlevelstart = 99
     vim.opt_local.foldmethod = 'indent'
     vim.opt_local.foldenable = false
+    -- Disable autocomments
+    vim.cmd [[setlocal formatoptions-=o]]
   end
 })
 
--- Disable autocomments
-vim.cmd 'autocmd BufNewFile,BufWinEnter * setlocal formatoptions-=o'
-
 -- Check for changes on focus/buffer enter
-vim.cmd 'autocmd FocusGained,BufEnter * :checktime'
+local checktime_au_group = vim.api.nvim_create_augroup('checktime', {clear = true})
+vim.api.nvim_create_autocmd({'FocusGained', 'BufEnter'}, {
+  pattern = '*',
+  group = checktime_au_group,
+  callback = function() vim.api.nvim_command('checktime') end
+})

@@ -33,6 +33,12 @@ vim.cmd [[ autocmd BufRead Cargo.toml call crates#toggle() ]]
 -- Neoterm
 vim.g.neoterm_default_mod = 'belowright'
 
+-- Undotree
+vim.g.mundo_width = 45
+vim.g.mundo_preview_height = 30
+vim.g.mundo_preview_height = 30
+vim.g.mundo_preview_bottom = true
+
 -- Treesitter
 require'nvim-treesitter.configs'.setup {
   ensure_installed = 'all',

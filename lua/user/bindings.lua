@@ -148,7 +148,7 @@ wk.register {
 }
 
 -- Undo Tree
-map('n', '<F1>', ':UndotreeToggle<CR>')
+map('n', '<leader>u', ':MundoToggle<CR>')
 
 -- Tabs
 wk.register {
