@@ -3,8 +3,6 @@ function dbg(arg)
   return arg
 end
 
-require 'user.utils.refactor'
-
 require 'user.plugins'
 
 require 'user.bindings'
@@ -18,3 +16,4 @@ require 'user.other'
 require 'user.style'
 require 'user.vim-test'
 require 'user.projects'
+require 'user.luasnip'

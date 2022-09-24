@@ -77,13 +77,6 @@ require'nvim-treesitter.configs'.setup {
         ['ao'] = '@block.outer',
         ['io'] = '@block.inner'
       },
-      selection_modes = {
-        ['@parameter.outer'] = 'v',
-        ['@function.inner'] = 'V',
-        ['@function.outer'] = 'V',
-        ['@class.outer'] = 'V',
-        ['@class.inner'] = 'V'
-      },
       include_surrounding_whitespace = true
     },
     swap = {
@@ -102,9 +95,6 @@ require'nvim-treesitter.configs'.setup {
     }
   }
 }
-
--- Luasnip
-require('luasnip.loaders.from_snipmate').load()
 
 -- Comments
 require('Comment').setup {

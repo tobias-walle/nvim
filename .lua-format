@@ -5,3 +5,7 @@ continuation_indent_width: 2
 keep_simple_control_block_one_line: true
 keep_simple_function_one_line: true
 double_quote_to_single_quote: true
+chop-down-table: true
+chop-down-kv-table: true
+extra-sep-at-table-end: true
+chop-down-parameter: true
