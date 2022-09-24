@@ -77,7 +77,7 @@ cmp.setup({
 
   sorting = {
     comparators = {
-      compare.score, compare.offset, compare.exact, compare.scopes, compare.recently_used,
+      compare.exact, compare.score, compare.offset, compare.scopes, compare.recently_used,
       compare.locality, compare.kind, compare.sort_text, compare.length, compare.order
     }
   },

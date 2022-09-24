@@ -52,6 +52,7 @@ return require'packer'.startup(function(use)
 
   -- Navigation
   use 'nvim-telescope/telescope.nvim'
+  use 'nvim-telescope/telescope-live-grep-args.nvim'
   use 'ThePrimeagen/harpoon'
   use 'windwp/nvim-spectre'
   use 'ahmedkhalf/project.nvim'
@@ -111,4 +112,7 @@ return require'packer'.startup(function(use)
 
   -- Color Codes
   use {'RRethy/vim-hexokinase', run = 'make hexokinase'}
+
+  -- Replace
+  use 'tpope/vim-abolish'
 end)
