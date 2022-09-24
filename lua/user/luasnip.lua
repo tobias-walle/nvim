@@ -12,40 +12,60 @@ local fmt = require('luasnip.extras.fmt').fmt
 local casing = require('user.utils.casing')
 
 local function get_cased_file_name(case)
-  local name = vim.fn.expand('%:t:r');
-  if (name == nil) then return 'ComponentName' end
+  local name = vim.fn.expand('%:t:r')
+  if name == nil then
+    return 'ComponentName'
+  end
   return case(casing.splitLowerCase(name))
 end
 
 local function get_cased_file_name_node(case)
-  return function() return sn(nil, i(1, get_cased_file_name(case))) end
+  return function()
+    return sn(nil, i(1, get_cased_file_name(case)))
+  end
 end
 
 ls.add_snippets('typescript', {
-  s('fun', fmt([[
+  s(
+    'fun',
+    fmt(
+      [[
     function {name}({arguments}): {return_type} {{
       {end_pos}
     }}
-  ]], {
-    name = d(1, get_cased_file_name_node(casing.camelCase)),
-    arguments = i(2),
-    return_type = i(3, 'void'),
-    end_pos = i(0)
-  })), s('efun', fmt([[
+  ]],
+      {
+        name = d(1, get_cased_file_name_node(casing.camelCase)),
+        arguments = i(2),
+        return_type = i(3, 'void'),
+        end_pos = i(0),
+      }
+    )
+  ),
+  s(
+    'efun',
+    fmt(
+      [[
     export function {name}({arguments}): {return_type} {{
       {end_pos}
     }}
-  ]], {
-    name = d(1, get_cased_file_name_node(casing.camelCase)),
-    arguments = i(2),
-    return_type = i(3, 'void'),
-    end_pos = i(0)
-  }))
+  ]],
+      {
+        name = d(1, get_cased_file_name_node(casing.camelCase)),
+        arguments = i(2),
+        return_type = i(3, 'void'),
+        end_pos = i(0),
+      }
+    )
+  ),
 })
 
-ls.filetype_extend('typescriptreact', {'typescript'})
+ls.filetype_extend('typescriptreact', { 'typescript' })
 ls.add_snippets('typescriptreact', {
-  s('comp', fmt([[
+  s(
+    'comp',
+    fmt(
+      [[
     import React from "react";
 
     export const {name}: React.FC = () => {{
@@ -53,9 +73,15 @@ ls.add_snippets('typescriptreact', {
         <div>{content}</div>
       );
     }}
-  ]], {name = d(1, get_cased_file_name_node(casing.pascalCase)), content = i(0, 'Hello World')})),
+  ]],
+      { name = d(1, get_cased_file_name_node(casing.pascalCase)), content = i(0, 'Hello World') }
+    )
+  ),
 
-  s('compp', fmt([[
+  s(
+    'compp',
+    fmt(
+      [[
     import React from "react";
 
     export interface {props} {{
@@ -66,9 +92,14 @@ ls.add_snippets('typescriptreact', {
         <div>{content}</div>
       );
     }}
-  ]], {
-    name = d(1, get_cased_file_name_node(casing.pascalCase)),
-    content = i(0, 'Hello World'),
-    props = f(function(args) return args[1][1] .. 'Props' end, {1})
-  }))
+  ]],
+      {
+        name = d(1, get_cased_file_name_node(casing.pascalCase)),
+        content = i(0, 'Hello World'),
+        props = f(function(args)
+          return args[1][1] .. 'Props'
+        end, { 1 }),
+      }
+    )
+  ),
 })

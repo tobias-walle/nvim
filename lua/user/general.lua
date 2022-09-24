@@ -29,8 +29,8 @@ vim.opt.guifont = 'JetBrainsMono Nerd Font'
 -- see https://github.com/sindrets/diffview.nvim/issues/35
 vim.opt.fillchars = vim.opt.fillchars + 'diff:╱'
 
-local general_options_au_group = vim.api.nvim_create_augroup('general_options', {clear = true})
-vim.api.nvim_create_autocmd({'BufNewFile', 'BufWinEnter'}, {
+local general_options_au_group = vim.api.nvim_create_augroup('general_options', { clear = true })
+vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufWinEnter' }, {
   pattern = '*',
   group = general_options_au_group,
   callback = function()
@@ -39,14 +39,16 @@ vim.api.nvim_create_autocmd({'BufNewFile', 'BufWinEnter'}, {
     vim.opt_local.foldmethod = 'indent'
     vim.opt_local.foldenable = false
     -- Disable autocomments
-    vim.cmd [[setlocal formatoptions-=o]]
-  end
+    vim.cmd([[setlocal formatoptions-=o]])
+  end,
 })
 
 -- Check for changes on focus/buffer enter
-local checktime_au_group = vim.api.nvim_create_augroup('checktime', {clear = true})
-vim.api.nvim_create_autocmd({'FocusGained', 'BufEnter'}, {
+local checktime_au_group = vim.api.nvim_create_augroup('checktime', { clear = true })
+vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter' }, {
   pattern = '*',
   group = checktime_au_group,
-  callback = function() vim.api.nvim_command('checktime') end
+  callback = function()
+    vim.api.nvim_command('checktime')
+  end,
 })

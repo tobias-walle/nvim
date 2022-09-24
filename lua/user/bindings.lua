@@ -4,7 +4,7 @@ local wk = require('which-key')
 
 -- Utils
 local function map(mode, shortcut, command)
-  vim.api.nvim_set_keymap(mode, shortcut, command, {noremap = true, silent = true})
+  vim.api.nvim_set_keymap(mode, shortcut, command, { noremap = true, silent = true })
 end
 
 -- Leader
@@ -25,28 +25,30 @@ map('n', '<C-l>', '<C-W>l')
 map('n', '<C-n>', '<C-a>')
 
 -- Files
-wk.register {
+wk.register({
   ['<leader>f'] = {
     name = 'Files',
-    D = {'<cmd>!rm %<cr><cmd>bd!<cr>', 'Delete file of current buffer'}
-  }
-}
+    D = { '<cmd>!rm %<cr><cmd>bd!<cr>', 'Delete file of current buffer' },
+  },
+})
 
 -- Line Numbers
-local function toggle_line_numbers() vim.opt.relativenumber = not vim.opt.relativenumber._value end
+local function toggle_line_numbers()
+  vim.opt.relativenumber = not vim.opt.relativenumber._value
+end
 
-vim.api.nvim_create_user_command('ToggleLine', toggle_line_numbers, {desc = 'Toggle line numbers'})
-vim.api.nvim_create_user_command('TL', toggle_line_numbers, {desc = 'Toggle line numbers'})
+vim.api.nvim_create_user_command('ToggleLine', toggle_line_numbers, { desc = 'Toggle line numbers' })
+vim.api.nvim_create_user_command('TL', toggle_line_numbers, { desc = 'Toggle line numbers' })
 
 -- Terminal
-wk.register {
+wk.register({
   ['<leader>x'] = {
     name = 'Terminal',
-    x = {'<cmd>Ttoggle<cr>', 'Toggle terminal'},
-    c = {'<cmd>Tclear<cr>', 'Clear terminal'},
-    f = {'<cmd>T cd %:p:h<cr>', 'Change working dir to current file'}
-  }
-}
+    x = { '<cmd>Ttoggle<cr>', 'Toggle terminal' },
+    c = { '<cmd>Tclear<cr>', 'Clear terminal' },
+    f = { '<cmd>T cd %:p:h<cr>', 'Change working dir to current file' },
+  },
+})
 
 -- Lists
 local active_list = 'quick_fix'
@@ -74,45 +76,55 @@ end
 
 local function next_in_active_list()
   if active_list == 'quick_fix' then
-    cmd [[ cnext ]]
+    cmd([[ cnext ]])
   elseif active_list == 'local' then
-    cmd [[ lnext ]]
+    cmd([[ lnext ]])
   end
 end
 
 local function previous_in_active_list()
   if active_list == 'quick_fix' then
-    cmd [[ cprevious ]]
+    cmd([[ cprevious ]])
   elseif active_list == 'local' then
-    cmd [[ lprevious ]]
+    cmd([[ lprevious ]])
   end
 end
 
-wk.register {
-  ['<M-t>'] = {toggle_active_list, 'Toggle active list'},
-  ['<M-j>'] = {next_in_active_list, 'Next QL Item'},
-  ['<M-k>'] = {previous_in_active_list, 'Previous QL Item'}
-}
+wk.register({
+  ['<M-t>'] = { toggle_active_list, 'Toggle active list' },
+  ['<M-j>'] = { next_in_active_list, 'Next QL Item' },
+  ['<M-k>'] = { previous_in_active_list, 'Previous QL Item' },
+})
 
 -- Local list
-wk.register {
+wk.register({
   ['<leader>l'] = {
     name = 'Local List',
-    a = {function() activate_list('local') end, 'Activate LL for shortcut'},
-    j = {'<cmd>lnext<cr>', 'Next LL Item'},
-    k = {'<cmd>lprevious<cr>', 'Previous LL Item'},
-    q = {'<cmd>lclose<cr>', 'Close List'}
-  }
-}
+    a = {
+      function()
+        activate_list('local')
+      end,
+      'Activate LL for shortcut',
+    },
+    j = { '<cmd>lnext<cr>', 'Next LL Item' },
+    k = { '<cmd>lprevious<cr>', 'Previous LL Item' },
+    q = { '<cmd>lclose<cr>', 'Close List' },
+  },
+})
 
 -- Quick Fix List
-wk.register {
+wk.register({
   ['<leader>c'] = {
     name = 'Quick fix List',
-    a = {function() activate_list('quick_fix') end, 'Activate QL for shortcut'},
-    q = {'<cmd>cclose<cr>', 'Close List'}
-  }
-}
+    a = {
+      function()
+        activate_list('quick_fix')
+      end,
+      'Activate QL for shortcut',
+    },
+    q = { '<cmd>cclose<cr>', 'Close List' },
+  },
+})
 
 -- HopL
 map('n', 's', '<cmd>HopWord<CR>')
@@ -123,67 +135,100 @@ map('v', 'S', '<cmd>HopChar1<CR>')
 map('o', 'S', '<cmd>HopChar1<CR>')
 
 -- Other
-wk.register {['<leader>o'] = {'<cmd>silent exec "!open %:p:h"<CR>', 'Open folder of current file'}}
-wk.register {['<leader><CR>'] = {require'user.reload'.reload, 'Reload vim config'}}
-wk.register {['<leader>q'] = {'<cmd>:close<CR>', 'Close Window'}}
-wk.register {
-  ['<leader>w'] = {'<cmd>lua vim.lsp.buf.formatting_sync()<CR><cmd>:write<CR>', 'Write Window'}
-}
+wk.register({ ['<leader>o'] = { '<cmd>silent exec "!open %:p:h"<CR>', 'Open folder of current file' } })
+wk.register({ ['<leader><CR>'] = { require('user.reload').reload, 'Reload vim config' } })
+wk.register({ ['<leader>q'] = { '<cmd>:close<CR>', 'Close Window' } })
+wk.register({
+  ['<leader>w'] = { '<cmd>lua vim.lsp.buf.formatting_sync()<CR><cmd>:write<CR>', 'Write Window' },
+})
 
 -- Registers
-wk.register {['<leader>r'] = {'<cmd>let @+=@"<CR><cmd>let @*=@"<CR>', 'Copy to system register'}}
+wk.register({ ['<leader>r'] = { '<cmd>let @+=@"<CR><cmd>let @*=@"<CR>', 'Copy to system register' } })
 
 -- Harpoon
-wk.register {
+wk.register({
   ['<leader>h'] = {
     name = 'Harpoon',
-    h = {function() require('harpoon.mark').add_file() end, 'Add file'},
-    m = {function() require('harpoon.ui').toggle_quick_menu() end, 'Quick Menu'}
+    h = {
+      function()
+        require('harpoon.mark').add_file()
+      end,
+      'Add file',
+    },
+    m = {
+      function()
+        require('harpoon.ui').toggle_quick_menu()
+      end,
+      'Quick Menu',
+    },
   },
   -- Navigation
-  ['<M-a>'] = {function() require('harpoon.ui').nav_file(1) end, 'Go to File 1'},
-  ['<M-s>'] = {function() require('harpoon.ui').nav_file(2) end, 'Go to File 2'},
-  ['<M-d>'] = {function() require('harpoon.ui').nav_file(3) end, 'Go to File 3'},
-  ['<M-f>'] = {function() require('harpoon.ui').nav_file(4) end, 'Go to File 4'}
-}
+  ['<M-a>'] = {
+    function()
+      require('harpoon.ui').nav_file(1)
+    end,
+    'Go to File 1',
+  },
+  ['<M-s>'] = {
+    function()
+      require('harpoon.ui').nav_file(2)
+    end,
+    'Go to File 2',
+  },
+  ['<M-d>'] = {
+    function()
+      require('harpoon.ui').nav_file(3)
+    end,
+    'Go to File 3',
+  },
+  ['<M-f>'] = {
+    function()
+      require('harpoon.ui').nav_file(4)
+    end,
+    'Go to File 4',
+  },
+})
 
 -- Undo Tree
 map('n', '<leader>u', ':MundoToggle<CR>')
 
 -- Tabs
-wk.register {
+wk.register({
   t = {
     name = 'Tabs',
-    h = {':tabprev<CR>', 'Previous Tab'},
-    l = {':tabnext<CR>', 'Next Tab'},
-    n = {':tabnew<CR>', 'New Tab'},
-    s = {':tab split<CR>', 'Split (Clone) Tab'},
-    q = {':tabclose<CR>', 'Close Tab'},
-    b = {'<C-W>T', 'Open Current Buffer as Tab'}
-  }
-}
+    h = { ':tabprev<CR>', 'Previous Tab' },
+    l = { ':tabnext<CR>', 'Next Tab' },
+    n = { ':tabnew<CR>', 'New Tab' },
+    s = { ':tab split<CR>', 'Split (Clone) Tab' },
+    q = { ':tabclose<CR>', 'Close Tab' },
+    b = { '<C-W>T', 'Open Current Buffer as Tab' },
+  },
+})
 
 -- File Explorer
-wk.register {
+wk.register({
   ['<leader>e'] = {
     name = 'File Explorer',
-    e = {'<cmd>Neotree toggle<CR>', 'Open Explorer'},
-    f = {'<cmd>Neotree reveal<CR>', 'Open Explorer and focus current file', silent = false},
-    q = {'<cmd>Neotree close<CR>', 'Close Explorer'}
-  }
-}
+    e = { '<cmd>Neotree toggle<CR>', 'Open Explorer' },
+    f = { '<cmd>Neotree reveal<CR>', 'Open Explorer and focus current file', silent = false },
+    q = { '<cmd>Neotree close<CR>', 'Close Explorer' },
+  },
+})
 
 -- map('', '<Plug>(fern-close-drawer)', '<cmd>FernDo close -drawer -stay<CR>')
 M.attach_file_explorer = function()
-  local bmap = function(action, name) return {action, name, buffer = vim.fn.bufnr()} end
+  local bmap = function(action, name)
+    return { action, name, buffer = vim.fn.bufnr() }
+  end
 
-  wk.register {
+  wk.register({
     s = bmap('<Plug>(fern-action-mark:toggle)', 'Select'),
     n = bmap('<Plug>(fern-action-new-path)', 'New File/Folder'),
     h = bmap('<Plug>(fern-action-collapse)', 'Collapse'),
     H = bmap(
       '<Plug>(fern-action-collapse)(fern-action-collapse)(fern-action-collapse)(fern-action-collapse)(fern-action-collapse)',
-      'Collapse'),
+      'Collapse'
+    ),
     l = bmap('<Plug>(fern-action-expand)', 'Expand'),
     y = bmap('<Plug>(fern-action-yank:path)', 'Yank Path'),
     z = bmap('<Plug>(fern-action-zoom)', 'Zoom'),
@@ -197,169 +242,278 @@ M.attach_file_explorer = function()
     ['<CR>'] = bmap('<Plug>(fern-action-open)<Plug>(fern-close-drawer)', 'Open'),
     ['<C-v>'] = bmap('<Plug>(fern-action-open:vsplit)<Plug>(fern-close-drawer)', 'Vsplit'),
     ['<C-s>'] = bmap('<Plug>(fern-action-open:split)<Plug>(fern-close-drawer)', 'Hsplit'),
-    ['<C-t>'] = bmap('<Plug>(fern-action-open:vsplit)<Plug>(fern-close-drawer)<C-W>T', 'Tabedit')
-  }
+    ['<C-t>'] = bmap('<Plug>(fern-action-open:vsplit)<Plug>(fern-close-drawer)<C-W>T', 'Tabedit'),
+  })
 end
 
 -- vim.cmd [[ autocmd FileType fern lua require('user.bindings').attach_file_explorer() ]]
 
 -- Diffs
-wk.register {
+wk.register({
   ['<leader>d'] = {
     name = 'Diffs',
-    g = {'<cmd>diffget<cr>', 'Apply from other buffer'},
-    p = {'<cmd>diffput<cr>', 'Apply to other buffer'},
-    f = {'<cmd>DiffviewFileHistory<cr>', 'Get see history of current file'},
-    c = {'<cmd>DiffviewOpen <C-r><C-w><cr>', 'Open diff between HEAD and commit under cursor'},
-    l = {'<cmd>vnew +read\\ # | windo diffthis<cr>', 'Diff with local file'}
-  }
-}
+    g = { '<cmd>diffget<cr>', 'Apply from other buffer' },
+    p = { '<cmd>diffput<cr>', 'Apply to other buffer' },
+    f = { '<cmd>DiffviewFileHistory<cr>', 'Get see history of current file' },
+    c = { '<cmd>DiffviewOpen <C-r><C-w><cr>', 'Open diff between HEAD and commit under cursor' },
+    l = { '<cmd>vnew +read\\ # | windo diffthis<cr>', 'Diff with local file' },
+  },
+})
 
 -- Git
 -- LuaFormatter off
-wk.register {
-  ['<leader>g'] = {
-    name = 'Git',
-    s = {'<cmd>G<cr><cmd>only<cr>', 'Git Status'},
-    p = {'<cmd>Gitsigns preview_hunk<CR>', 'Preview Hunk'},
-    r = {'<cmd>Gitsigns reset_hunk<CR>', 'Reset Hunk'},
-    b = {function() require'gitsigns'.blame_line {full = true} end, 'Blame Line'}
-  }
-}
 wk.register({
   ['<leader>g'] = {
     name = 'Git',
-    r = {'<cmd>Gitsigns reset_hunk<CR>', 'Reset Hunk'},
-  }
+    s = { '<cmd>G<cr><cmd>only<cr>', 'Git Status' },
+    p = { '<cmd>Gitsigns preview_hunk<CR>', 'Preview Hunk' },
+    r = { '<cmd>Gitsigns reset_hunk<CR>', 'Reset Hunk' },
+    b = {
+      function()
+        require('gitsigns').blame_line({ full = true })
+      end,
+      'Blame Line',
+    },
+  },
+})
+wk.register({
+  ['<leader>g'] = {
+    name = 'Git',
+    r = { '<cmd>Gitsigns reset_hunk<CR>', 'Reset Hunk' },
+  },
 }, { mode = 'v' })
 -- LuaFormatter on
 
 -- Merge
-wk.register {
+wk.register({
   ['<leader>m'] = {
     name = 'Git Merge',
-    t = {':MergetoolToggle<cr>', 'Toggle Mergetool'},
+    t = { ':MergetoolToggle<cr>', 'Toggle Mergetool' },
     l = {
       name = 'Layout',
-      a = {':MergetoolToggleLayout lmr<cr>', 'Toggle lmr layout'},
-      b = {':MergetoolToggleLayout blr,m<cr>', 'Toggle blr,m layout'}
+      a = { ':MergetoolToggleLayout lmr<cr>', 'Toggle lmr layout' },
+      b = { ':MergetoolToggleLayout blr,m<cr>', 'Toggle blr,m layout' },
     },
     p = {
       name = 'Preference',
-      l = {':MergetoolPreferLocal<cr>', 'Prefer local revision'},
-      r = {':MergetoolPreferRemote<cr>', 'Prefer remote revision'}
-    }
-  }
-}
+      l = { ':MergetoolPreferLocal<cr>', 'Prefer local revision' },
+      r = { ':MergetoolPreferRemote<cr>', 'Prefer remote revision' },
+    },
+  },
+})
 
 -- Debugging (WIP)
-wk.register {
+wk.register({
   ['<leader>b'] = {
     name = 'Debugging (WIP)',
-    b = {function() require('dap').toggle_breakpoint() end, 'Toggle Breakpoint'},
-    c = {function() require('dap').continue() end, 'Continue'}
-  }
-}
-
--- Testing
-wk.register {
-  ['<leader>t'] = {
-    name = 'Testing',
-    l = {'<cmd>Tclear!<cr><cmd>TestLast<cr>', 'Run previous test again'},
-    t = {'<cmd>Tclear!<cr><cmd>TestFile<cr>', 'Run tests in file'},
-    n = {'<cmd>Tclear!<cr><cmd>TestNearest<cr>', 'Run test close to cursor'},
-    v = {'<cmd>Tclear!<cr><cmd>TestVisit<cr>', 'Run test close to cursor'},
-    u = {name = 'Ultitest', t = {':Ultest<cr>', 'Run tests in file'}},
-    d = {
-      name = 'Debug',
-      t = {':UltestDebug<cr>', 'Debug tests in file'},
-      n = {':UltestDebugNearest<cr>', 'Debug test close to cursor'}
-    }
-  }
-}
-
--- Search
-wk.register {
-  ['<leader>s'] = {
-    name = 'Search',
-    u = {function() require('telescope.builtin').resume() end, 'Resume'},
-    f = {function() require('telescope.builtin').find_files() end, 'Find files'},
-    F = {function() require('user.telescope').find_files_all() end, 'Find files (include ignored)'},
-    s = {function() require('telescope.builtin').live_grep() end, 'Find text'},
-    S = {function() require('user.telescope').live_grep() end, 'Find text with options'},
-    r = {function() require('spectre').open_file_search() end, 'Search & Replace in file'},
-    R = {function() require('spectre').open() end, 'Search & Replace globally'},
-    c = {function() require('telescope.builtin').commands() end, 'Find command'},
     b = {
       function()
-        require('telescope.builtin').buffers {sort_lastused = true, ignore_current_buffer = true}
-      end, 'Find buffer'
+        require('dap').toggle_breakpoint()
+      end,
+      'Toggle Breakpoint',
     },
-    p = {function() require('telescope').extensions.projects.projects() end, 'Find buffer'},
+    c = {
+      function()
+        require('dap').continue()
+      end,
+      'Continue',
+    },
+  },
+})
+
+-- Testing
+wk.register({
+  ['<leader>t'] = {
+    name = 'Testing',
+    l = { '<cmd>Tclear!<cr><cmd>TestLast<cr>', 'Run previous test again' },
+    t = { '<cmd>Tclear!<cr><cmd>TestFile<cr>', 'Run tests in file' },
+    n = { '<cmd>Tclear!<cr><cmd>TestNearest<cr>', 'Run test close to cursor' },
+    v = { '<cmd>Tclear!<cr><cmd>TestVisit<cr>', 'Run test close to cursor' },
+    u = { name = 'Ultitest', t = { ':Ultest<cr>', 'Run tests in file' } },
+    d = {
+      name = 'Debug',
+      t = { ':UltestDebug<cr>', 'Debug tests in file' },
+      n = { ':UltestDebugNearest<cr>', 'Debug test close to cursor' },
+    },
+  },
+})
+
+-- Search
+wk.register({
+  ['<leader>s'] = {
+    name = 'Search',
+    u = {
+      function()
+        require('telescope.builtin').resume()
+      end,
+      'Resume',
+    },
+    f = {
+      function()
+        require('telescope.builtin').find_files()
+      end,
+      'Find files',
+    },
+    F = {
+      function()
+        require('user.telescope').find_files_all()
+      end,
+      'Find files (include ignored)',
+    },
+    s = {
+      function()
+        require('telescope.builtin').live_grep()
+      end,
+      'Find text',
+    },
+    S = {
+      function()
+        require('user.telescope').live_grep()
+      end,
+      'Find text with options',
+    },
+    r = {
+      function()
+        require('spectre').open_file_search()
+      end,
+      'Search & Replace in file',
+    },
+    R = {
+      function()
+        require('spectre').open()
+      end,
+      'Search & Replace globally',
+    },
+    c = {
+      function()
+        require('telescope.builtin').commands()
+      end,
+      'Find command',
+    },
+    b = {
+      function()
+        require('telescope.builtin').buffers({ sort_lastused = true, ignore_current_buffer = true })
+      end,
+      'Find buffer',
+    },
+    p = {
+      function()
+        require('telescope').extensions.projects.projects()
+      end,
+      'Find buffer',
+    },
     g = {
       name = 'Git',
-      s = {function() require('telescope.builtin').git_status() end, 'Find staged files'}
-    }
+      s = {
+        function()
+          require('telescope.builtin').git_status()
+        end,
+        'Find staged files',
+      },
+    },
   },
-  ['<C-p>'] = {function() require('telescope.builtin').find_files() end, 'Find files'},
-  ['?'] = {':nohl<CR>', 'Hide search highlight'}
-}
+  ['<C-p>'] = {
+    function()
+      require('telescope.builtin').find_files()
+    end,
+    'Find files',
+  },
+  ['?'] = { ':nohl<CR>', 'Hide search highlight' },
+})
 
 local function toggle_virtual_lines()
   local config = vim.diagnostic.config()
-  if (config == nil) then return end
-  vim.diagnostic.config({virtual_lines = not config.virtual_lines})
-  vim.diagnostic.config({virtual_text = not config.virtual_text})
+  if config == nil then
+    return
+  end
+  vim.diagnostic.config({ virtual_lines = not config.virtual_lines })
+  vim.diagnostic.config({ virtual_text = not config.virtual_text })
 end
 
 -- Completion
 local refactor = require('user.utils.refactor')
 M.attach_completion = function(bufnr)
-  local bmap = function(action, name) return {action, name, buffer = bufnr} end
-  local bmapnsilent =
-    function(action, name) return {action, name, buffer = bufnr, silent = false} end
+  local bmap = function(action, name)
+    return { action, name, buffer = bufnr }
+  end
+  local bmapnsilent = function(action, name)
+    return { action, name, buffer = bufnr, silent = false }
+  end
 
-  wk.register {
+  wk.register({
     g = {
       name = 'Go to',
-      D = bmap(function() vim.lsp.buf.declaration() end, 'Go to declaration'),
-      d = bmap(function() vim.lsp.buf.definition() end, 'Go to definition'),
-      i = bmap(function() vim.lsp.buf.implementation() end, 'Go to implementation'),
-      r = bmap(function() vim.lsp.buf.references() end, 'Go to references')
+      D = bmap(function()
+        vim.lsp.buf.declaration()
+      end, 'Go to declaration'),
+      d = bmap(function()
+        vim.lsp.buf.definition()
+      end, 'Go to definition'),
+      i = bmap(function()
+        vim.lsp.buf.implementation()
+      end, 'Go to implementation'),
+      r = bmap(function()
+        vim.lsp.buf.references()
+      end, 'Go to references'),
     },
     ['<leader><leader>'] = {
       name = 'Language Server',
-      h = bmap(function() vim.lsp.buf.hover() end, 'Hover'),
-      s = bmap(function() vim.lsp.buf.signature_help() end, 'Signature Help'),
-      r = bmap(function() vim.lsp.buf.rename() end, 'Rename'),
+      h = bmap(function()
+        vim.lsp.buf.hover()
+      end, 'Hover'),
+      s = bmap(function()
+        vim.lsp.buf.signature_help()
+      end, 'Signature Help'),
+      r = bmap(function()
+        vim.lsp.buf.rename()
+      end, 'Rename'),
       R = bmap(refactor.rename_prefix, 'Rename Prefix'),
-      a = bmap(function() vim.lsp.buf.code_action() end, 'Code Actions'),
-      e = bmap(function() vim.diagnostic.open_float() end, 'Show Errors'),
-      q = bmap(function() vim.diagnostic.setloclist() end, 'Save Errors to Loclist'),
-      f = bmap(function() vim.lsp.buf.formatting() end, 'Format Buffer'),
-      d = bmap(function() vim.lsp.buf.type_definition() end, 'Type Definition'),
-      l = bmap(function() toggle_virtual_lines() end, 'Toggle diagnostic lines'),
+      a = bmap(function()
+        vim.lsp.buf.code_action()
+      end, 'Code Actions'),
+      e = bmap(function()
+        vim.diagnostic.open_float()
+      end, 'Show Errors'),
+      q = bmap(function()
+        vim.diagnostic.setloclist()
+      end, 'Save Errors to Loclist'),
+      f = bmap(function()
+        vim.lsp.buf.formatting()
+      end, 'Format Buffer'),
+      d = bmap(function()
+        vim.lsp.buf.type_definition()
+      end, 'Type Definition'),
+      l = bmap(function()
+        toggle_virtual_lines()
+      end, 'Toggle diagnostic lines'),
       w = {
         name = 'Workspaces',
-        a = bmapnsilent(function() vim.lsp.buf.add_workspace_folder() end, 'Add Workspace'),
-        d = bmapnsilent(function() vim.lsp.buf.remove_workspace_folder() end, 'Remove Workspace'),
-        l = bmapnsilent(function() dbg(vim.lsp.buf.list_workspace_folders()) end, 'List Workspaces')
+        a = bmapnsilent(function()
+          vim.lsp.buf.add_workspace_folder()
+        end, 'Add Workspace'),
+        d = bmapnsilent(function()
+          vim.lsp.buf.remove_workspace_folder()
+        end, 'Remove Workspace'),
+        l = bmapnsilent(function()
+          dbg(vim.lsp.buf.list_workspace_folders())
+        end, 'List Workspaces'),
       },
       t = {
         name = 'Typescript',
         r = bmapnsilent('<cmd>TypescriptRenameFile<CR>', 'Rename TS file'),
-        i = bmapnsilent('<cmd>TypescriptAddMissingImports<CR><cmd>TypescriptOrganizeImports<CR>',
-                        'Import All & Organize Imports'),
-        t = bmapnsilent('<cmd>edit %:r.spec.%:e<CR>', 'Create Test')
-      }
-    }
-  }
+        i = bmapnsilent(
+          '<cmd>TypescriptAddMissingImports<CR><cmd>TypescriptOrganizeImports<CR>',
+          'Import All & Organize Imports'
+        ),
+        t = bmapnsilent('<cmd>edit %:r.spec.%:e<CR>', 'Create Test'),
+      },
+    },
+  })
 end
 
 local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and
-           vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
 end
 
 local luasnip = require('luasnip')
@@ -375,7 +529,7 @@ M.cmp_mapping = function(cmp)
       else
         fallback()
       end
-    end, {'i', 's'}),
+    end, { 'i', 's' }),
 
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
@@ -383,7 +537,7 @@ M.cmp_mapping = function(cmp)
       else
         fallback()
       end
-    end, {'i', 's'}),
+    end, { 'i', 's' }),
 
     ['<C-n>'] = cmp.mapping(function(fallback)
       if luasnip.expand_or_jumpable() then
@@ -391,7 +545,7 @@ M.cmp_mapping = function(cmp)
       else
         fallback()
       end
-    end, {'i', 's'}),
+    end, { 'i', 's' }),
 
     ['<C-p>'] = cmp.mapping(function(fallback)
       if luasnip.jumpable(-1) then
@@ -399,15 +553,15 @@ M.cmp_mapping = function(cmp)
       else
         fallback()
       end
-    end, {'i', 's'}),
+    end, { 'i', 's' }),
 
     ['<C-e>'] = cmp.mapping.close(),
-    ['<CR>'] = cmp.mapping.confirm({behavior = cmp.ConfirmBehavior.Insert, select = true})
+    ['<CR>'] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = true }),
   }
 end
 
-wk.register({['<C-E>'] = {'<Plug>luasnip-next-choice', 'Next Snippet'}}, {mode = 'i'})
-wk.register({['<C-E>'] = {'<Plug>luasnip-next-choice', 'Next Snippet'}}, {mode = 's'})
+wk.register({ ['<C-E>'] = { '<Plug>luasnip-next-choice', 'Next Snippet' } }, { mode = 'i' })
+wk.register({ ['<C-E>'] = { '<Plug>luasnip-next-choice', 'Next Snippet' } }, { mode = 's' })
 
 -- Typescript
 -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gs", ":TSLspOrganize<CR>", opts)
