@@ -1,1 +1,1 @@
-require('nvim-projectconfig').setup {autocmd = true}
+require('nvim-projectconfig').setup({ autocmd = true })

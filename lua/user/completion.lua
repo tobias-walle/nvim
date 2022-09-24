@@ -1,14 +1,14 @@
-vim.cmd [[
+vim.cmd([[
 set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 
 autocmd BufNewFile,BufRead tsconfig*.json setlocal filetype=jsonc
-]]
+]])
 
 -- See https://github.com/simrat39/rust-tools.nvim#configuration
-local lspconfig = require 'lspconfig'
-local bindings = require 'user.bindings'
-local lspInlayhints = require 'lsp-inlayhints';
+local lspconfig = require('lspconfig')
+local bindings = require('user.bindings')
+local lspInlayhints = require('lsp-inlayhints')
 
 require('mason').setup()
 
@@ -18,7 +18,7 @@ local on_attach = function(client, bufnr)
   lspInlayhints.on_attach(client, bufnr, false)
 end
 
-lspInlayhints.setup {}
+lspInlayhints.setup({})
 
 -- Enable (broadcasting) snippet capability for completion
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -31,105 +31,130 @@ end
 
 local pid = vim.fn.getpid()
 local omnisharp_bin = '/usr/local/bin/omnisharp'
-require'lspconfig'.omnisharp.setup {
-  cmd = {omnisharp_bin, '--languageserver', '--hostPID', tostring(pid)},
-  on_attach = on_attach
-}
+require('lspconfig').omnisharp.setup({
+  cmd = { omnisharp_bin, '--languageserver', '--hostPID', tostring(pid) },
+  on_attach = on_attach,
+})
 
-lspconfig.kotlin_language_server.setup {on_attach = on_attach}
-lspconfig.yamlls.setup {on_attach = on_attach}
-lspconfig.hls.setup {on_attach = on_attach_disable_formatting}
+lspconfig.kotlin_language_server.setup({ on_attach = on_attach })
+lspconfig.yamlls.setup({ on_attach = on_attach })
+lspconfig.hls.setup({ on_attach = on_attach_disable_formatting })
 --[[ lspconfig.tailwindcss.setup {on_attach = on_attach} ]]
 
 local cssls_capabilities = vim.lsp.protocol.make_client_capabilities()
 cssls_capabilities.textDocument.completion.completionItem.snippetSupport = true
-lspconfig.cssls.setup {on_attach = on_attach_disable_formatting, capabilities = cssls_capabilities}
+lspconfig.cssls.setup({ on_attach = on_attach_disable_formatting, capabilities = cssls_capabilities })
 
-local luadev = require('lua-dev').setup {
+local luadev = require('lua-dev').setup({
   lspconfig = {
-    on_attach = on_attach_disable_formatting
+    on_attach = on_attach_disable_formatting,
     -- settings = {Lua = {diagnostics = {globals = {'vim'}}}}
-  }
-}
+  },
+})
 lspconfig.sumneko_lua.setup(luadev)
 
-lspconfig.jsonls.setup {
+lspconfig.jsonls.setup({
   capabilities = cssls_capabilities,
-  settings = {json = {schemas = require('schemastore').json.schemas()}},
-  on_attach = on_attach_disable_formatting
-}
-lspconfig.pyright.setup {on_attach = on_attach}
-lspconfig.taplo.setup {cmd = {'taplo', 'lsp', 'stdio'}, on_attach = on_attach}
-lspconfig.angularls.setup {
+  settings = { json = { schemas = require('schemastore').json.schemas() } },
+  on_attach = on_attach_disable_formatting,
+})
+lspconfig.pyright.setup({ on_attach = on_attach })
+lspconfig.taplo.setup({ cmd = { 'taplo', 'lsp', 'stdio' }, on_attach = on_attach })
+lspconfig.angularls.setup({
   on_attach = function(client, bufnr)
     client.resolved_capabilities.rename = false
     on_attach(client, bufnr)
-  end
-}
+  end,
+})
 
-local cmp = require 'cmp'
-local compare = cmp.config.compare;
+local cmp = require('cmp')
+local compare = cmp.config.compare
 cmp.register_source('filename', require('user.cmp-sources.filename').new())
 cmp.setup({
-  snippet = {expand = function(args) require('luasnip').lsp_expand(args.body) end},
+  snippet = {
+    expand = function(args)
+      require('luasnip').lsp_expand(args.body)
+    end,
+  },
   on_attach = on_attach,
   mapping = bindings.cmp_mapping(cmp),
 
   sorting = {
     comparators = {
-      compare.exact, compare.score, compare.offset, compare.scopes, compare.recently_used,
-      compare.locality, compare.kind, compare.sort_text, compare.length, compare.order
-    }
+      compare.exact,
+      compare.score,
+      compare.offset,
+      compare.scopes,
+      compare.recently_used,
+      compare.locality,
+      compare.kind,
+      compare.sort_text,
+      compare.length,
+      compare.order,
+    },
   },
 
   sources = cmp.config.sources({
-    {name = 'nvim_lsp', max_item_count = 10}, {name = 'path'}, {name = 'crates'},
-    {name = 'buffer', keyword_length = 3, max_item_count = 5}, {name = 'filename'},
-    {name = 'luasnip', max_item_count = 5}
+    { name = 'nvim_lsp', max_item_count = 10 },
+    { name = 'path' },
+    { name = 'crates' },
+    { name = 'buffer', keyword_length = 3, max_item_count = 5 },
+    { name = 'filename' },
+    { name = 'luasnip', max_item_count = 5 },
   }),
-  experimental = {ghost_text = true}
+  experimental = { ghost_text = true },
 })
 
 -- Signature Help
-require'lsp_signature'.setup {hint_enable = true, floating_window = false, hint_prefix = ''}
+require('lsp_signature').setup({ hint_enable = true, floating_window = false, hint_prefix = '' })
 
 -- Null Ls
-require('null-ls').setup {
+require('null-ls').setup({
   sources = {
     require('null-ls').builtins.formatting.prettierd,
-    require('null-ls').builtins.diagnostics.eslint_d.with {
+    require('null-ls').builtins.diagnostics.eslint_d.with({
       condition = function(utils)
-        return utils.root_has_file({'.eslintrc.js', '.eslintrc.yml', '.eslintrc.json'})
-      end
-    }, require('null-ls').builtins.formatting.eslint_d,
+        return utils.root_has_file({ '.eslintrc.js', '.eslintrc.yml', '.eslintrc.json' })
+      end,
+    }),
+    require('null-ls').builtins.formatting.eslint_d,
     require('null-ls').builtins.code_actions.eslint_d,
-    require('null-ls').builtins.formatting.lua_format, require('null-ls').builtins.formatting.black
+    require('null-ls').builtins.formatting.stylua,
+    require('null-ls').builtins.formatting.black,
   },
-  on_attach = on_attach
-}
+  on_attach = on_attach,
+})
 
 -- Rust
 require('rust-tools').setup({
-  tools = {autoSetHints = false, hover_with_actions = false},
+  tools = { autoSetHints = false, hover_with_actions = false },
 
   server = {
     standalone = false,
     on_attach = on_attach,
-    settings = {['rust-analyzer'] = {checkOnSave = {command = 'clippy'}}}
-  }
+    settings = { ['rust-analyzer'] = { checkOnSave = { command = 'clippy' } } },
+  },
 })
 
 -- Typescript
 local function ts_filter(arr, fn)
-  if type(arr) ~= 'table' then return arr end
+  if type(arr) ~= 'table' then
+    return arr
+  end
 
   local filtered = {}
-  for k, v in pairs(arr) do if fn(v, k, arr) then table.insert(filtered, v) end end
+  for k, v in pairs(arr) do
+    if fn(v, k, arr) then
+      table.insert(filtered, v)
+    end
+  end
 
   return filtered
 end
 
-local function ts_filter_react_dts(value) return string.match(value.uri, 'react/index.d.ts') == nil end
+local function ts_filter_react_dts(value)
+  return string.match(value.uri, 'react/index.d.ts') == nil
+end
 
 -- lspconfig.denols.setup {
 --   on_attach = on_attach,
@@ -143,7 +168,7 @@ local ts_inlay_hint_options = {
   includeInlayVariableTypeHints = true,
   includeInlayPropertyDeclarationTypeHints = true,
   includeInlayFunctionLikeReturnTypeHints = true,
-  includeInlayEnumMemberValueHints = true
+  includeInlayEnumMemberValueHints = true,
 }
 
 require('typescript').setup({
@@ -164,19 +189,19 @@ require('typescript').setup({
         end
 
         vim.lsp.handlers['textDocument/definition'](err, result, method, ...)
-      end
+      end,
     },
 
     root_dir = lspconfig.util.root_pattern('package.json'),
 
     settings = {
-      typescript = {inlayHints = ts_inlay_hint_options},
-      javascript = {inlayHints = ts_inlay_hint_options}
-    }
-  }
+      typescript = { inlayHints = ts_inlay_hint_options },
+      javascript = { inlayHints = ts_inlay_hint_options },
+    },
+  },
 })
 
 -- Better diagnostics
 require('lsp_lines').setup()
-vim.diagnostic.config({virtual_lines = false})
-vim.diagnostic.config({virtual_text = true})
+vim.diagnostic.config({ virtual_lines = false })
+vim.diagnostic.config({ virtual_text = true })
