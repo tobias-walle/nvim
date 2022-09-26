@@ -11,6 +11,7 @@ vim.opt.smarttab = true
 vim.opt.expandtab = true
 vim.opt.autoindent = true
 vim.opt.copyindent = true
+vim.opt.smartindent = false
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.mouse = 'a'
