@@ -81,9 +81,9 @@ cmp.setup({
 
   sorting = {
     comparators = {
-      compare.exact,
       compare.score,
       compare.offset,
+      compare.exact,
       compare.scopes,
       compare.recently_used,
       compare.locality,
@@ -182,7 +182,6 @@ require('typescript').setup({
 
     handlers = {
       ['textDocument/definition'] = function(err, result, method, ...)
-        print('HERE')
         if vim.tbl_islist(result) and #result > 1 then
           local filtered_result = ts_filter(result, ts_filter_react_dts)
           return vim.lsp.handlers['textDocument/definition'](err, filtered_result, method, ...)
