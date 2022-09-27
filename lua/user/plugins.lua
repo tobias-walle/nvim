@@ -18,7 +18,7 @@ return require('packer').startup(function(use)
 
   -- Autocompletion & Diagnostics
   use('neovim/nvim-lspconfig')
-  use('NoahTheDuke/vim-just')
+  use('NoahTheDuke/vim-just') -- Syntax highlighting for justfiles
 
   use('b0o/schemastore.nvim')
 
@@ -54,8 +54,6 @@ return require('packer').startup(function(use)
   use('nvim-telescope/telescope.nvim')
   use('nvim-telescope/telescope-live-grep-args.nvim')
   use('ThePrimeagen/harpoon')
-  use('windwp/nvim-spectre')
-  use('ahmedkhalf/project.nvim')
 
   -- Undo
   use('simnalamburt/vim-mundo')
@@ -67,11 +65,6 @@ return require('packer').startup(function(use)
   use('sindrets/diffview.nvim')
 
   -- File Explorer
-  use({ 'lambdalisue/fern.vim', branch = 'main' })
-  use({ 'lambdalisue/fern-hijack.vim', branch = 'master' })
-  use({ 'lambdalisue/fern-renderer-nerdfont.vim', branch = 'master' })
-  -- use {'lambdalisue/fern-git-status.vim', branch = 'master'}
-
   use({ 'nvim-neo-tree/neo-tree.nvim', branch = 'v2.x' })
 
   -- Clipboard

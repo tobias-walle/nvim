@@ -1,6 +1,7 @@
 local M = {}
 
 require('telescope').load_extension('live_grep_args')
+require('telescope').load_extension('neoclip')
 
 local lga_actions = require('telescope-live-grep-args.actions')
 require('telescope').setup({
