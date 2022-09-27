@@ -372,33 +372,21 @@ wk.register({
       end,
       'Find text with options',
     },
-    r = {
-      function()
-        require('spectre').open_file_search()
-      end,
-      'Search & Replace in file',
-    },
-    R = {
-      function()
-        require('spectre').open()
-      end,
-      'Search & Replace globally',
-    },
     c = {
       function()
         require('telescope.builtin').commands()
       end,
       'Find command',
     },
+    y = {
+      function()
+        require('telescope').extensions.neoclip.neoclip()
+      end,
+      'Find command',
+    },
     b = {
       function()
         require('telescope.builtin').buffers({ sort_lastused = true, ignore_current_buffer = true })
-      end,
-      'Find buffer',
-    },
-    p = {
-      function()
-        require('telescope').extensions.projects.projects()
       end,
       'Find buffer',
     },
