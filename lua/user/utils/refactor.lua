@@ -50,7 +50,7 @@ function M.find_top_level_declarations()
     '( export_statement declaration: (_ (variable_declarator name: (_) @name)) )',
   }
 
-  local filetype = vim.bo.filetype
+  local filetype = 'typescript'
   local parser = vim.treesitter.get_parser(0, filetype)
   local test = parser:parse()
   local root = test[1]:root()
