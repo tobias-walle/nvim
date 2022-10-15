@@ -131,6 +131,8 @@ ls.add_snippets('typescriptreact', {
     'scomp',
     fmt(
       [[
+import {{ Component }} from "solid-js";
+
 export const {name}: Component = () => {{
   return (
     <div>{content}</div>
@@ -145,6 +147,8 @@ export const {name}: Component = () => {{
     'scompp',
     fmt(
       [[
+import {{ Component }} from "solid-js";
+
 export interface {props} {{
   {props_content}
 }}

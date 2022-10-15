@@ -9,6 +9,7 @@ autocmd BufNewFile,BufRead tsconfig*.json setlocal filetype=jsonc
 local lspconfig = require('lspconfig')
 local bindings = require('user.bindings')
 local lspInlayhints = require('lsp-inlayhints')
+lspInlayhints.setup()
 
 require('mason').setup()
 
@@ -18,14 +19,12 @@ local on_attach = function(client, bufnr)
   lspInlayhints.on_attach(client, bufnr, false)
 end
 
-lspInlayhints.setup({})
-
 -- Enable (broadcasting) snippet capability for completion
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local on_attach_disable_formatting = function(client, bufnr)
-  client.resolved_capabilities.document_formatting = false
+  client.server_capabilities.document_formatting = false
   on_attach(client, bufnr)
 end
 
@@ -175,7 +174,7 @@ require('typescript').setup({
   server = {
 
     on_attach = function(client, bufnr)
-      client.resolved_capabilities.document_formatting = false
+      client.server_capabilities.document_formatting = false
 
       on_attach(client, bufnr)
     end,
