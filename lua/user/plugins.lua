@@ -63,6 +63,7 @@ return require('packer').startup(function(use)
   use('tpope/vim-fugitive')
   use('samoshkin/vim-mergetool')
   use('sindrets/diffview.nvim')
+  -- use('TimUntersberger/neogit')
 
   -- File Explorer
   use({ 'nvim-neo-tree/neo-tree.nvim', branch = 'v2.x' })
