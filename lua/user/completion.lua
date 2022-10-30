@@ -110,7 +110,7 @@ require('lsp_signature').setup({ hint_enable = true, floating_window = false, hi
 -- Null Ls
 require('null-ls').setup({
   sources = {
-    require('null-ls').builtins.formatting.prettierd,
+    require('null-ls').builtins.formatting.prettier,
     require('null-ls').builtins.diagnostics.eslint_d.with({
       condition = function(utils)
         return utils.root_has_file({ '.eslintrc.js', '.eslintrc.yml', '.eslintrc.json' })

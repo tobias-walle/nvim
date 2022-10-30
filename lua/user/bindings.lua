@@ -254,8 +254,6 @@ wk.register({
     name = 'Diffs',
     g = { '<cmd>diffget<cr>', 'Apply from other buffer' },
     p = { '<cmd>diffput<cr>', 'Apply to other buffer' },
-    f = { '<cmd>DiffviewFileHistory<cr>', 'Get see history of current file' },
-    c = { '<cmd>DiffviewOpen <C-r><C-w><cr>', 'Open diff between HEAD and commit under cursor' },
     l = { '<cmd>vnew +read\\ # | windo diffthis<cr>', 'Diff with local file' },
   },
 })
@@ -268,6 +266,10 @@ wk.register({
     s = { '<cmd>G<cr><cmd>only<cr>', 'Git Status' },
     p = { '<cmd>Gitsigns preview_hunk<CR>', 'Preview Hunk' },
     r = { '<cmd>Gitsigns reset_hunk<CR>', 'Reset Hunk' },
+    R = { '<cmd>G checkout -- %<CR>', 'Reset file' },
+    x = { '<cmd>DiffviewOpen --base=LOCAL<cr>', 'Open diffview against local changes' },
+    f = { '<cmd>DiffviewFileHistory --base=LOCAL %<cr>', 'Get see history of current file' },
+    c = { '<cmd>DiffviewOpen <C-r><C-w><cr>', 'Open diff between HEAD and commit under cursor' },
     b = {
       function()
         require('gitsigns').blame_line({ full = true })

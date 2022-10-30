@@ -10,9 +10,6 @@ require('nvim-ts-autotag').setup({})
 -- Which key
 require('which-key').setup({})
 
--- Gitsigns
-require('gitsigns').setup({ keymaps = {} })
-
 -- Git Merge Tool
 vim.g.mergetool_layout = 'mr'
 vim.g.mergetool_prefer_revision = 'local'
