@@ -4,7 +4,7 @@ local lga_actions = require('telescope-live-grep-args.actions')
 
 require('telescope').setup({
   defaults = {
-    file_ignore_patterns = { '.git', 'yarn.lock', '.yarn' },
+    file_ignore_patterns = { '.git/', 'yarn.lock', '.yarn/' },
     layout_strategy = 'vertical',
     layout_config = { vertical = { width = 0.9 } },
   },

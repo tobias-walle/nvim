@@ -212,45 +212,26 @@ wk.register({
 wk.register({
   ['<leader>e'] = {
     name = 'File Explorer',
-    e = { '<cmd>Neotree toggle<CR>', 'Open Explorer' },
-    f = { '<cmd>Neotree reveal<CR>', 'Open Explorer and focus current file', silent = false },
-    q = { '<cmd>Neotree close<CR>', 'Close Explorer' },
+    e = {
+      function()
+        require('telescope').extensions.file_browser.file_browser()
+      end,
+      'Open FileBrowser relative to cwd',
+    },
+    f = {
+      function()
+        require('telescope').extensions.file_browser.file_browser({ path = vim.fn.expand('%:p:h') })
+      end,
+      'Open FileBrowser',
+    },
+    n = {
+      name = 'Neotree',
+      e = { '<cmd>Neotree toggle<CR>', 'Open Explorer' },
+      f = { '<cmd>Neotree reveal<CR>', 'Open Explorer and focus current file', silent = false },
+      q = { '<cmd>Neotree close<CR>', 'Close Explorer' },
+    },
   },
 })
-
--- map('', '<Plug>(fern-close-drawer)', '<cmd>FernDo close -drawer -stay<CR>')
-M.attach_file_explorer = function()
-  local bmap = function(action, name)
-    return { action, name, buffer = vim.fn.bufnr() }
-  end
-
-  wk.register({
-    s = bmap('<Plug>(fern-action-mark:toggle)', 'Select'),
-    n = bmap('<Plug>(fern-action-new-path)', 'New File/Folder'),
-    h = bmap('<Plug>(fern-action-collapse)', 'Collapse'),
-    H = bmap(
-      '<Plug>(fern-action-collapse)(fern-action-collapse)(fern-action-collapse)(fern-action-collapse)(fern-action-collapse)'
-      ,
-      'Collapse'
-    ),
-    l = bmap('<Plug>(fern-action-expand)', 'Expand'),
-    y = bmap('<Plug>(fern-action-yank:path)', 'Yank Path'),
-    z = bmap('<Plug>(fern-action-zoom)', 'Zoom'),
-    c = bmap('<Plug>(fern-action-clipboard-copy)', 'Copy'),
-    m = bmap('<Plug>(fern-action-clipboard-move)', 'Move'),
-    p = bmap('<Plug>(fern-action-clipboard-paste)', 'Paste'),
-    d = bmap('<Plug>(fern-action-remove)', 'Remove'),
-    r = bmap('<Plug>(fern-action-rename)', 'Rename'),
-    ['e'] = bmap('<Plug>(fern-action-enter)', 'Enter'),
-    ['<BS>'] = bmap('<Plug>(fern-action-leave)', 'Leave'),
-    ['<CR>'] = bmap('<Plug>(fern-action-open)<Plug>(fern-close-drawer)', 'Open'),
-    ['<C-v>'] = bmap('<Plug>(fern-action-open:vsplit)<Plug>(fern-close-drawer)', 'Vsplit'),
-    ['<C-s>'] = bmap('<Plug>(fern-action-open:split)<Plug>(fern-close-drawer)', 'Hsplit'),
-    ['<C-t>'] = bmap('<Plug>(fern-action-open:vsplit)<Plug>(fern-close-drawer)<C-W>T', 'Tabedit'),
-  })
-end
-
--- vim.cmd [[ autocmd FileType fern lua require('user.bindings').attach_file_explorer() ]]
 
 -- Diffs
 wk.register({
