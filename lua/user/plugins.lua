@@ -50,6 +50,9 @@ return require('packer').startup(function(use)
   -- Help/Docs
   use('folke/which-key.nvim')
 
+  -- Dashboard
+  use('glepnir/dashboard-nvim')
+
   -- Navigation
   use('nvim-telescope/telescope.nvim')
   use('nvim-telescope/telescope-live-grep-args.nvim')
