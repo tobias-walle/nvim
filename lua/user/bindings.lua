@@ -33,7 +33,10 @@ wk.register({
 })
 
 -- General
-vim.api.nvim_create_user_command('X', 'wqa', { desc = 'Close & Save' })
+vim.api.nvim_create_user_command('X', function()
+  vim.cmd('bufdo lua vim.lsp.buf.format()')
+  vim.cmd('wqa')
+end, { desc = 'Format & Save & Close' })
 
 -- Line Numbers
 local function toggle_line_numbers()
