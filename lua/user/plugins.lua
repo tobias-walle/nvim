@@ -53,6 +53,7 @@ return require('packer').startup(function(use)
   -- Navigation
   use('nvim-telescope/telescope.nvim')
   use('nvim-telescope/telescope-live-grep-args.nvim')
+  use('nvim-telescope/telescope-file-browser.nvim')
   use('ThePrimeagen/harpoon')
 
   -- Undo

@@ -364,12 +364,6 @@ wk.register({
     },
     s = {
       function()
-        require('telescope.builtin').live_grep()
-      end,
-      'Find text',
-    },
-    S = {
-      function()
         require('user.telescope').live_grep()
       end,
       'Find text with options',
@@ -379,6 +373,12 @@ wk.register({
         require('telescope.builtin').commands()
       end,
       'Find command',
+    },
+    e = {
+      function()
+        require('telescope').extensions.file_browser.file_browser()
+      end,
+      'Open FileBrowser',
     },
     y = {
       function()
