@@ -32,6 +32,9 @@ wk.register({
   },
 })
 
+-- General
+vim.api.nvim_create_user_command('X', 'wqa', { desc = 'Close & Save' })
+
 -- Line Numbers
 local function toggle_line_numbers()
   vim.opt.relativenumber = not vim.opt.relativenumber._value
@@ -226,7 +229,8 @@ M.attach_file_explorer = function()
     n = bmap('<Plug>(fern-action-new-path)', 'New File/Folder'),
     h = bmap('<Plug>(fern-action-collapse)', 'Collapse'),
     H = bmap(
-      '<Plug>(fern-action-collapse)(fern-action-collapse)(fern-action-collapse)(fern-action-collapse)(fern-action-collapse)',
+      '<Plug>(fern-action-collapse)(fern-action-collapse)(fern-action-collapse)(fern-action-collapse)(fern-action-collapse)'
+      ,
       'Collapse'
     ),
     l = bmap('<Plug>(fern-action-expand)', 'Expand'),
@@ -376,9 +380,15 @@ wk.register({
     },
     e = {
       function()
+        require('telescope').extensions.file_browser.file_browser({ path = vim.fn.expand('%:p:h') })
+      end,
+      'Open FileBrowser relative to current path',
+    },
+    E = {
+      function()
         require('telescope').extensions.file_browser.file_browser()
       end,
-      'Open FileBrowser',
+      'Open FileBrowser relative to cwd',
     },
     y = {
       function()
