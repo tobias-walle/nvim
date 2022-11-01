@@ -39,7 +39,7 @@ return require('packer').startup(function(use)
 
   use('https://git.sr.ht/~whynothugo/lsp_lines.nvim')
 
-  use('folke/lua-dev.nvim')
+  use('folke/neodev.nvim')
 
   -- Lsp Installation
   use('williamboman/mason.nvim')
