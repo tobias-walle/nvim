@@ -38,6 +38,11 @@ vim.api.nvim_create_user_command('X', function()
   vim.cmd('wqa')
 end, { desc = 'Format & Save & Close' })
 
+vim.api.nvim_create_user_command('W', function()
+  vim.cmd('bufdo lua vim.lsp.buf.format()')
+  vim.cmd('wa')
+end, { desc = 'Format & Save' })
+
 -- Line Numbers
 local function toggle_line_numbers()
   vim.opt.relativenumber = not vim.opt.relativenumber._value
@@ -50,9 +55,10 @@ vim.api.nvim_create_user_command('TL', toggle_line_numbers, { desc = 'Toggle lin
 wk.register({
   ['<leader>x'] = {
     name = 'Terminal',
-    x = { '<cmd>Ttoggle<cr>', 'Toggle terminal' },
+    x = { '<cmd>vert Ttoggle<cr>', 'Toggle terminal' },
     c = { '<cmd>Tclear<cr>', 'Clear terminal' },
-    f = { '<cmd>T cd %:p:h<cr>', 'Change working dir to current file' },
+    q = { '<cmd>Tclose<cr>', 'Close terminal' },
+    f = { '<cmd>T cd %:p:h<cr><cmd>vert Topen<cr>', 'Change working dir to current file' },
   },
 })
 

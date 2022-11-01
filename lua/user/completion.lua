@@ -1,3 +1,5 @@
+local U = require('user.utils')
+
 vim.cmd([[
 set completeopt=menuone,noinsert,noselect
 set shortmess+=c
@@ -44,13 +46,10 @@ local cssls_capabilities = vim.lsp.protocol.make_client_capabilities()
 cssls_capabilities.textDocument.completion.completionItem.snippetSupport = true
 lspconfig.cssls.setup({ on_attach = on_attach_disable_formatting, capabilities = cssls_capabilities })
 
-local luadev = require('lua-dev').setup({
-  lspconfig = {
-    on_attach = on_attach_disable_formatting,
-    -- settings = {Lua = {diagnostics = {globals = {'vim'}}}}
-  },
+require('neodev').setup({})
+lspconfig.sumneko_lua.setup({
+  on_attach = on_attach_disable_formatting,
 })
-lspconfig.sumneko_lua.setup(luadev)
 
 lspconfig.jsonls.setup({
   capabilities = cssls_capabilities,
@@ -113,7 +112,7 @@ require('null-ls').setup({
     require('null-ls').builtins.formatting.prettier,
     require('null-ls').builtins.diagnostics.eslint_d.with({
       condition = function(utils)
-        return utils.root_has_file({ '.eslintrc.js', '.eslintrc.yml', '.eslintrc.json' })
+        return utils.root_has_file({ '.eslintrc.js', '.eslintrc.cjs', '.eslintrc.yml', '.eslintrc.json' })
       end,
     }),
     require('null-ls').builtins.formatting.eslint_d,
