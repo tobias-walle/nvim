@@ -4,7 +4,9 @@ vim.cmd([[colorscheme tokyonight]])
 vim.cmd([[hi LspInlayHint guifg=#4d7a80 guibg=#1f2335]])
 
 -- UI
-require('dressing').setup({})
+require('dressing').setup({
+  input = { insert_only = false },
+})
 
 -- Tabs
 require('luatab').setup({})
