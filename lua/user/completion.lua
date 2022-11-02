@@ -14,6 +14,7 @@ local lspInlayhints = require('lsp-inlayhints')
 lspInlayhints.setup()
 
 require('mason').setup()
+require('nu').setup({})
 
 local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -58,12 +59,6 @@ lspconfig.jsonls.setup({
 })
 lspconfig.pyright.setup({ on_attach = on_attach })
 lspconfig.taplo.setup({ cmd = { 'taplo', 'lsp', 'stdio' }, on_attach = on_attach })
-lspconfig.angularls.setup({
-  on_attach = function(client, bufnr)
-    client.resolved_capabilities.rename = false
-    on_attach(client, bufnr)
-  end,
-})
 
 local cmp = require('cmp')
 local compare = cmp.config.compare
@@ -159,6 +154,24 @@ end
 --   root_dir = lspconfig.util.root_pattern('deno.json', 'deno.jsonc')
 -- }
 
+local function disable_typescript_lsp_renaming_if_angular_is_active()
+  local clients = vim.lsp.get_active_clients()
+  local ts_active = U.some(clients, function(client)
+    return client.name == 'tsserver'
+  end)
+  local ng_active = U.some(clients, function(client)
+    return client.name == 'angularls'
+  end)
+  if ts_active and ng_active then
+    local ts_client = U.find(clients, function(client)
+      return client.name == 'tsserver'
+    end)
+    if ts_client ~= nil then
+      ts_client.server_capabilities.renameProvider = false
+    end
+  end
+end
+
 local ts_inlay_hint_options = {
   includeInlayParameterNameHints = 'all',
   includeInlayParameterNameHintsWhenArgumentMatchesName = false,
@@ -175,6 +188,7 @@ require('typescript').setup({
     on_attach = function(client, bufnr)
       client.server_capabilities.document_formatting = false
 
+      disable_typescript_lsp_renaming_if_angular_is_active()
       on_attach(client, bufnr)
     end,
 
@@ -196,6 +210,13 @@ require('typescript').setup({
       javascript = { inlayHints = ts_inlay_hint_options },
     },
   },
+})
+
+lspconfig.angularls.setup({
+  on_attach = function(client, bufnr)
+    disable_typescript_lsp_renaming_if_angular_is_active()
+    on_attach(client, bufnr)
+  end,
 })
 
 -- Better diagnostics

@@ -41,6 +41,9 @@ return require('packer').startup(function(use)
 
   use('folke/neodev.nvim')
 
+  -- Nushell
+  use({ 'LhKipp/nvim-nu', run = ':TSUpdate' })
+
   -- Lsp Installation
   use('williamboman/mason.nvim')
 
