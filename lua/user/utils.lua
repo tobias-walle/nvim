@@ -30,6 +30,30 @@ function M.map(list, mapper)
   return new_table
 end
 
+--- @generic T
+--- @generic R
+--- @param list T[]
+--- @param check fun (item: T, index: integer): boolean
+--- @return T | nil
+function M.find(list, check)
+  for i, v in ipairs(list) do
+    if check(v, i) then
+      return v
+    end
+  end
+
+  return nil
+end
+
+--- @generic T
+--- @generic R
+--- @param list T[]
+--- @param check fun (item: T, index: integer): boolean
+--- @return boolean
+function M.some(list, check)
+  return M.find(list, check) ~= nil
+end
+
 --- @param table table
 --- @return integer
 function M.size(table)
