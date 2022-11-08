@@ -16,6 +16,9 @@ return require('packer').startup(function(use)
   use('nvim-treesitter/playground')
   use('nvim-treesitter/nvim-treesitter-textobjects')
 
+  -- Tmux
+  use('christoomey/vim-tmux-navigator')
+
   -- Autocompletion & Diagnostics
   use('neovim/nvim-lspconfig')
   use('NoahTheDuke/vim-just') -- Syntax highlighting for justfiles
@@ -116,4 +119,7 @@ return require('packer').startup(function(use)
 
   -- Replace
   use('tpope/vim-abolish')
+
+  -- Learning
+  use('ThePrimeagen/vim-be-good')
 end)
