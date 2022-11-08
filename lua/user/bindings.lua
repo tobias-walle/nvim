@@ -15,12 +15,6 @@ vim.g.maplocalleader = ' '
 -- Copy/Pasta
 map('v', '<Leader>y', '"+y')
 
--- Pane Switching
-map('n', '<C-j>', '<C-W>j')
-map('n', '<C-k>', '<C-W>k')
-map('n', '<C-h>', '<C-W>h')
-map('n', '<C-l>', '<C-W>l')
-
 -- Increment
 map('n', '<C-n>', '<C-a>')
 
@@ -34,9 +28,9 @@ wk.register({
 
 -- General
 vim.api.nvim_create_user_command('X', function()
-  vim.cmd('bufdo lua vim.lsp.buf.format()')
+  -- vim.cmd('bufdo lua vim.lsp.buf.format()')
   vim.cmd('wqa')
-end, { desc = 'Format & Save & Close' })
+end, { desc = 'Save & Close' })
 
 vim.api.nvim_create_user_command('W', function()
   vim.cmd('bufdo lua vim.lsp.buf.format()')
