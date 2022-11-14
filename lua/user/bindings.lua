@@ -215,24 +215,9 @@ wk.register({
 wk.register({
   ['<leader>e'] = {
     name = 'File Explorer',
-    e = {
-      function()
-        require('telescope').extensions.file_browser.file_browser()
-      end,
-      'Open FileBrowser relative to cwd',
-    },
-    f = {
-      function()
-        require('telescope').extensions.file_browser.file_browser({ path = vim.fn.expand('%:p:h') })
-      end,
-      'Open FileBrowser',
-    },
-    n = {
-      name = 'Neotree',
-      e = { '<cmd>Neotree toggle<CR>', 'Open Explorer' },
-      f = { '<cmd>Neotree reveal<CR>', 'Open Explorer and focus current file', silent = false },
-      q = { '<cmd>Neotree close<CR>', 'Close Explorer' },
-    },
+    e = { '<cmd>Neotree toggle<CR>', 'Open Explorer' },
+    f = { '<cmd>Neotree reveal<CR>', 'Open Explorer and focus current file', silent = false },
+    q = { '<cmd>Neotree close<CR>', 'Close Explorer' },
   },
 })
 
