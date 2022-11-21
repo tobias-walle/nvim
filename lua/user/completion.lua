@@ -160,7 +160,7 @@ local function ts_filter(arr, fn)
 end
 
 local function ts_filter_react_dts(value)
-  return string.match(value.uri, 'react/index.d.ts') == nil
+  return string.match(value.targetUri, 'react/index.d.ts') == nil
 end
 
 -- lspconfig.denols.setup {
