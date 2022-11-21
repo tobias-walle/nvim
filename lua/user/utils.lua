@@ -4,6 +4,11 @@ local async = require('plenary.async')
 local Popup = require('nui.popup')
 local event = require('nui.utils.autocmd').event
 
+function dbg(arg)
+  print(vim.inspect(arg))
+  return arg
+end
+
 --- @param variable unknown
 --- @param name string
 --- @param expected_type string
