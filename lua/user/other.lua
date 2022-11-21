@@ -30,6 +30,9 @@ vim.g.mundo_preview_height = 30
 vim.g.mundo_preview_bottom = true
 
 -- Treesitter
+require('treesitter-context').setup({
+  enable = true,
+})
 require('nvim-treesitter.configs').setup({
   ensure_installed = 'all',
   sync_install = false,
@@ -84,6 +87,9 @@ require('nvim-treesitter.configs').setup({
     },
   },
 })
+
+-- Aerial (Outline)
+require('aerial').setup()
 
 -- Comments
 require('Comment').setup({
