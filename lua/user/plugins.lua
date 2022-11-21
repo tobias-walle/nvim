@@ -49,6 +49,7 @@ return require('packer').startup(function(use)
 
   -- Lsp Installation
   use('williamboman/mason.nvim')
+  use('williamboman/mason-lspconfig.nvim')
 
   -- Focus Areas
   use('hoschi/yode-nvim')

@@ -1,8 +1,4 @@
-function dbg(arg)
-  print(vim.inspect(arg))
-  return arg
-end
-
+require('user.utils')
 require('user.plugins')
 
 require('user.bindings')
