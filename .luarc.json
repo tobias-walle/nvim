@@ -1,10 +1,10 @@
 {
-    "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
-    "Lua.diagnostics.disable": [
-        "missing-parameter",
-        "redefined-local"
-    ],
-    "Lua.diagnostics.globals": [
-        "dbg"
-    ]
+  "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
+  "Lua.diagnostics.disable": [
+    "missing-parameter",
+    "redefined-local"
+  ],
+  "Lua.diagnostics.globals": [
+    "dbg"
+  ]
 }
