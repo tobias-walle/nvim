@@ -211,11 +211,12 @@ wk.register({
   },
 })
 
--- File Explorer
+-- Explorer (File/Outline)
 wk.register({
   ['<leader>e'] = {
     name = 'File Explorer',
     e = { '<cmd>Neotree toggle<CR>', 'Open Explorer' },
+    o = { '<cmd>AerialToggle<CR>', 'Toggle Outline Explorer' },
     f = { '<cmd>Neotree reveal<CR>', 'Open Explorer and focus current file', silent = false },
     q = { '<cmd>Neotree close<CR>', 'Close Explorer' },
   },
