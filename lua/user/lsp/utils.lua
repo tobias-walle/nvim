@@ -5,12 +5,12 @@ local null_ls = require('null-ls')
 
 ---@alias LspSetupFun fun(name: string)
 ---@alias NullSetupFun fun(name: string): unknown[]
----@alias LspMap table<string, LspSetupFun>
+---@alias LspMap table<string, LspSetupFun | { [1]: LspSetupFun, install: boolean }>
 ---@alias NullMap table<string, NullSetupFun>
 ---@alias LspConfig { lsp: LspMap, null_ls: NullMap }
 
-local snippet_capabilities = vim.lsp.protocol.make_client_capabilities()
-snippet_capabilities.textDocument.completion.completionItem.snippetSupport = true
+M.snippet_capabilities = vim.lsp.protocol.make_client_capabilities()
+M.snippet_capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 ---@diagnostic disable-next-line: unused-local
 function M.on_attach(client, bufnr)
@@ -48,8 +48,15 @@ function M.apply_config(config)
     null_ls = {},
   }
 
-  for server_name, setup in pairs(config.lsp) do
-    table.insert(ensure_installed.lsp, server_name)
+  for server_name, options in pairs(config.lsp) do
+    if type(options) == 'function' then
+      options = { options }
+    end
+    local setup = options[1]
+    local install = options.install ~= false
+    if install then
+      table.insert(ensure_installed.lsp, server_name)
+    end
     setup(server_name)
   end
 

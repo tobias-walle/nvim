@@ -1,0 +1,15 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1
+  },
+  "1 error pnpm": {
+    "code": "ERR_PNPM_CANNOT_REMOVE_MISSING_DEPS",
+    "hint": "Available dependencies: n, prettier, pretty-quick, refactor-ts, refactoring",
+    "err": {
+      "name": "pnpm",
+      "message": "Cannot remove '@angular/language-server', 'typescript': no such dependencies found in 'dependencies'",
+      "code": "ERR_PNPM_CANNOT_REMOVE_MISSING_DEPS",
+      "stack": "pnpm: Cannot remove '@angular/language-server', 'typescript': no such dependencies found in 'dependencies'\n    at Object.handler (/Users/tobias.walle/Library/pnpm/global-packages/5/node_modules/.pnpm/pnpm@6.32.4/node_modules/pnpm/dist/pnpm.cjs:122967:15)\n    at async /Users/tobias.walle/Library/pnpm/global-packages/5/node_modules/.pnpm/pnpm@6.32.4/node_modules/pnpm/dist/pnpm.cjs:182129:21\n    at async run (/Users/tobias.walle/Library/pnpm/global-packages/5/node_modules/.pnpm/pnpm@6.32.4/node_modules/pnpm/dist/pnpm.cjs:182103:34)\n    at async runPnpm (/Users/tobias.walle/Library/pnpm/global-packages/5/node_modules/.pnpm/pnpm@6.32.4/node_modules/pnpm/dist/pnpm.cjs:182322:5)\n    at async /Users/tobias.walle/Library/pnpm/global-packages/5/node_modules/.pnpm/pnpm@6.32.4/node_modules/pnpm/dist/pnpm.cjs:182314:7"
+    }
+  }
+}

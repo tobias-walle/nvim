@@ -13,9 +13,9 @@ local config = {
     ['gopls'] = L.setup_default,
     ['kotlin_language_server'] = L.setup_default,
     ['taplo'] = L.setup_default,
-    ['hls'] = L.setup_without_formatting,
+    ['hls'] = { L.setup_without_formatting, install = false },
     ['tsserver'] = require('user.lsp.typescript').setup_typescript,
-    ['angularls'] = require('user.lsp.typescript').setup_angular,
+    ['angularls'] = { require('user.lsp.typescript').setup_angular, install = false },
     ['cssls'] = function(name)
       lspconfig[name].setup({
         on_attach = L.on_attach_disable_formatting,
