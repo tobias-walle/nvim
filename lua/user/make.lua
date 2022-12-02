@@ -1,8 +1,8 @@
 local M = {}
 
-function M.typeCheck()
+local function createTypescriptCommand(cmd)
   local lines = { '' }
-  local makeprg = 'yarn type-check'
+  local makeprg = cmd
   local errorformat = [[%A%f(%l\,%c): %trror TS%n: %m,%C%m,%-G]]
 
   local cmd = vim.fn.expandcmd(makeprg)
@@ -27,68 +27,27 @@ function M.typeCheck()
     stdout_buffered = true,
     stderr_buffered = true,
   })
+end
+
+function M.typeCheck()
+  createTypescriptCommand('yarn type-check')
 end
 
 function M.tscCheck()
-  local lines = { '' }
-  local makeprg = 'yarn tsc --noEmit'
-  local errorformat = [[%A%f(%l\,%c): %trror TS%n: %m,%C%m,%-G]]
+  createTypescriptCommand('yarn tsc --noEmit')
+end
 
-  local cmd = vim.fn.expandcmd(makeprg)
-
-  local function on_event(job_id, data, event)
-    if event == 'stdout' or event == 'stderr' then
-      if data then
-        vim.list_extend(lines, data)
-      end
-    end
-
-    if event == 'exit' then
-      vim.fn.setqflist({}, ' ', { title = cmd, lines = lines, efm = errorformat })
-      vim.cmd([[ copen ]])
-    end
-  end
-
-  local job_id = vim.fn.jobstart(cmd, {
-    on_stderr = on_event,
-    on_stdout = on_event,
-    on_exit = on_event,
-    stdout_buffered = true,
-    stderr_buffered = true,
-  })
+function M.tsBuild()
+  createTypescriptCommand('yarn tsc --build')
 end
 
 function M.ngCheck()
-  local lines = { '' }
-  local makeprg = 'yarn ng build'
-  local errorformat = [[%A%f(%l\,%c): %trror TS%n: %m,%C%m,%-G]]
-
-  local cmd = vim.fn.expandcmd(makeprg)
-
-  local function on_event(job_id, data, event)
-    if event == 'stdout' or event == 'stderr' then
-      if data then
-        vim.list_extend(lines, data)
-      end
-    end
-
-    if event == 'exit' then
-      vim.fn.setqflist({}, ' ', { title = cmd, lines = lines, efm = errorformat })
-      vim.cmd([[ copen ]])
-    end
-  end
-
-  local job_id = vim.fn.jobstart(cmd, {
-    on_stderr = on_event,
-    on_stdout = on_event,
-    on_exit = on_event,
-    stdout_buffered = true,
-    stderr_buffered = true,
-  })
+  createTypescriptCommand('yarn ng build')
 end
 
-vim.cmd([[ command! Mtc lua require('user.make').typeCheck() ]])
-vim.cmd([[ command! Mtsc lua require('user.make').tscCheck() ]])
-vim.cmd([[ command! Mng lua require('user.make').ngCheck() ]])
+vim.api.nvim_create_user_command('Mtc', M.typeCheck, {})
+vim.api.nvim_create_user_command('Mtsc', M.tscCheck, {})
+vim.api.nvim_create_user_command('Mtsb', M.tsBuild, {})
+vim.api.nvim_create_user_command('Mng', M.ngCheck, {})
 
 return M

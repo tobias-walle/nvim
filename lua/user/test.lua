@@ -3,7 +3,7 @@ vim.g['test#strategy'] = 'neoterm'
 local configureJSTest = function()
   vim.g['test#javascript#jest#executable'] = 'yarn test'
   vim.g['test#javascript#runner'] = 'jest'
-  vim.g['test#project_root'] = vim.fn.expand('%:p:h')
+  -- vim.g['test#project_root'] = vim.fn.expand('%:p:h')
 end
 
 local test_au_group = vim.api.nvim_create_augroup('test', { clear = true })

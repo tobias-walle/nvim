@@ -258,6 +258,10 @@ wk.register({
     r = { '<cmd>Gitsigns reset_hunk<CR>', 'Reset Hunk' },
   },
 }, { mode = 'v' })
+
+vim.api.nvim_create_user_command('DiffO', function(opts)
+  vim.cmd('DiffviewOpen --base=LOCAL ' .. opts.args)
+end, { desc = 'Open Diff from locale', nargs = 1 })
 -- LuaFormatter on
 
 -- Merge
