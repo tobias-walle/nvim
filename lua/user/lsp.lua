@@ -31,7 +31,7 @@ local config = {
     end,
     ['omnisharp'] = function(name)
       local pid = vim.fn.getpid()
-      local omnisharp_bin = '/usr/local/bin/omnisharp'
+      local omnisharp_bin = 'omnisharp'
       lspconfig[name].setup({
         cmd = { omnisharp_bin, '--languageserver', '--hostPID', tostring(pid) },
         on_attach = L.on_attach,

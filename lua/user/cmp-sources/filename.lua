@@ -16,6 +16,7 @@ function S:complete(params, callback)
     callback({})
     return
   end
+  name = string.gsub(name, '%.spec', '')
   local split = casing.splitLowerCase(name)
   local pc = { label = casing.pascalCase(split) }
   local cc = { label = casing.camelCase(split) }

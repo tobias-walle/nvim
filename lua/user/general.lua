@@ -31,14 +31,15 @@ vim.opt.guifont = 'JetBrainsMono Nerd Font'
 vim.opt.fillchars = vim.opt.fillchars + 'diff:╱'
 
 local general_options_au_group = vim.api.nvim_create_augroup('general_options', { clear = true })
+
 vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufWinEnter' }, {
   pattern = '*',
   group = general_options_au_group,
   callback = function()
     -- Folding
-    vim.opt_local.foldlevelstart = 99
-    vim.opt_local.foldmethod = 'indent'
-    vim.opt_local.foldenable = false
+    vim.opt.foldlevelstart = 99
+    vim.opt.foldmethod = 'indent'
+    vim.opt.foldenable = false
     -- Disable autocomments
     vim.cmd([[setlocal formatoptions-=o]])
   end,
