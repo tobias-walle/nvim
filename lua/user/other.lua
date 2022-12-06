@@ -1,12 +1,6 @@
 -- Hop
 require('hop').setup({})
 
--- Autopairs
-require('nvim-autopairs').setup({ enable_moveright = false })
-
--- Autotags
-require('nvim-ts-autotag').setup({})
-
 -- Which key
 require('which-key').setup({})
 
@@ -16,9 +10,6 @@ vim.g.mergetool_prefer_revision = 'local'
 
 -- Neoclip
 require('neoclip').setup({})
-
--- Cargo Toml
-vim.cmd([[ autocmd BufRead Cargo.toml call crates#toggle() ]])
 
 -- Neoterm
 vim.g.neoterm_default_mod = 'belowright'

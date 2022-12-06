@@ -33,7 +33,6 @@ return require('packer').startup(function(use)
   use('hrsh7th/cmp-buffer')
   use('hrsh7th/cmp-path')
   use('simrat39/rust-tools.nvim')
-  use('mhinz/vim-crates')
   use('saecki/crates.nvim')
   use('jose-elias-alvarez/typescript.nvim')
   use('ray-x/lsp_signature.nvim')
@@ -126,4 +125,7 @@ return require('packer').startup(function(use)
 
   -- Learning
   use('ThePrimeagen/vim-be-good')
+
+  -- Faster startup
+  use('lewis6991/impatient.nvim')
 end)
