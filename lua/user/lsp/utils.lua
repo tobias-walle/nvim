@@ -6,7 +6,7 @@ local null_ls = require('null-ls')
 ---@alias LspSetupFun fun(name: string)
 ---@alias NullSetupFun fun(name: string): unknown[]
 ---@alias LspMap table<string, LspSetupFun | { [1]: LspSetupFun, install: boolean }>
----@alias NullMap table<string, NullSetupFun>
+---@alias NullMap table<string, NullSetupFun | { [1]: NullSetupFun, install: boolean }>
 ---@alias LspConfig { lsp: LspMap, null_ls: NullMap }
 
 M.snippet_capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -61,8 +61,15 @@ function M.apply_config(config)
   end
 
   local null_ls_sources = {}
-  for name, get_sources in pairs(config.null_ls) do
-    table.insert(ensure_installed.null_ls, name)
+  for name, options in pairs(config.null_ls) do
+    if type(options) == 'function' then
+      options = { options }
+    end
+    local get_sources = options[1]
+    local install = options.install ~= false
+    if install then
+      table.insert(ensure_installed.null_ls, name)
+    end
     local new_sources = get_sources(name)
     vim.list_extend(null_ls_sources, new_sources)
   end

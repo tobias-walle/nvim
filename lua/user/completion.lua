@@ -33,6 +33,7 @@ cmp.setup({
     { name = 'buffer', keyword_length = 3, max_item_count = 5 },
     { name = 'filename' },
     { name = 'luasnip', max_item_count = 5 },
+    { name = 'crates' },
   }),
   experimental = { ghost_text = true },
 })
