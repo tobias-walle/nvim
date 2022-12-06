@@ -1,3 +1,5 @@
+require('impatient')
+
 require('user.utils')
 require('user.plugins')
 
@@ -11,6 +13,7 @@ require('user.completion')
 require('user.lsp')
 require('user.explorer')
 require('user.other')
+require('user.autopairs')
 require('user.treesitter')
 require('user.style')
 require('user.test')
