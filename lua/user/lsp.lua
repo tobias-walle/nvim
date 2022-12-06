@@ -70,6 +70,12 @@ local config = {
         }),
       }
     end,
+    ['cspell'] = function(name)
+      return {
+        null_ls.builtins.code_actions[name],
+        null_ls.builtins.diagnostics[name],
+      }
+    end,
   },
 }
 
@@ -78,12 +84,20 @@ L.apply_config(config)
 -- Nushell
 require('nu').setup({})
 
--- Signature Help
-require('lsp_signature').setup({
-  hint_enable = true,
-  floating_window = false,
-  hint_prefix = '',
+-- Cargo.toml completion
+require('crates').setup({
+  null_ls = {
+    enabled = true,
+    name = 'crates.nvim',
+  },
 })
+
+-- Signature Help
+-- require('lsp_signature').setup({
+--   hint_enable = true,
+--   floating_window = false,
+--   hint_prefix = '',
+-- })
 
 -- Better diagnostics
 require('lsp_lines').setup()
