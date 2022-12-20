@@ -40,6 +40,7 @@ local config = {
     ['rust_analyzer'] = function()
       require('rust-tools').setup({
         tools = { autoSetHints = false, hover_with_actions = false },
+        reload_workspace_from_cargo_toml = false,
         server = {
           standalone = false,
           on_attach = L.on_attach,
@@ -65,15 +66,15 @@ local config = {
         null_ls.builtins.code_actions[name],
         null_ls.builtins.diagnostics[name].with({
           condition = function(utils)
-            return utils.root_has_file({ '.eslintrc.js', '.eslintrc.cjs', '.eslintrc.yml', '.eslintrc.json' })
+            return utils.root_has_file({
+              '.eslintrc.js',
+              '.eslintrc.cjs',
+              '.eslintrc.yml',
+              '.eslintrc.json',
+              '.eslintrc',
+            })
           end,
         }),
-      }
-    end,
-    ['cspell'] = function(name)
-      return {
-        null_ls.builtins.code_actions[name],
-        null_ls.builtins.diagnostics[name],
       }
     end,
   },

@@ -51,6 +51,17 @@ function M.find(list, check)
 end
 
 --- @generic T
+--- @param list T[]
+--- @return integer
+function M.len(list)
+  local count = 0
+  for _, _ in ipairs(list) do
+    count = count + 1
+  end
+  return count
+end
+
+--- @generic T
 --- @generic R
 --- @param list T[]
 --- @param check fun (item: T, index: integer): boolean

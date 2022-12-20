@@ -1,6 +1,7 @@
 local M = {}
 
 local wk = require('which-key')
+local U = require('user.utils')
 
 -- Utils
 local function map(mode, shortcut, command)
@@ -322,6 +323,14 @@ wk.register({
 wk.register({
   ['<leader>s'] = {
     name = 'Search',
+    x = {
+      function()
+        vim.ui.input({ prompt = 'Telescope: ' }, function(picker)
+          require('telescope.builtin')[picker]()
+        end)
+      end,
+      'Prompt Picker',
+    },
     u = {
       function()
         require('telescope.builtin').resume()
@@ -406,6 +415,7 @@ end
 
 -- Completion
 local refactor = require('user.utils.refactor')
+
 M.attach_completion = function(bufnr)
   local bmap = function(action, name)
     return { action, name, buffer = bufnr }
@@ -448,6 +458,7 @@ M.attach_completion = function(bufnr)
       e = bmap(function()
         vim.diagnostic.open_float()
       end, 'Show Errors'),
+      E = bmap('<cmd>RustOpenExternalDocs<cr>', 'Rust External Docs'),
       q = bmap(function()
         vim.diagnostic.setloclist()
       end, 'Save Errors to Loclist'),
