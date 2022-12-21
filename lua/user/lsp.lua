@@ -52,7 +52,13 @@ local config = {
       require('neodev').setup({})
       lspconfig[name].setup({
         on_attach = L.on_attach_disable_formatting,
-        settings = { Lua = { hint = { enable = true } } },
+        settings = {
+          Lua = {
+            hint = { enable = true },
+          },
+          workspace = { checkThirdParty = false },
+          telemetry = { enable = false },
+        },
       })
     end,
   },
