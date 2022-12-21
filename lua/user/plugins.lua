@@ -45,6 +45,8 @@ return require('packer').startup(function(use)
 
   use('folke/neodev.nvim')
 
+  use('j-hui/fidget.nvim') -- Spinner while lsp is loading
+
   -- Nushell
   use({ 'LhKipp/nvim-nu', run = ':TSUpdate' })
 

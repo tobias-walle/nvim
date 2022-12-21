@@ -122,3 +122,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
     require('lsp-inlayhints').on_attach(client, bufnr)
   end,
 })
+
+-- Spinner while lsp is loading
+require('fidget').setup({
+  text = {
+    spinner = 'dots',
+  },
+})
