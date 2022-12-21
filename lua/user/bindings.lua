@@ -197,7 +197,7 @@ wk.register({
 })
 
 -- Undo Tree
-map('n', '<leader>u', ':MundoToggle<CR>')
+map('n', '<leader>u', ':UndotreeToggle<CR>')
 
 -- Tabs
 wk.register({

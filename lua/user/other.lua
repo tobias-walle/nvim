@@ -15,10 +15,7 @@ require('neoclip').setup({})
 vim.g.neoterm_default_mod = 'belowright'
 
 -- Undotree
-vim.g.mundo_width = 45
-vim.g.mundo_preview_height = 30
-vim.g.mundo_preview_height = 30
-vim.g.mundo_preview_bottom = true
+vim.g.undotree_WindowLayout = 2
 
 -- Aerial (Outline)
 require('aerial').setup()

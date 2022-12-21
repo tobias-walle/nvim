@@ -72,7 +72,7 @@ return require('packer').startup(function(use)
   use('ThePrimeagen/harpoon')
 
   -- Undo
-  use('simnalamburt/vim-mundo')
+  use('mbbill/undotree')
 
   -- Git
   use('lewis6991/gitsigns.nvim')
