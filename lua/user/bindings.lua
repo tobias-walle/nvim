@@ -337,6 +337,18 @@ wk.register({
       end,
       'Resume',
     },
+    h = {
+      function()
+        require('telescope.builtin').help_tags()
+      end,
+      'Help',
+    },
+    H = {
+      function()
+        require('telescope.builtin').search_history()
+      end,
+      'Search History',
+    },
     f = {
       function()
         require('telescope.builtin').find_files()
@@ -354,6 +366,12 @@ wk.register({
         require('user.telescope').live_grep()
       end,
       'Find text with options',
+    },
+    z = {
+      function()
+        require('telescope.builtin').lsp_workspace_symbols()
+      end,
+      'Find workspace symbols',
     },
     c = {
       function()
@@ -431,13 +449,16 @@ M.attach_completion = function(bufnr)
         vim.lsp.buf.declaration()
       end, 'Go to declaration'),
       d = bmap(function()
-        vim.lsp.buf.definition()
+        require('telescope.builtin').lsp_definitions()
       end, 'Go to definition'),
+      t = bmap(function()
+        require('telescope.builtin').lsp_type_definitions()
+      end, 'Go to type defintions'),
       i = bmap(function()
-        vim.lsp.buf.implementation()
+        require('telescope.builtin').lsp_implementations()
       end, 'Go to implementation'),
       r = bmap(function()
-        vim.lsp.buf.references()
+        require('telescope.builtin').lsp_references()
       end, 'Go to references'),
     },
     ['<leader><leader>'] = {
@@ -547,10 +568,5 @@ end
 
 wk.register({ ['<C-E>'] = { '<Plug>luasnip-next-choice', 'Next Snippet' } }, { mode = 'i' })
 wk.register({ ['<C-E>'] = { '<Plug>luasnip-next-choice', 'Next Snippet' } }, { mode = 's' })
-
--- Typescript
--- vim.api.nvim_buf_set_keymap(bufnr, "n", "gs", ":TSLspOrganize<CR>", opts)
--- vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", ":TSLspRenameFile<CR>", opts)
--- vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", ":TSLspImportAll<CR>", opts)
 
 return M

@@ -89,8 +89,6 @@ function M.setup_typescript()
 
   -- Allow comments in tsconfig
   vim.cmd([[
-  set completeopt=menuone,noinsert,noselect
-  set shortmess+=c
 
   autocmd BufNewFile,BufRead tsconfig*.json setlocal filetype=jsonc
   ]])
