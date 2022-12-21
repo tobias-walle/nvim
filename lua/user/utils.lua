@@ -239,4 +239,11 @@ function M.starts_with(s, prefix)
   return string.sub(s, 1, string.len(prefix)) == prefix
 end
 
+--- @param a table
+--- @param b table
+--- @return table
+function M.merge(a, b)
+  return vim.tbl_deep_extend('force', {}, a, b)
+end
+
 return M

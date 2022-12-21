@@ -18,6 +18,8 @@ vim.opt.mouse = 'a'
 vim.opt.pastetoggle = '<F2>'
 vim.opt.cursorline = true
 vim.opt.autoread = true
+vim.opt.completeopt = 'menuone,noinsert,noselect'
+vim.opt.shortmess = vim.opt.shortmess + 'c'
 
 vim.opt.backup = false
 vim.opt.writebackup = false
