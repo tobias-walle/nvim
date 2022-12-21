@@ -1,47 +1,48 @@
 -- Options
-vim.opt.encoding = 'utf-8'
-vim.opt.hidden = true
-vim.opt.wrap = false
-vim.opt.termguicolors = true
-vim.opt.splitbelow = true
-vim.opt.splitright = true
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
-vim.opt.smarttab = true
-vim.opt.expandtab = true
-vim.opt.autoindent = true
-vim.opt.copyindent = true
-vim.opt.smartindent = false
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.mouse = 'a'
-vim.opt.pastetoggle = '<F2>'
-vim.opt.cursorline = true
-vim.opt.autoread = true
-vim.opt.completeopt = 'menuone,noinsert,noselect'
+vim.o.encoding = 'utf-8'
+vim.o.hidden = true
+vim.o.wrap = false
+vim.o.termguicolors = true
+vim.o.splitbelow = true
+vim.o.splitright = true
+vim.o.tabstop = 2
+vim.o.shiftwidth = 2
+vim.o.smarttab = true
+vim.o.expandtab = true
+vim.o.autoindent = true
+vim.o.copyindent = true
+vim.o.smartindent = false
+vim.o.number = true
+vim.o.relativenumber = true
+vim.o.mouse = 'a'
+vim.o.pastetoggle = '<F2>'
+vim.o.cursorline = true
+vim.o.autoread = true
+vim.o.completeopt = 'menuone,noinsert,noselect'
 vim.opt.shortmess = vim.opt.shortmess + 'c'
 
-vim.opt.backup = false
-vim.opt.writebackup = false
-vim.opt.updatetime = 300
-vim.opt.timeoutlen = 500
-vim.opt.scrolloff = 15
-vim.opt.showtabline = 1
-vim.opt.undofile = true
-vim.opt.guifont = 'JetBrainsMono Nerd Font'
+vim.o.backup = false
+vim.o.writebackup = false
+vim.o.updatetime = 50
+vim.o.timeoutlen = 500
+vim.wo.signcolumn = 'yes'
+vim.o.scrolloff = 15
+vim.o.showtabline = 1
+vim.o.undofile = true
+vim.o.guifont = 'JetBrainsMono Nerd Font'
 -- see https://github.com/sindrets/diffview.nvim/issues/35
 vim.opt.fillchars = vim.opt.fillchars + 'diff:╱'
 
+vim.cmd([[set formatoptions-=o]])
 local general_options_au_group = vim.api.nvim_create_augroup('general_options', { clear = true })
-
 vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufWinEnter' }, {
   pattern = '*',
   group = general_options_au_group,
   callback = function()
     -- Folding
-    vim.opt.foldlevelstart = 99
-    vim.opt.foldmethod = 'indent'
-    vim.opt.foldenable = false
+    vim.o.foldlevelstart = 99
+    vim.o.foldmethod = 'indent'
+    vim.o.foldenable = false
     -- Disable autocomments
     vim.cmd([[setlocal formatoptions-=o]])
   end,
@@ -53,6 +54,6 @@ vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter' }, {
   pattern = '*',
   group = checktime_au_group,
   callback = function()
-    vim.api.nvim_command('checktime')
+    vim.cmd.checktime()
   end,
 })
