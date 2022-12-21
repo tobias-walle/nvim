@@ -28,6 +28,5 @@ require('Comment').setup({
   pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
 })
 
--- Yode
---[[ require('yode-nvim.helper').getIndentCount = function(text) return 0 end ]]
---[[ require('yode-nvim').setup({}) ]]
+-- Colors
+require('colorizer').setup()

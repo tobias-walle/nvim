@@ -12,7 +12,11 @@ return require('packer').startup(function(use)
   use('stevearc/dressing.nvim')
 
   -- treesitter
-  use({ 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' })
+  local function update_treesitter()
+    pcall(require('nvim-treesitter.install').update({ with_sync = true }))
+  end
+
+  use({ 'nvim-treesitter/nvim-treesitter', run = update_treesitter })
   use('nvim-treesitter/playground')
   use('nvim-treesitter/nvim-treesitter-textobjects')
   use('nvim-treesitter/nvim-treesitter-context')
@@ -48,15 +52,12 @@ return require('packer').startup(function(use)
   use('j-hui/fidget.nvim') -- Spinner while lsp is loading
 
   -- Nushell
-  use({ 'LhKipp/nvim-nu', run = ':TSUpdate' })
+  use({ 'LhKipp/nvim-nu', run = update_treesitter })
 
   -- Lsp Installation
   use('williamboman/mason.nvim')
   use('williamboman/mason-lspconfig.nvim')
   use('WhoIsSethDaniel/mason-tool-installer.nvim')
-
-  -- Focus Areas
-  use('hoschi/yode-nvim')
 
   -- Help/Docs
   use('folke/which-key.nvim')
@@ -101,7 +102,14 @@ return require('packer').startup(function(use)
   use('phaazon/hop.nvim')
 
   -- Tests
-  use({ 'vim-test/vim-test', run = ':UpdateRemotePlugins' })
+  use({
+    'vim-test/vim-test',
+    run = function()
+      pcall(function()
+        vim.cmd([[UpdateRemotePlugins]])
+      end)
+    end,
+  })
 
   -- Debugging
   use('mfussenegger/nvim-dap')
@@ -120,7 +128,7 @@ return require('packer').startup(function(use)
   use('kassio/neoterm')
 
   -- Color Codes
-  use({ 'RRethy/vim-hexokinase', run = 'make hexokinase' })
+  use('norcalli/nvim-colorizer.lua')
 
   -- Replace
   use('tpope/vim-abolish')

@@ -1,7 +1,11 @@
+if require('user.bootstrap') then
+  return
+end
+
 require('impatient')
 
-require('user.utils')
 require('user.plugins')
+require('user.utils')
 
 require('user.bindings')
 require('user.general')
