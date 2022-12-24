@@ -44,7 +44,16 @@ local config = {
         server = {
           standalone = false,
           on_attach = L.on_attach,
-          settings = { ['rust-analyzer'] = { checkOnSave = { command = 'clippy' } } },
+          settings = {
+            ['rust-analyzer'] = {
+              checkOnSave = { command = 'clippy' },
+              completion = {
+                callable = {
+                  snippets = 'none',
+                },
+              },
+            },
+          },
         },
       })
     end,
