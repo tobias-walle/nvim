@@ -8,9 +8,9 @@ cmp.register_source('filename', require('user.cmp-sources.filename').new())
 
 cmp.setup({
   mapping = require('user.bindings').cmp_mapping(cmp),
-  preselect = cmp.PreselectMode.Item,
+  preselect = cmp.PreselectMode.None,
   completion = {
-    completeopt = 'menu,menuone,noinsert',
+    completeopt = 'menu,menuone,noinsert,noselect',
   },
   snippet = {
     expand = function(args)
