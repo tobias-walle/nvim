@@ -117,7 +117,7 @@ require('neo-tree').setup({
       always_show = {},
       never_show = {},
     },
-    follow_current_file = true,
+    follow_current_file = false,
     group_empty_dirs = false,
     hijack_netrw_behavior = 'open_current',
     use_libuv_file_watcher = true,
@@ -192,6 +192,15 @@ require('neo-tree').setup({
       ['?'] = 'show_help',
       ['<'] = 'prev_source',
       ['>'] = 'next_source',
+    },
+  },
+  event_handlers = {
+    {
+      event = 'file_opened',
+      handler = function(file_path)
+        --auto close
+        require('neo-tree').close_all()
+      end,
     },
   },
 })

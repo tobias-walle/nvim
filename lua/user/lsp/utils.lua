@@ -41,6 +41,12 @@ function M.setup_null_ls_formatting(name)
   }
 end
 
+function M.setup_null_ls_diagnostics(name)
+  return {
+    null_ls.builtins.diagnostics[name],
+  }
+end
+
 ---@param config LspConfig
 function M.apply_config(config)
   local ensure_installed = {
