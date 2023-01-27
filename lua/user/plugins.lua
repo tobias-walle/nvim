@@ -138,4 +138,7 @@ return require('packer').startup(function(use)
 
   -- Faster startup
   use('lewis6991/impatient.nvim')
+
+  -- Paste images from clipboard
+  use('ekickx/clipboard-image.nvim')
 end)

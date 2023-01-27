@@ -449,16 +449,20 @@ M.attach_completion = function(bufnr)
         vim.lsp.buf.declaration()
       end, 'Go to declaration'),
       d = bmap(function()
-        require('telescope.builtin').lsp_definitions()
+        -- require('telescope.builtin').lsp_definitions()
+        vim.lsp.buf.definition()
       end, 'Go to definition'),
       t = bmap(function()
-        require('telescope.builtin').lsp_type_definitions()
+        -- require('telescope.builtin').lsp_type_definitions()
+        vim.lsp.buf.type_definition()
       end, 'Go to type defintions'),
       i = bmap(function()
-        require('telescope.builtin').lsp_implementations()
+        -- require('telescope.builtin').lsp_implementations()
+        vim.lsp.buf.implementation()
       end, 'Go to implementation'),
       r = bmap(function()
-        require('telescope.builtin').lsp_references()
+        -- require('telescope.builtin').lsp_references()
+        vim.lsp.buf.references()
       end, 'Go to references'),
     },
     ['<leader><leader>'] = {

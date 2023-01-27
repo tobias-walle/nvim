@@ -27,3 +27,15 @@ require('Comment').setup({
 
 -- Colors
 require('colorizer').setup()
+
+-- Paste Images
+require('clipboard-image').setup({
+  default = {
+    img_dir = 'media',
+    img_dir_txt = 'media',
+    img_name = function()
+      ---@diagnostic disable-next-line: param-type-mismatch
+      return vim.fn.input('Image Filename: ')
+    end,
+  },
+})
