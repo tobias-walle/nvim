@@ -2,6 +2,7 @@ local M = {}
 
 local lspconfig = require('lspconfig')
 local null_ls = require('null-ls')
+local U = require('user.utils')
 
 ---@alias LspSetupFun fun(name: string)
 ---@alias NullSetupFun fun(name: string): unknown[]
