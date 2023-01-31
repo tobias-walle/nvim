@@ -63,6 +63,6 @@ end
 M.a = function()
   M.smart_rename()
 end
-local search = 'smart_renxxame'
+local search = 'smart_rename'
 
 return M
