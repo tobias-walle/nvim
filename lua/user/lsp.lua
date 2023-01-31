@@ -81,15 +81,15 @@ local config = {
         null_ls.builtins.formatting[name],
         null_ls.builtins.code_actions[name],
         null_ls.builtins.diagnostics[name].with({
-          -- condition = function(utils)
-          --   return utils.root_has_file({
-          --     '.eslintrc.js',
-          --     '.eslintrc.cjs',
-          --     '.eslintrc.yml',
-          --     '.eslintrc.json',
-          --     '.eslintrc',
-          --   })
-          -- end,
+          condition = function(utils)
+            return utils.root_has_file({
+              '.eslintrc.js',
+              '.eslintrc.cjs',
+              '.eslintrc.yml',
+              '.eslintrc.json',
+              '.eslintrc',
+            })
+          end,
         }),
       }
     end,

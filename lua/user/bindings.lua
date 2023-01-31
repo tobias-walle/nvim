@@ -38,6 +38,10 @@ vim.api.nvim_create_user_command('W', function()
   vim.cmd('wa')
 end, { desc = 'Format & Save' })
 
+vim.api.nvim_create_user_command('SpellAddAll', 'let @a = "]Szg" | norm 1000@a', {
+  desc = 'Add all words in buffer to spell check white list',
+})
+
 -- Line Numbers
 local function toggle_line_numbers()
   vim.opt.relativenumber = not vim.opt.relativenumber._value

@@ -141,4 +141,7 @@ return require('packer').startup(function(use)
 
   -- Paste images from clipboard
   use('ekickx/clipboard-image.nvim')
+
+  -- Session
+  use('tpope/vim-obsession')
 end)

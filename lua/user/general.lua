@@ -29,6 +29,10 @@ vim.o.scrolloff = 15
 vim.o.showtabline = 1
 vim.o.undofile = true
 vim.o.guifont = 'JetBrainsMono Nerd Font'
+vim.opt.spelllang = 'en,de'
+vim.o.spell = true
+vim.o.spellcapcheck = false
+
 -- see https://github.com/sindrets/diffview.nvim/issues/35
 vim.opt.fillchars = vim.opt.fillchars + 'diff:╱'
 
