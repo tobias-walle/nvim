@@ -144,16 +144,32 @@ export const {name}: Component = () => {{
   ),
 
   s(
+    'spcomp',
+    fmt(
+      [[
+import {{ ParentComponent }} from "solid-js";
+
+export const {name}: ParentComponent = () => {{
+  return (
+    <div>{content}</div>
+  );
+}}
+  ]],
+      { name = d(1, get_cased_file_name_node(casing.pascalCase)), content = i(0, 'Hello World') }
+    )
+  ),
+
+  s(
     'scompp',
     fmt(
       [[
 import {{ Component }} from "solid-js";
 
-export interface {props} {{
+type Props = {{
   {props_content}
 }}
 
-export const {name}: Component<{props}> = (props) => {{
+export const {name}: Component<Props> = (props) => {{
   return (
     <div>{content}</div>
   );
@@ -163,9 +179,48 @@ export const {name}: Component<{props}> = (props) => {{
         name = d(1, get_cased_file_name_node(casing.pascalCase)),
         props_content = i(2),
         content = i(0, 'Hello World'),
-        props = f(function(args)
-          return args[1][1] .. 'Props'
-        end, { 1 }),
+      }
+    )
+  ),
+
+  s(
+    'spcompp',
+    fmt(
+      [[
+import {{ ParentComponent }} from "solid-js";
+
+type Props = {{
+  {props_content}
+}}
+
+export const {name}: ParentComponent<Props> = (props) => {{
+  return (
+    <div>{content}</div>
+  );
+}}
+  ]],
+      {
+        name = d(1, get_cased_file_name_node(casing.pascalCase)),
+        props_content = i(2),
+        content = i(0, 'Hello World'),
+      }
+    )
+  ),
+
+  s(
+    'createStyles',
+    fmt(
+      [[
+const styles = createStyles({{
+  {name}: () =>
+    css({{
+      {class}
+    }}),
+}});
+  ]],
+      {
+        name = i(1, 'wrapper'),
+        class = i(0),
       }
     )
   ),
