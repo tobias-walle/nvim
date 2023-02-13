@@ -58,7 +58,7 @@ local config = {
         },
       })
     end,
-    ['sumneko_lua'] = function(name)
+    ['lua_ls'] = function(name)
       require('neodev').setup({})
       lspconfig[name].setup({
         on_attach = L.on_attach_disable_formatting,
