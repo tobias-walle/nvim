@@ -61,7 +61,7 @@ function M.setup_typescript()
     server = {
 
       on_attach = function(client, bufnr)
-        client.server_capabilities.document_formatting = false
+        L.disable_formatting(client)
 
         disable_typescript_lsp_renaming_if_angular_is_active()
         L.on_attach(client, bufnr)
@@ -97,7 +97,7 @@ end
 function M.setup_angular()
   lspconfig.angularls.setup({
     on_attach = function(client, bufnr)
-      client.server_capabilities.document_formatting = false
+      L.disable_formatting(client)
 
       disable_typescript_lsp_renaming_if_angular_is_active()
       L.on_attach(client, bufnr)
