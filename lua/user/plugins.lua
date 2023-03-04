@@ -10,6 +10,8 @@ return require('packer').startup(function(use)
 
   -- UI
   use('stevearc/dressing.nvim')
+  use('rcarriga/nvim-notify')
+  use('folke/noice.nvim')
 
   -- treesitter
   local function update_treesitter()
