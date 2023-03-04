@@ -128,7 +128,7 @@ return require('packer').startup(function(use)
   use('kassio/neoterm')
 
   -- Color Codes
-  use('norcalli/nvim-colorizer.lua')
+  use('NvChad/nvim-colorizer.lua')
 
   -- Replace
   use('tpope/vim-abolish')

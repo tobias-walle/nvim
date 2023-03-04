@@ -7,14 +7,14 @@ local null_ls = require('null-ls')
 ---@type LspConfig
 local config = {
   lsp = {
-    ['yamlls'] = L.setup_default,
     ['tailwindcss'] = L.setup_default,
     ['pyright'] = L.setup_default,
-    ['r_language_server'] = L.setup_default,
+    ['r_language_server'] = { L.setup_default, install = false },
     ['gopls'] = L.setup_default,
     ['kotlin_language_server'] = L.setup_default,
     ['taplo'] = L.setup_default,
     ['hls'] = { L.setup_without_formatting, install = false },
+    ['yamlls'] = L.setup_without_formatting,
     ['tsserver'] = require('user.lsp.typescript').setup_typescript,
     ['angularls'] = { require('user.lsp.typescript').setup_angular, install = false },
     ['cssls'] = function(name)
@@ -48,6 +48,9 @@ local config = {
           settings = {
             ['rust-analyzer'] = {
               checkOnSave = { command = 'clippy' },
+              cargo = {
+                allFeatures = true,
+              },
               completion = {
                 callable = {
                   snippets = 'none',

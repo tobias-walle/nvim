@@ -19,8 +19,12 @@ function M.on_attach(client, bufnr)
   require('user.bindings').attach_completion(bufnr)
 end
 
+function M.disable_formatting(client)
+  client.server_capabilities.documentFormattingProvider = false
+end
+
 function M.on_attach_disable_formatting(client, bufnr)
-  client.server_capabilities.document_formatting = false
+  M.disable_formatting(client)
   M.on_attach(client, bufnr)
 end
 
