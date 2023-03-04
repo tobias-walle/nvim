@@ -383,6 +383,12 @@ wk.register({
       end,
       'Find command',
     },
+    n = {
+      function()
+        require('telescope').extensions.notify.notify()
+      end,
+      'Find notifications',
+    },
     e = {
       function()
         require('telescope').extensions.file_browser.file_browser({ path = vim.fn.expand('%:p:h') })

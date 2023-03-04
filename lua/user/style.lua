@@ -14,6 +14,12 @@ hi SpellRare cterm=undercurl gui=undercurl guisp=#839EEE
 require('dressing').setup({
   input = { insert_only = false },
 })
+require('notify').setup({
+  render = 'minimal',
+  stages = 'fade',
+})
+require('noice').setup({
+})
 
 -- Tabs
 require('luatab').setup({})

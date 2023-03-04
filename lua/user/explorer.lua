@@ -107,6 +107,7 @@ require('neo-tree').setup({
   enable_git_status = true,
   enable_diagnostics = false,
   sort_case_insensitive = true,
+  use_popups_for_input = false,
   nesting_rules = {},
   filesystem = {
     filtered_items = {
