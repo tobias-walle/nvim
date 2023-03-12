@@ -10,7 +10,6 @@ return require('packer').startup(function(use)
 
   -- UI
   use('stevearc/dressing.nvim')
-  use('rcarriga/nvim-notify')
   use('folke/noice.nvim')
 
   -- treesitter
@@ -23,6 +22,16 @@ return require('packer').startup(function(use)
   use('nvim-treesitter/nvim-treesitter-textobjects')
   use('nvim-treesitter/nvim-treesitter-context')
   use('stevearc/aerial.nvim')
+  use('JoosepAlviste/nvim-ts-context-commentstring')
+
+  -- Plugin Collections
+  use('echasnovski/mini.ai')
+  use('echasnovski/mini.bufremove')
+  use('echasnovski/mini.comment')
+  use('echasnovski/mini.cursorword')
+
+  -- Repeat
+  use('tpope/vim-repeat')
 
   -- Tmux
   use('christoomey/vim-tmux-navigator')
@@ -101,7 +110,7 @@ return require('packer').startup(function(use)
 
   -- Commands
   use('tpope/vim-surround')
-  use('phaazon/hop.nvim')
+  use('ggandor/leap.nvim')
 
   -- Tests
   use({
@@ -115,10 +124,6 @@ return require('packer').startup(function(use)
 
   -- Debugging
   use('mfussenegger/nvim-dap')
-
-  -- Comments
-  use('numToStr/Comment.nvim')
-  use('JoosepAlviste/nvim-ts-context-commentstring')
 
   -- Project Config
   use('windwp/nvim-projectconfig')

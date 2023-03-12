@@ -12,6 +12,7 @@ require('user.general')
 
 require('user.git')
 require('user.make')
+require('user.mini')
 require('user.telescope')
 require('user.completion')
 require('user.lsp')

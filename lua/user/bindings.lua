@@ -137,14 +137,6 @@ wk.register({
   },
 })
 
--- HopL
-map('n', 's', '<cmd>HopWord<CR>')
-map('v', 's', '<cmd>HopWord<CR>')
-map('o', 's', '<cmd>HopWord<CR>')
-map('n', 'S', '<cmd>HopChar1<CR>')
-map('v', 'S', '<cmd>HopChar1<CR>')
-map('o', 'S', '<cmd>HopChar1<CR>')
-
 -- Other
 wk.register({ ['<leader>o'] = { '<cmd>silent exec "!open %:p:h"<CR>', 'Open folder of current file' } })
 wk.register({ ['<leader><CR>'] = { require('user.reload').reload, 'Reload vim config' } })

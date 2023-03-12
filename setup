@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 mkdir -p ./pack/packer/start/packer.nvim
 git clone --depth 1 https://github.com/wbthomason/packer.nvim ./pack/packer/start/packer.nvim
 

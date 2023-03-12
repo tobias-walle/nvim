@@ -14,11 +14,31 @@ hi SpellRare cterm=undercurl gui=undercurl guisp=#839EEE
 require('dressing').setup({
   input = { insert_only = false },
 })
-require('notify').setup({
-  render = 'minimal',
-  stages = 'fade',
-})
+-- require('notify').setup({
+--   render = 'minimal',
+--   stages = 'fade',
+--   timeout = 2000,
+--   top_down = false,
+-- })
 require('noice').setup({
+  presets = {
+    bottom_search = true,
+  },
+  messages = {
+    enabled = false, -- enables the Noice messages UI
+  },
+  cmdline = {
+    ---@type table<string, CmdlineFormat>
+    format = {
+      cmdline = { pattern = '^:', icon = '', lang = 'vim' },
+      search_down = { kind = 'search', pattern = '^/', icon = '', lang = 'regex' },
+      search_up = { kind = 'search', pattern = '^%?', icon = ' ', lang = 'regex' },
+      filter = { pattern = '^:%s*!', icon = '$', lang = 'bash' },
+      lua = { pattern = '^:%s*lua%s+', icon = '', lang = 'lua' },
+      help = { pattern = '^:%s*he?l?p?%s+', icon = '' },
+      input = {},
+    },
+  },
 })
 
 -- Tabs
