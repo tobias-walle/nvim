@@ -20,6 +20,32 @@ vim.g.undotree_WindowLayout = 2
 -- Aerial (Outline)
 require('aerial').setup()
 
+-- Autoclose tags
+require('nvim-ts-autotag').setup({
+  filetypes = {
+    -- For WASM UI frameworks like Leptos in Rust
+    'rust',
+    -- Default values
+    'html',
+    'javascript',
+    'typescript',
+    'javascriptreact',
+    'typescriptreact',
+    'svelte',
+    'vue',
+    'tsx',
+    'jsx',
+    'rescript',
+    'xml',
+    'php',
+    'markdown',
+    'glimmer',
+    'handlebars',
+    'hbs',
+    'htmldjango',
+  },
+})
+
 -- Colors
 require('colorizer').setup({
   user_default_options = {

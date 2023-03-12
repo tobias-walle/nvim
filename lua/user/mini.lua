@@ -10,11 +10,5 @@ require('mini.comment').setup({
     end,
   },
 })
--- Highlight word under cursor
--- require('mini.cursorword').setup({})
--- Highlight scope
--- require('mini.indentscope').setup({
---   draw = {
---     animation = require('mini.indentscope').gen_animation.none(),
---   },
--- })
+-- Autoclose pairs
+require('mini.pairs').setup({})
