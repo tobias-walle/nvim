@@ -11,7 +11,7 @@ require('mini.comment').setup({
   },
 })
 -- Highlight word under cursor
-require('mini.cursorword').setup({})
+-- require('mini.cursorword').setup({})
 -- Highlight scope
 -- require('mini.indentscope').setup({
 --   draw = {
