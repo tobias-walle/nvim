@@ -1,5 +1,5 @@
 -- Hop
-require('hop').setup({})
+require('leap').add_default_mappings()
 
 -- Which key
 require('which-key').setup({})
@@ -19,11 +19,6 @@ vim.g.undotree_WindowLayout = 2
 
 -- Aerial (Outline)
 require('aerial').setup()
-
--- Comments
-require('Comment').setup({
-  pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
-})
 
 -- Colors
 require('colorizer').setup({
