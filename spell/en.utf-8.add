@@ -393,3 +393,5 @@ zod
 tsx
 SolidJS
 frontends
+VDOM
+dom
