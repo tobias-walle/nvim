@@ -10,5 +10,3 @@ require('mini.comment').setup({
     end,
   },
 })
--- Autoclose pairs
-require('mini.pairs').setup({})

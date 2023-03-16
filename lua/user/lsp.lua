@@ -14,7 +14,17 @@ local config = {
     ['kotlin_language_server'] = L.setup_default,
     ['taplo'] = L.setup_default,
     ['hls'] = { L.setup_without_formatting, install = false },
-    ['yamlls'] = L.setup_without_formatting,
+    ['yamlls'] = function(name)
+      lspconfig[name].setup({
+        on_attach = L.on_attach_disable_formatting,
+        settings = {
+          keyOrdering = false,
+          yaml = {
+            schemas = require('schemastore').json.schemas(),
+          },
+        },
+      })
+    end,
     ['tsserver'] = require('user.lsp.typescript').setup_typescript,
     ['angularls'] = { require('user.lsp.typescript').setup_angular, install = false },
     ['cssls'] = function(name)
@@ -78,7 +88,7 @@ local config = {
   null_ls = {
     ['stylua'] = L.setup_null_ls_formatting,
     ['black'] = L.setup_null_ls_formatting,
-    ['prettierd'] = L.setup_null_ls_formatting,
+    ['prettier'] = L.setup_null_ls_formatting,
     ['eslint_d'] = function(name)
       return {
         null_ls.builtins.formatting[name],

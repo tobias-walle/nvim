@@ -20,6 +20,12 @@ vim.g.undotree_WindowLayout = 2
 -- Aerial (Outline)
 require('aerial').setup()
 
+-- Autoclose brackets
+require('nvim-autopairs').setup({
+  enable_moveright = true,
+  fast_wrap = {},
+})
+
 -- Autoclose tags
 require('nvim-ts-autotag').setup({
   filetypes = {
