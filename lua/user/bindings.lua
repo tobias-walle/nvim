@@ -142,7 +142,13 @@ wk.register({ ['<leader>o'] = { '<cmd>silent exec "!open %:p:h"<CR>', 'Open fold
 wk.register({ ['<leader><CR>'] = { require('user.reload').reload, 'Reload vim config' } })
 wk.register({ ['<leader>q'] = { '<cmd>:close<CR>', 'Close Window' } })
 wk.register({
-  ['<leader>w'] = { '<cmd>lua vim.lsp.buf.format({ timeout_ms = 3000 })<CR><cmd>:write<CR>', 'Write Window' },
+  ['<leader>w'] = {
+    function()
+      vim.lsp.buf.format({ timeout_ms = 3000, async = false })
+      vim.cmd('write')
+    end,
+    'Write Window',
+  },
 })
 
 -- Registers

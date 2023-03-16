@@ -28,7 +28,6 @@ return require('packer').startup(function(use)
   use('echasnovski/mini.ai')
   use('echasnovski/mini.bufremove')
   use('echasnovski/mini.comment')
-  use('echasnovski/mini.pairs')
 
   -- Repeat
   use('tpope/vim-repeat')
@@ -104,7 +103,8 @@ return require('packer').startup(function(use)
   use('nvim-lualine/lualine.nvim')
   use('alvarosevilla95/luatab.nvim')
 
-  -- Autoclose tags
+  -- Autoclose brackets
+  use('windwp/nvim-autopairs')
   use('windwp/nvim-ts-autotag')
 
   -- Commands
