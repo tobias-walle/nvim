@@ -22,12 +22,12 @@ return require('packer').startup(function(use)
   use('nvim-treesitter/nvim-treesitter-textobjects')
   use('nvim-treesitter/nvim-treesitter-context')
   use('stevearc/aerial.nvim')
+  use('numToStr/Comment.nvim')
   use('JoosepAlviste/nvim-ts-context-commentstring')
 
   -- Plugin Collections
   use('echasnovski/mini.ai')
   use('echasnovski/mini.bufremove')
-  use('echasnovski/mini.comment')
 
   -- Repeat
   use('tpope/vim-repeat')

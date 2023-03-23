@@ -26,6 +26,11 @@ require('nvim-autopairs').setup({
   fast_wrap = {},
 })
 
+-- Comments
+require('Comment').setup({
+  pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+})
+
 -- Autoclose tags
 require('nvim-ts-autotag').setup({
   filetypes = {
@@ -76,10 +81,9 @@ require('colorizer').setup({
 -- Paste Images
 require('clipboard-image').setup({
   default = {
-    img_dir = 'media',
+    img_dir = { '%:p:h', 'media' },
     img_dir_txt = 'media',
     img_name = function()
-      ---@diagnostic disable-next-line: param-type-mismatch
       return vim.fn.input('Image Filename: ')
     end,
   },
