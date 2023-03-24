@@ -1,7 +1,5 @@
 local M = {}
 
-local lspconfig = require('lspconfig')
-local null_ls = require('null-ls')
 local U = require('user.utils')
 
 ---@alias LspSetupFun fun(name: string)
@@ -29,24 +27,28 @@ function M.on_attach_disable_formatting(client, bufnr)
 end
 
 function M.setup_default(server_name)
+  local lspconfig = require('lspconfig')
   lspconfig[server_name].setup({
     on_attach = M.on_attach,
   })
 end
 
 function M.setup_without_formatting(server_name)
+  local lspconfig = require('lspconfig')
   lspconfig[server_name].setup({
     on_attach = M.on_attach_disable_formatting,
   })
 end
 
 function M.setup_null_ls_formatting(name)
+  local null_ls = require('null-ls')
   return {
     null_ls.builtins.formatting[name],
   }
 end
 
 function M.setup_null_ls_diagnostics(name)
+  local null_ls = require('null-ls')
   return {
     null_ls.builtins.diagnostics[name],
   }
@@ -54,6 +56,8 @@ end
 
 ---@param config LspConfig
 function M.apply_config(config)
+  local null_ls = require('null-ls')
+
   local ensure_installed = {
     lsp = {},
     null_ls = {},
@@ -113,11 +117,6 @@ local function ts_filter_react_dts(value)
   return string.match(value.targetUri, 'react/index.d.ts') == nil
 end
 
--- lspconfig.denols.setup {
---   on_attach = on_attach,
---   root_dir = lspconfig.util.root_pattern('deno.json', 'deno.jsonc')
--- }
-
 local function disable_typescript_lsp_renaming_if_angular_is_active()
   local clients = vim.lsp.get_active_clients()
   local ts_active = U.some(clients, function(client)
@@ -137,6 +136,7 @@ local function disable_typescript_lsp_renaming_if_angular_is_active()
 end
 
 function M.setup_typescript()
+  local lspconfig = require('lspconfig')
   local ts_inlay_hint_options = {
     includeInlayParameterNameHints = 'all',
     includeInlayParameterNameHintsWhenArgumentMatchesName = false,
@@ -185,6 +185,7 @@ function M.setup_typescript()
 end
 
 function M.setup_angular()
+  local lspconfig = require('lspconfig')
   lspconfig.angularls.setup({
     on_attach = function(client, bufnr)
       M.disable_formatting(client)

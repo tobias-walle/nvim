@@ -51,18 +51,17 @@ vim.api.nvim_create_user_command('ToggleLine', toggle_line_numbers, { desc = 'To
 vim.api.nvim_create_user_command('TL', toggle_line_numbers, { desc = 'Toggle line numbers' })
 
 -- Make
-local Make = require('user.utils.make')
 vim.api.nvim_create_user_command('Mtc', function()
-  Make.runTypescriptCommand('yarn type-check')
+  require('user.utils.make').runTypescriptCommand('yarn type-check')
 end, {})
 vim.api.nvim_create_user_command('Mtsc', function()
-  Make.runTypescriptCommand('yarn tsc --noEmit')
+  require('user.utils.make').runTypescriptCommand('yarn tsc --noEmit')
 end, {})
 vim.api.nvim_create_user_command('Mtsb', function()
-  Make.runTypescriptCommand('yarn tsc --build')
+  require('user.utils.make').runTypescriptCommand('yarn tsc --build')
 end, {})
 vim.api.nvim_create_user_command('Mng', function()
-  Make.runTypescriptCommand('yarn ng build')
+  require('user.utils.make').runTypescriptCommand('yarn ng build')
 end, {})
 
 -- Terminal
@@ -453,8 +452,6 @@ local function toggle_virtual_lines()
 end
 
 -- Completion
-local refactor = require('user.utils.refactor')
-
 M.attach_completion = function(bufnr)
   local bmap = function(action, name)
     return { action, name, buffer = bufnr }
@@ -497,7 +494,7 @@ M.attach_completion = function(bufnr)
       r = bmap(function()
         vim.lsp.buf.rename()
       end, 'Rename'),
-      R = bmap(refactor.rename_prefix, 'Rename Prefix'),
+      R = bmap(require('user.utils.refactor').rename_prefix, 'Rename Prefix'),
       a = bmap(function()
         vim.lsp.buf.code_action()
       end, 'Code Actions'),
@@ -547,8 +544,6 @@ local has_words_before = function()
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
 end
 
-local luasnip = require('luasnip')
-
 M.cmp_mapping = function(cmp)
   return {
     ['<C-Space>'] = cmp.mapping.complete(),
@@ -571,6 +566,7 @@ M.cmp_mapping = function(cmp)
     end, { 'i', 's' }),
 
     ['<C-n>'] = cmp.mapping(function(fallback)
+      local luasnip = require('luasnip')
       if luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump()
       else
@@ -579,6 +575,7 @@ M.cmp_mapping = function(cmp)
     end, { 'i', 's' }),
 
     ['<C-p>'] = cmp.mapping(function(fallback)
+      local luasnip = require('luasnip')
       if luasnip.jumpable(-1) then
         luasnip.jump(-1)
       else
