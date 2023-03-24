@@ -1,8 +1,6 @@
 local M = {}
 
 local async = require('plenary.async')
-local Popup = require('nui.popup')
-local event = require('nui.utils.autocmd').event
 
 function dbg(arg)
   print(vim.inspect(arg))
@@ -145,6 +143,8 @@ end
 --- @param callback fun (edited_content: string[]): nil
 --- @return nil
 function M.show_edit_popup(title, content, callback)
+  local Popup = require('nui.popup')
+  local event = require('nui.utils.autocmd').event
   local popup = Popup({
     enter = true,
     relative = 'editor',
@@ -177,6 +177,8 @@ M.show_edit_popup_async = async.wrap(M.show_edit_popup, 3)
 --- @param callback nil | fun (): nil
 --- @return nil
 function M.show_terminal_popup(title, commands, callback)
+  local Popup = require('nui.popup')
+  local event = require('nui.utils.autocmd').event
   local popup = Popup({
     enter = true,
     relative = 'editor',

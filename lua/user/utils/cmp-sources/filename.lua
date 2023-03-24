@@ -1,6 +1,4 @@
 local S = {}
-local cmp = require('cmp')
-local casing = require('user.utils.casing')
 
 function S:new()
   return setmetatable({}, { __index = S })
@@ -17,6 +15,7 @@ function S:complete(params, callback)
     return
   end
   name = string.gsub(name, '%.spec', '')
+  local casing = require('user.utils.casing')
   local split = casing.splitLowerCase(name)
   local pc = { label = casing.pascalCase(split) }
   local cc = { label = casing.camelCase(split) }
