@@ -1,40 +1,40 @@
+local opt = vim.opt
+
 -- Options
-vim.opt.encoding = 'utf-8'
-vim.opt.hidden = true
-vim.opt.wrap = false
-vim.opt.termguicolors = true
-vim.opt.splitbelow = true
-vim.opt.splitright = true
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
-vim.opt.shiftround = true
-vim.opt.smarttab = true
-vim.opt.expandtab = true
-vim.opt.number = true
--- vim.opt.smartindent = true
-vim.opt.relativenumber = true
-vim.opt.mouse = 'a'
-vim.opt.pastetoggle = '<F2>'
-vim.opt.cursorline = true
-vim.opt.autoread = true
-vim.opt.shortmess = vim.opt.shortmess + 'c'
+opt.encoding = 'utf-8'
+opt.hidden = true
+opt.wrap = false
+opt.termguicolors = true
+opt.splitbelow = true
+opt.splitright = true
+opt.tabstop = 2
+opt.shiftwidth = 2
+opt.shiftround = true
+opt.smarttab = true
+opt.expandtab = true
+opt.number = true
+opt.relativenumber = true
+opt.mouse = 'a'
+opt.pastetoggle = '<F2>'
+opt.cursorline = true
+opt.autoread = true
+opt.shortmess = opt.shortmess + 'c'
 
-vim.o.backup = false
-vim.o.writebackup = false
-vim.o.updatetime = 50
-vim.o.timeoutlen = 500
-vim.wo.signcolumn = 'yes'
-vim.o.scrolloff = 15
-vim.o.showtabline = 1
-vim.o.guifont = 'JetBrainsMono Nerd Font'
-vim.opt.spelllang = 'en,de'
-vim.o.spell = true
-vim.o.spellcapcheck = false
+opt.backup = false
+opt.writebackup = false
+opt.updatetime = 50
+opt.timeoutlen = 500
+opt.scrolloff = 15
+opt.showtabline = 1
+opt.guifont = 'JetBrainsMono Nerd Font'
+opt.spelllang = 'en,de'
+opt.spell = true
+opt.spellcapcheck = ''
 
-vim.opt.undofile = true
+opt.undofile = true
 
 -- see https://github.com/sindrets/diffview.nvim/issues/35
-vim.opt.fillchars = vim.opt.fillchars + 'diff:╱'
+opt.fillchars = opt.fillchars + 'diff:╱'
 
 vim.cmd([[set formatoptions-=o]])
 local general_options_au_group = vim.api.nvim_create_augroup('general_options', { clear = true })
