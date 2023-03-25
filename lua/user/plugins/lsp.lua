@@ -24,7 +24,7 @@ return {
         ['pyright'] = L.setup_default,
         ['r_language_server'] = { L.setup_default, install = false },
         ['gopls'] = L.setup_default,
-        ['kotlin_language_server'] = L.setup_default,
+        ['kotlin_language_server'] = L.setup_without_formatting,
         ['taplo'] = L.setup_default,
         ['hls'] = { L.setup_without_formatting, install = false },
         ['yamlls'] = function(name)
