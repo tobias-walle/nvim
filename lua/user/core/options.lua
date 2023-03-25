@@ -19,6 +19,7 @@ opt.pastetoggle = '<F2>'
 opt.cursorline = true
 opt.autoread = true
 opt.shortmess = opt.shortmess + 'c'
+opt.shell = 'fish'
 
 opt.backup = false
 opt.writebackup = false
