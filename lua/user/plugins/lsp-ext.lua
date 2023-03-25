@@ -1,5 +1,5 @@
----@return LazyConfig
-return {
+---@type LazyPlugin
+local plugin = {
   {
     'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
     config = function()
@@ -41,3 +41,5 @@ return {
     end,
   },
 }
+
+return plugin

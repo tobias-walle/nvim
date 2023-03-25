@@ -1,5 +1,5 @@
----@return LazyConfig
-return {
+---@type LazyPlugin
+local plugin = {
   'neovim/nvim-lspconfig',
   dependencies = {
     'williamboman/mason.nvim',
@@ -125,3 +125,5 @@ return {
     L.apply_config(config)
   end,
 }
+
+return plugin

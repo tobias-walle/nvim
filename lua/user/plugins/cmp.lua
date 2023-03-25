@@ -1,5 +1,5 @@
----@return LazyConfig
-return {
+---@type LazyPlugin
+local plugin = {
   'hrsh7th/nvim-cmp',
   dependencies = {
     'L3MON4D3/LuaSnip',
@@ -80,3 +80,5 @@ return {
     })
   end,
 }
+
+return plugin

@@ -1,5 +1,5 @@
----@return LazyConfig
-return {
+---@type LazyPlugin
+local plugin = {
   -- Autoclose tags
   'windwp/nvim-ts-autotag',
   config = function()
@@ -29,3 +29,5 @@ return {
     })
   end,
 }
+
+return plugin

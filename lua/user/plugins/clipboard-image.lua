@@ -1,5 +1,5 @@
----@return LazyConfig
-return {
+---@type LazyPlugin
+local plugin = {
   -- Paste Images
   'ekickx/clipboard-image.nvim',
   config = function()
@@ -14,3 +14,5 @@ return {
     })
   end,
 }
+
+return plugin

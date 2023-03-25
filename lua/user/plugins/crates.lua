@@ -1,5 +1,5 @@
----@return LazyConfig
-return {
+---@type LazyPlugin
+local plugin = {
   -- Cargo.toml completion
   'saecki/crates.nvim',
   config = function()
@@ -11,3 +11,5 @@ return {
     })
   end,
 }
+
+return plugin

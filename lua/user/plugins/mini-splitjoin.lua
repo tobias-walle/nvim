@@ -1,9 +1,13 @@
 ---@type LazyPlugin
 local plugin = {
   -- Jump to last buffer if a buffer gets removed
-  'echasnovski/mini.bufremove',
+  'echasnovski/mini.splitjoin',
   config = function()
-    require('mini.bufremove').setup()
+    require('mini.splitjoin').setup({
+      mappings = {
+        toggle = 'gS',
+      },
+    })
   end,
 }
 

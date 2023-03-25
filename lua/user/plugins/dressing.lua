@@ -1,5 +1,5 @@
----@return LazyConfig
-return {
+---@type LazyPlugin
+local plugin = {
   'stevearc/dressing.nvim',
   config = function()
     require('dressing').setup({
@@ -7,3 +7,5 @@ return {
     })
   end,
 }
+
+return plugin

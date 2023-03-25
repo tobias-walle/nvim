@@ -1,5 +1,5 @@
----@return LazyConfig
-return {
+---@type LazyPlugin
+local plugin = {
   'nvim-neo-tree/neo-tree.nvim',
   branch = 'v2.x',
   dependencies = {
@@ -126,3 +126,5 @@ return {
     })
   end,
 }
+
+return plugin

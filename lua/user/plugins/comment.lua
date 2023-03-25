@@ -1,5 +1,5 @@
----@return LazyConfig
-return {
+---@type LazyPlugin
+local plugin = {
   'numToStr/Comment.nvim',
   dependencies = {
     'JoosepAlviste/nvim-ts-context-commentstring',
@@ -10,3 +10,5 @@ return {
     })
   end,
 }
+
+return plugin

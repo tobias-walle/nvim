@@ -1,5 +1,5 @@
----@return LazyConfig
-return {
+---@type LazyPlugin
+local plugin = {
   'nvim-treesitter/nvim-treesitter',
   build = ':TSUpdate',
   dependencies = {
@@ -66,3 +66,5 @@ return {
     })
   end,
 }
+
+return plugin

@@ -1,5 +1,5 @@
----@return LazyConfig
-return {
+---@type LazyPlugin
+local plugin = {
   'L3MON4D3/LuaSnip',
   config = function()
     local ls = require('luasnip')
@@ -231,3 +231,5 @@ const styles = createStyles({{
     })
   end,
 }
+
+return plugin

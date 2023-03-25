@@ -1,5 +1,5 @@
----@return LazyConfig
-return {
+---@type LazyPlugin
+local plugin = {
   {
     'lewis6991/gitsigns.nvim',
     config = function()
@@ -18,3 +18,5 @@ return {
     end,
   },
 }
+
+return plugin

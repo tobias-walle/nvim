@@ -1,5 +1,5 @@
----@return LazyConfig
-return {
+---@type LazyPlugin
+local plugin = {
   'nvim-telescope/telescope.nvim',
   dependencies = {
     'nvim-telescope/telescope-live-grep-args.nvim',
@@ -57,3 +57,5 @@ return {
     require('telescope').load_extension('file_browser')
   end,
 }
+
+return plugin
