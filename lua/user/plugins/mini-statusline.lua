@@ -1,8 +1,8 @@
 ---@type LazyPlugin
 local plugin = {
-  'alvarosevilla95/luatab.nvim',
+  'echasnovski/mini.statusline',
   config = function()
-    require('luatab').setup({})
+    require('mini.statusline').setup()
   end,
 }
 

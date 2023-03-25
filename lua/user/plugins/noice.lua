@@ -1,5 +1,5 @@
----@return LazyConfig
-return {
+---@type LazyPlugin
+local plugin = {
   'folke/noice.nvim',
   config = function()
     require('noice').setup({
@@ -24,3 +24,5 @@ return {
     })
   end,
 }
+
+return plugin

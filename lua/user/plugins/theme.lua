@@ -1,5 +1,5 @@
----@return LazyConfig
-return {
+---@type LazyPlugin
+local plugin = {
   'folke/tokyonight.nvim',
   lazy = false,
   priority = 1000,
@@ -16,3 +16,5 @@ return {
     ]])
   end,
 }
+
+return plugin

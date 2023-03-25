@@ -1,5 +1,5 @@
----@return LazyConfig
-return {
+---@type LazyPlugin
+local plugin = {
   'AckslD/nvim-neoclip.lua',
   dependencies = {
     'nvim-telescope/telescope.nvim',
@@ -9,3 +9,5 @@ return {
     require('telescope').load_extension('neoclip')
   end,
 }
+
+return plugin

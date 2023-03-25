@@ -1,4 +1,6 @@
----@return LazyConfig
-return {
+---@type LazyPlugin
+local plugin = {
   'ThePrimeagen/vim-be-good',
 }
+
+return plugin

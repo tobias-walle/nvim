@@ -1,5 +1,5 @@
----@return LazyConfig
-return {
+---@type LazyPlugin
+local plugin = {
   -- Autoclose brackets
   'NvChad/nvim-colorizer.lua',
   config = function()
@@ -24,3 +24,5 @@ return {
     })
   end,
 }
+
+return plugin

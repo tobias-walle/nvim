@@ -1,5 +1,5 @@
----@return LazyConfig
-return {
+---@type LazyPlugin
+local plugin = {
   'vim-test/vim-test',
   build = function()
     pcall(function()
@@ -23,3 +23,5 @@ return {
     })
   end,
 }
+
+return plugin

@@ -1,5 +1,5 @@
----@return LazyConfig
-return {
+---@type LazyPlugin
+local plugin = {
   -- Autoclose brackets
   'windwp/nvim-autopairs',
   config = function()
@@ -9,3 +9,5 @@ return {
     })
   end,
 }
+
+return plugin
