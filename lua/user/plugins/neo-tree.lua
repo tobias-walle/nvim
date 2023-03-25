@@ -82,6 +82,7 @@ local plugin = {
         mapping_options = { noremap = true, nowait = true },
         mappings = {
           ['<space>'] = 'none',
+          ['/'] = 'none',
           ['<2-LeftMouse>'] = 'open',
           ['<cr>'] = 'open',
           ['S'] = 'open_split',
