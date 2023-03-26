@@ -14,6 +14,7 @@ opt.smarttab = true
 opt.expandtab = true
 opt.number = true
 opt.relativenumber = true
+opt.signcolumn = 'yes'
 opt.mouse = 'a'
 opt.pastetoggle = '<F2>'
 opt.cursorline = true
