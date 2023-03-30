@@ -5,7 +5,7 @@ local plugin = {
   config = function()
     require('mini.splitjoin').setup({
       mappings = {
-        toggle = 'gS',
+        toggle = 'gj',
       },
     })
   end,

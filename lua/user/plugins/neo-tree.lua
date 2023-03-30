@@ -1,12 +1,14 @@
 ---@type LazyPlugin
 local plugin = {
   'nvim-neo-tree/neo-tree.nvim',
+  lazy = false,
   branch = 'v2.x',
   dependencies = {
     'nvim-lua/plenary.nvim',
     'nvim-tree/nvim-web-devicons',
     'MunifTanjim/nui.nvim',
   },
+  cmd = { 'Neotree' },
   config = function()
     local U = require('user.utils.neo-tree')
 

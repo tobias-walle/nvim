@@ -50,6 +50,20 @@ end
 vim.api.nvim_create_user_command('ToggleLine', toggle_line_numbers, { desc = 'Toggle line numbers' })
 vim.api.nvim_create_user_command('TL', toggle_line_numbers, { desc = 'Toggle line numbers' })
 
+-- Neovide
+if vim.g.neovide == true then
+  -- Zoom
+  map('n', '<C-+>', ':lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.1<CR>')
+  map('n', '<C-->', ':lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.1<CR>')
+  map('n', '<C-0>', ':lua vim.g.neovide_scale_factor = 1<CR>')
+  -- Allow clipboard copy paste in neovim
+  vim.g.neovide_input_use_logo = 1
+  map('', '<D-v>', '+p<CR>')
+  map('!', '<D-v>', '<C-R>+')
+  map('t', '<D-v>', '<C-R>+')
+  map('v', '<D-v>', '<C-R>+')
+end
+
 -- Make
 vim.api.nvim_create_user_command('Mtc', function()
   require('user.utils.make').runTypescriptCommand('yarn type-check')
@@ -253,10 +267,15 @@ wk.register({
 wk.register({
   ['<leader>g'] = {
     name = 'Git',
-    s = { '<cmd>G<cr><cmd>only<cr>', 'Git Status' },
+    s = {
+      function()
+        require('neogit').open()
+      end,
+      'Git Status',
+    },
     p = { '<cmd>Gitsigns preview_hunk<CR>', 'Preview Hunk' },
     r = { '<cmd>Gitsigns reset_hunk<CR>', 'Reset Hunk' },
-    R = { '<cmd>G checkout -- %<CR>', 'Reset file' },
+    R = { '<cmd>silent !git checkout -- %<CR>', 'Reset file' },
     x = { '<cmd>DiffviewOpen --base=LOCAL<cr>', 'Open diffview against local changes' },
     f = { '<cmd>DiffviewFileHistory --base=LOCAL %<cr>', 'Get see history of current file' },
     c = { '<cmd>DiffviewOpen <C-r><C-w><cr>', 'Open diff between HEAD and commit under cursor' },
