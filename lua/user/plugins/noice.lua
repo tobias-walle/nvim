@@ -1,6 +1,7 @@
----@type LazyPlugin
+---@type LazySpec
 local plugin = {
   'folke/noice.nvim',
+  lazy = false,
   config = function()
     require('noice').setup({
       presets = {

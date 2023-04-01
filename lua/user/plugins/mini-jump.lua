@@ -1,6 +1,7 @@
----@type LazyPlugin
+---@type LazySpec
 local plugin = {
   'echasnovski/mini.jump',
+  lazy = false,
   config = function()
     require('mini.jump').setup({
       mappings = {

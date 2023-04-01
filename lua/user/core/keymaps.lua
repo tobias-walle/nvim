@@ -179,53 +179,6 @@ wk.register({
   },
 })
 
--- Registers
-wk.register({ ['<leader>r'] = { '<cmd>let @+=@"<CR><cmd>let @*=@"<CR>', 'Copy to system register' } })
-
--- Harpoon
-wk.register({
-  ['<leader>h'] = {
-    name = 'Harpoon',
-    h = {
-      function()
-        require('harpoon.mark').add_file()
-      end,
-      'Add file',
-    },
-    m = {
-      function()
-        require('harpoon.ui').toggle_quick_menu()
-      end,
-      'Quick Menu',
-    },
-  },
-  -- Navigation
-  ['<M-a>'] = {
-    function()
-      require('harpoon.ui').nav_file(1)
-    end,
-    'Go to File 1',
-  },
-  ['<M-s>'] = {
-    function()
-      require('harpoon.ui').nav_file(2)
-    end,
-    'Go to File 2',
-  },
-  ['<M-d>'] = {
-    function()
-      require('harpoon.ui').nav_file(3)
-    end,
-    'Go to File 3',
-  },
-  ['<M-f>'] = {
-    function()
-      require('harpoon.ui').nav_file(4)
-    end,
-    'Go to File 4',
-  },
-})
-
 -- Undo Tree
 map('n', '<leader>u', ':UndotreeToggle<CR>')
 
@@ -297,24 +250,6 @@ wk.register({
 vim.api.nvim_create_user_command('DiffO', function(opts)
   vim.cmd('DiffviewOpen --base=LOCAL ' .. opts.args)
 end, { desc = 'Open Diff from locale', nargs = 1 })
-
--- Merge
-wk.register({
-  ['<leader>m'] = {
-    name = 'Git Merge',
-    t = { ':MergetoolToggle<cr>', 'Toggle Mergetool' },
-    l = {
-      name = 'Layout',
-      a = { ':MergetoolToggleLayout lmr<cr>', 'Toggle lmr layout' },
-      b = { ':MergetoolToggleLayout blr,m<cr>', 'Toggle blr,m layout' },
-    },
-    p = {
-      name = 'Preference',
-      l = { ':MergetoolPreferLocal<cr>', 'Prefer local revision' },
-      r = { ':MergetoolPreferRemote<cr>', 'Prefer remote revision' },
-    },
-  },
-})
 
 -- Debugging (WIP)
 wk.register({

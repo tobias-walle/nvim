@@ -1,7 +1,8 @@
----@type LazyPlugin
+---@type LazySpec
 local plugin = {
   -- Paste Images
   'ekickx/clipboard-image.nvim',
+  event = 'VeryLazy',
   config = function()
     require('clipboard-image').setup({
       default = {

@@ -1,9 +1,9 @@
 ---@type LazySpec
 local plugin = {
-  'petertriho/nvim-scrollbar',
+  'echasnovski/mini.bracketed',
   lazy = false,
   config = function()
-    require('scrollbar').setup({})
+    require('mini.bracketed').setup({})
   end,
 }
 

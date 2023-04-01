@@ -1,9 +1,10 @@
----@type LazyPlugin
+---@type LazySpec
 local plugin = {
   'nvim-telescope/telescope.nvim',
   dependencies = {
     'nvim-telescope/telescope-live-grep-args.nvim',
     'nvim-telescope/telescope-file-browser.nvim',
+    'AckslD/nvim-neoclip.lua',
   },
   config = function()
     local lga_actions = require('telescope-live-grep-args.actions')
@@ -53,8 +54,10 @@ local plugin = {
         },
       },
     })
+
     require('telescope').load_extension('live_grep_args')
     require('telescope').load_extension('file_browser')
+    require('telescope').load_extension('neoclip')
   end,
 }
 

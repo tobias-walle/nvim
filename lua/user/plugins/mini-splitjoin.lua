@@ -1,7 +1,7 @@
----@type LazyPlugin
+---@type LazySpec
 local plugin = {
-  -- Jump to last buffer if a buffer gets removed
   'echasnovski/mini.splitjoin',
+  lazy = false,
   config = function()
     require('mini.splitjoin').setup({
       mappings = {

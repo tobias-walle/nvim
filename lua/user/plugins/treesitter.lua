@@ -1,7 +1,7 @@
----@type LazyPlugin
+---@type LazySpec
 local plugin = {
   'nvim-treesitter/nvim-treesitter',
-  lazy = true,
+  event = 'VeryLazy',
   build = ':TSUpdate',
   dependencies = {
     'nvim-treesitter/playground',

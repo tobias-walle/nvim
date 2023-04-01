@@ -1,7 +1,6 @@
----@type LazyPlugin
+---@type LazySpec
 local plugin = {
   'nvim-neo-tree/neo-tree.nvim',
-  lazy = false,
   branch = 'v2.x',
   dependencies = {
     'nvim-lua/plenary.nvim',
@@ -33,7 +32,6 @@ local plugin = {
         },
         follow_current_file = false,
         group_empty_dirs = false,
-        hijack_netrw_behavior = 'open_current',
         use_libuv_file_watcher = true,
         window = {
           mappings = {
@@ -129,5 +127,14 @@ local plugin = {
     })
   end,
 }
+
+local neo_tree_group = vim.api.nvim_create_augroup('neo_tree_group', { clear = true })
+vim.api.nvim_create_autocmd({ 'FileType' }, {
+  group = neo_tree_group,
+  pattern = 'netrw',
+  callback = function()
+    vim.cmd([[Neotree position=current]])
+  end,
+})
 
 return plugin
