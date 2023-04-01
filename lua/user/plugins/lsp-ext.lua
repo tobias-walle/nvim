@@ -1,7 +1,8 @@
----@type LazyPlugin
+---@type LazySpec
 local plugin = {
   {
     'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
+    event = 'VeryLazy',
     config = function()
       require('lsp_lines').setup()
       vim.diagnostic.config({ virtual_lines = false })
@@ -10,6 +11,7 @@ local plugin = {
   },
   {
     'lvimuser/lsp-inlayhints.nvim',
+    event = 'VeryLazy',
     config = function()
       local lspInlayhints = require('lsp-inlayhints')
       lspInlayhints.setup()
@@ -32,6 +34,7 @@ local plugin = {
   {
     -- Spinner while lsp is loading
     'j-hui/fidget.nvim',
+    event = 'VeryLazy',
     config = function()
       require('fidget').setup({
         text = {

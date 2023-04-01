@@ -1,4 +1,4 @@
----@type LazyPlugin
+---@type LazySpec
 local plugin = {
   'ggandor/leap.nvim',
   config = function()

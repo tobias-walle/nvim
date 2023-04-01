@@ -1,4 +1,4 @@
----@type LazyPlugin
+---@type LazySpec
 local plugin = {
   'folke/tokyonight.nvim',
   lazy = false,

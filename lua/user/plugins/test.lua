@@ -1,6 +1,7 @@
----@type LazyPlugin
+---@type LazySpec
 local plugin = {
   'vim-test/vim-test',
+  event = 'VeryLazy',
   build = function()
     pcall(function()
       vim.cmd([[UpdateRemotePlugins]])

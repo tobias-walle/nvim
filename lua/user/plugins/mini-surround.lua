@@ -1,6 +1,7 @@
----@type LazyPlugin
+---@type LazySpec
 local plugin = {
   'echasnovski/mini.surround',
+  event = 'VeryLazy',
   config = function()
     require('mini.surround').setup({
       search_method = 'cover_or_next',

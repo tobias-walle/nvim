@@ -1,4 +1,4 @@
----@type LazyPlugin
+---@type LazySpec
 local plugin = {
   'nvim-lua/plenary.nvim',
   'nvim-tree/nvim-web-devicons',

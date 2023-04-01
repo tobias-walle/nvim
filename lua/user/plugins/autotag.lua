@@ -1,7 +1,8 @@
----@type LazyPlugin
+---@type LazySpec
 local plugin = {
   -- Autoclose tags
   'windwp/nvim-ts-autotag',
+  event = 'VeryLazy',
   config = function()
     require('nvim-ts-autotag').setup({
       filetypes = {
