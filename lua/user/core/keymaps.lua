@@ -15,6 +15,9 @@ vim.g.maplocalleader = ' '
 
 -- Copy/Pasta
 map('v', '<Leader>y', '"+y')
+map('n', '<Leader>y', '"+y')
+map('v', '<Leader>p', '"+p')
+map('n', '<Leader>p', '"+p')
 
 -- Increment
 map('n', '<C-n>', '<C-a>')
@@ -220,12 +223,6 @@ wk.register({
 wk.register({
   ['<leader>g'] = {
     name = 'Git',
-    s = {
-      function()
-        require('neogit').open()
-      end,
-      'Git Status',
-    },
     p = { '<cmd>Gitsigns preview_hunk<CR>', 'Preview Hunk' },
     r = { '<cmd>Gitsigns reset_hunk<CR>', 'Reset Hunk' },
     R = { '<cmd>silent !git checkout -- %<CR>', 'Reset file' },

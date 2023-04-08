@@ -1,7 +1,7 @@
 ---@type LazySpec
 local plugin = {
   'neovim/nvim-lspconfig',
-  event = 'VeryLazy',
+  lazy = false,
   dependencies = {
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
@@ -54,6 +54,7 @@ local plugin = {
             settings = { json = { schemas = require('schemastore').json.schemas() } },
           })
         end,
+        -- ['csharp_ls'] = L.setup_default,
         ['omnisharp'] = function(name)
           local pid = vim.fn.getpid()
           local omnisharp_bin = 'omnisharp'
