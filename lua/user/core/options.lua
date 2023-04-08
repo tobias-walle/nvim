@@ -38,6 +38,9 @@ opt.undofile = true
 -- see https://github.com/sindrets/diffview.nvim/issues/35
 opt.fillchars = opt.fillchars + 'diff:╱'
 
+-- Do not let the editorconfig change the EOL style (Git is already managing that)
+require('editorconfig').properties.end_of_line = nil
+
 vim.cmd([[set formatoptions-=o]])
 local general_options_au_group = vim.api.nvim_create_augroup('general_options', { clear = true })
 vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufWinEnter' }, {
