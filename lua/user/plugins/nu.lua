@@ -2,7 +2,7 @@
 local plugin = {
   -- Nushell language support
   'LhKipp/nvim-nu',
-  event = 'VeryLazy',
+  enabled = false,
   config = function()
     require('nu').setup({})
   end,
