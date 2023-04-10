@@ -2,7 +2,7 @@
 local M = {}
 
 M.setup = function()
-  local group = vim.api.nvim_create_augroup('startup', {
+  local group = vim.api.nvim_create_augroup('close-unused-buffers', {
     clear = false,
   })
 
