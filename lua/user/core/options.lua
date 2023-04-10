@@ -65,3 +65,6 @@ vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter' }, {
     vim.cmd.checktime()
   end,
 })
+
+-- Init some utils
+require('user.utils.autoclose-unused-buffers').setup()
