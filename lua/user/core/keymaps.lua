@@ -198,6 +198,14 @@ wk.register({
   },
 })
 
+-- Buffers
+wk.register({
+  ['<leader>b'] = {
+    name = 'Buffers',
+    c = { require('user.utils.autoclose-unused-buffers').close_unused_buffers, 'Close unused buffers' },
+  },
+})
+
 -- Explorer (File/Outline)
 wk.register({
   ['<leader>e'] = {
@@ -215,7 +223,6 @@ wk.register({
     name = 'Diffs',
     g = { '<cmd>diffget<cr>', 'Apply from other buffer' },
     p = { '<cmd>diffput<cr>', 'Apply to other buffer' },
-    l = { '<cmd>vnew +read\\ # | windo diffthis<cr>', 'Diff with local file' },
   },
 })
 
@@ -249,23 +256,23 @@ vim.api.nvim_create_user_command('DiffO', function(opts)
 end, { desc = 'Open Diff from locale', nargs = 1 })
 
 -- Debugging (WIP)
-wk.register({
-  ['<leader>b'] = {
-    name = 'Debugging (WIP)',
-    b = {
-      function()
-        require('dap').toggle_breakpoint()
-      end,
-      'Toggle Breakpoint',
-    },
-    c = {
-      function()
-        require('dap').continue()
-      end,
-      'Continue',
-    },
-  },
-})
+-- wk.register({
+--   ['<leader>b'] = {
+--     name = 'Debugging (WIP)',
+--     b = {
+--       function()
+--         require('dap').toggle_breakpoint()
+--       end,
+--       'Toggle Breakpoint',
+--     },
+--     c = {
+--       function()
+--         require('dap').continue()
+--       end,
+--       'Continue',
+--     },
+--   },
+-- })
 
 -- Testing
 wk.register({
@@ -370,6 +377,7 @@ wk.register({
     },
     b = {
       function()
+        require('user.utils.autoclose-unused-buffers').close_unused_buffers()
         require('telescope.builtin').buffers({ sort_lastused = true, ignore_current_buffer = true })
       end,
       'Find buffer',
