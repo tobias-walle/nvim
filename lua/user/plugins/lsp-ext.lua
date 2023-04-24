@@ -37,6 +37,9 @@ local plugin = {
     event = 'VeryLazy',
     config = function()
       require('fidget').setup({
+        window = {
+          blend = 0,
+        },
         text = {
           spinner = 'dots',
         },
