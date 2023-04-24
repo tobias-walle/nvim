@@ -175,7 +175,7 @@ wk.register({ ['<leader>q'] = { '<cmd>:close<CR>', 'Close Window' } })
 wk.register({
   ['<leader>w'] = {
     function()
-      vim.lsp.buf.format({ timeout_ms = 3000, async = false })
+      require('user.utils.lsp').format()
       vim.cmd('write')
     end,
     'Write Window',
@@ -465,7 +465,7 @@ M.attach_completion = function(bufnr)
         vim.diagnostic.setloclist()
       end, 'Save Errors to Loclist'),
       f = bmap(function()
-        vim.lsp.buf.formatting()
+        require('user.utils.lsp').format()
       end, 'Format Buffer'),
       d = bmap(function()
         vim.lsp.buf.type_definition()
