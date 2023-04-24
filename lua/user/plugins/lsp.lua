@@ -54,13 +54,18 @@ local plugin = {
             settings = { json = { schemas = require('schemastore').json.schemas() } },
           })
         end,
+        ['eslint'] = function(name)
+          lspconfig[name].setup({
+            on_attach = L.on_attach,
+          })
+        end,
         -- ['csharp_ls'] = L.setup_default,
         ['omnisharp'] = function(name)
           local pid = vim.fn.getpid()
           local omnisharp_bin = 'omnisharp'
           lspconfig[name].setup({
             cmd = { omnisharp_bin, '--languageserver', '--hostPID', tostring(pid) },
-            on_attach = L.on_attach,
+            on_attach = L.on_attach_csharp,
           })
         end,
         ['rust_analyzer'] = function()
@@ -104,23 +109,6 @@ local plugin = {
         ['stylua'] = L.setup_null_ls_formatting,
         ['black'] = L.setup_null_ls_formatting,
         ['prettier'] = L.setup_null_ls_formatting,
-        ['eslint_d'] = function(name)
-          return {
-            null_ls.builtins.formatting[name],
-            null_ls.builtins.code_actions[name],
-            null_ls.builtins.diagnostics[name].with({
-              condition = function(utils)
-                return utils.root_has_file({
-                  '.eslintrc.js',
-                  '.eslintrc.cjs',
-                  '.eslintrc.yml',
-                  '.eslintrc.json',
-                  '.eslintrc',
-                })
-              end,
-            }),
-          }
-        end,
       },
     }
 
