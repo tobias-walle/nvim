@@ -24,6 +24,7 @@ opt.shell = 'fish'
 
 opt.backup = false
 opt.writebackup = false
+opt.swapfile = false
 opt.updatetime = 50
 opt.timeoutlen = 500
 opt.scrolloff = 15
