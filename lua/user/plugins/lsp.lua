@@ -59,15 +59,7 @@ local plugin = {
             on_attach = L.on_attach,
           })
         end,
-        -- ['csharp_ls'] = L.setup_default,
-        ['omnisharp'] = function(name)
-          local pid = vim.fn.getpid()
-          local omnisharp_bin = 'omnisharp'
-          lspconfig[name].setup({
-            cmd = { omnisharp_bin, '--languageserver', '--hostPID', tostring(pid) },
-            on_attach = L.on_attach_csharp,
-          })
-        end,
+        ['csharp_ls'] = L.setup_default,
         ['rust_analyzer'] = function()
           require('rust-tools').setup({
             tools = { autoSetHints = false, hover_with_actions = false },
