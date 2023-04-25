@@ -45,7 +45,7 @@ local plugin = {
         local badSpell1 = { undercurl = true, sp = colors.mauve }
         local badSpell2 = { undercurl = true, sp = colors.teal }
         return {
-          LspInlayHint = { fg = colors.lavender, bg = colors.surface0, style = { 'italic' } },
+          LspInlayHint = { fg = colors.surface2, bg = colors.mantle, style = { 'italic' } },
           DiagnosticUnnecessary = { undercurl = true, sp = colors.yellow, fg = colors.overlay2 },
           SpellBad = badSpell1,
           SpellCap = badSpell2,
