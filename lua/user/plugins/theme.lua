@@ -24,7 +24,6 @@ local plugin = {
         treesitter_context = true,
         telescope = true,
         which_key = true,
-        ts_rainbow2 = true,
         native_lsp = {
           enabled = true,
           virtual_text = {
