@@ -2,23 +2,53 @@
 local plugin = {
   'folke/noice.nvim',
   lazy = false,
+  dependencies = {
+    'rcarriga/nvim-notify',
+  },
   config = function()
     require('noice').setup({
       presets = {
-        bottom_search = true,
-      },
-      messages = {
-        enabled = false, -- enables the Noice messages UI
+        lsp_doc_border = true,
       },
       cmdline = {
-        ---@type table<string, CmdlineFormat>
         format = {
-          cmdline = { pattern = '^:', icon = '', lang = 'vim' },
-          search_down = { kind = 'search', pattern = '^/', icon = '', lang = 'regex' },
-          search_up = { kind = 'search', pattern = '^%?', icon = ' ', lang = 'regex' },
-          filter = { pattern = '^:%s*!', icon = '$', lang = 'bash' },
-          lua = { pattern = '^:%s*lua%s+', icon = '', lang = 'lua' },
-          help = { pattern = '^:%s*he?l?p?%s+', icon = '' },
+          cmdline = {
+            view = 'cmdline',
+            pattern = '^:',
+            icon = '',
+            lang = 'vim',
+          },
+          search_down = {
+            view = 'cmdline',
+            kind = 'search',
+            pattern = '^/',
+            icon = '',
+            lang = 'regex',
+          },
+          search_up = {
+            view = 'cmdline',
+            kind = 'search',
+            pattern = '^%?',
+            icon = ' ',
+            lang = 'regex',
+          },
+          filter = {
+            view = 'cmdline',
+            pattern = '^:%s*!',
+            icon = '$',
+            lang = 'fish',
+          },
+          lua = {
+            view = 'cmdline',
+            pattern = '^:%s*lua%s+',
+            icon = '',
+            lang = 'lua',
+          },
+          help = {
+            view = 'cmdline',
+            pattern = '^:%s*he?l?p?%s+',
+            icon = '?',
+          },
           input = {},
         },
       },
