@@ -31,21 +31,6 @@ local plugin = {
       })
     end,
   },
-  {
-    -- Spinner while lsp is loading
-    'j-hui/fidget.nvim',
-    event = 'VeryLazy',
-    config = function()
-      require('fidget').setup({
-        window = {
-          blend = 0,
-        },
-        text = {
-          spinner = 'dots',
-        },
-      })
-    end,
-  },
 }
 
 return plugin
