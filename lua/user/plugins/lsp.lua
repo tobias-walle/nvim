@@ -54,12 +54,18 @@ local plugin = {
             settings = { json = { schemas = require('schemastore').json.schemas() } },
           })
         end,
-        ['eslint'] = function(name)
+        ['eslint'] = L.setup_default,
+        ['csharp_ls'] = function(name)
           lspconfig[name].setup({
             on_attach = L.on_attach,
+            root_dir = function(startpath)
+              return lspconfig.util.root_pattern('*.sln')(startpath)
+                or lspconfig.util.root_pattern('*.csproj')(startpath)
+                or lspconfig.util.root_pattern('*.fsproj')(startpath)
+                or lspconfig.util.root_pattern('.git')(startpath)
+            end,
           })
         end,
-        ['csharp_ls'] = L.setup_default,
         ['rust_analyzer'] = function()
           require('rust-tools').setup({
             tools = { autoSetHints = false, hover_with_actions = false },
