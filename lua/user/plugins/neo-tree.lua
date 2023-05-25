@@ -10,6 +10,7 @@ local plugin = {
   cmd = { 'Neotree' },
   config = function()
     local U = require('user.utils.neo-tree')
+    local events = require('neo-tree.events')
 
     vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 
@@ -109,19 +110,27 @@ local plugin = {
       },
       event_handlers = {
         {
-          event = 'file_opened',
+          event = events.FILE_OPENED,
           handler = function(file_path)
             --auto close
             require('neo-tree').close_all()
           end,
         },
         {
-          event = 'neo_tree_buffer_enter',
+          event = events.NEO_TREE_BUFFER_ENTER,
           handler = function()
             vim.opt_local.number = true
             vim.opt_local.relativenumber = true
             vim.opt_local.signcolumn = 'no'
           end,
+        },
+        {
+          event = events.FILE_MOVED,
+          handler = U.on_file_moved,
+        },
+        {
+          event = events.FILE_RENAMED,
+          handler = U.on_file_moved,
         },
       },
     })
