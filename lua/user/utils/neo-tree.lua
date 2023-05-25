@@ -100,4 +100,23 @@ function M.smart_rename(state)
   end)
 end
 
+---@class FileMovedArgs
+---@field source string
+---@field destination string
+---@param args FileMovedArgs
+function M.on_file_moved(args)
+  local ts_clients = vim.lsp.get_active_clients({ name = 'tsserver' })
+  for _, ts_client in ipairs(ts_clients) do
+    ts_client.request('workspace/executeCommand', {
+      command = '_typescript.applyRenameFile',
+      arguments = {
+        {
+          sourceUri = vim.uri_from_fname(args.source),
+          targetUri = vim.uri_from_fname(args.destination),
+        },
+      },
+    })
+  end
+end
+
 return M
