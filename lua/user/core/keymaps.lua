@@ -390,6 +390,11 @@ wk.register({
         end,
         'Find staged files',
       },
+      l = {
+        ':DiffCommitLine<CR>',
+        'Show diff of selected lines',
+        mode = { 'v' },
+      },
     },
   },
   ['<C-p>'] = {
@@ -400,6 +405,12 @@ wk.register({
   },
   ['?'] = { ':nohl<CR>', 'Hide search highlight' },
 })
+
+vim.api.nvim_create_user_command(
+  'DiffCommitLine',
+  "lua require('telescope').extensions.advanced_git_search.diff_commit_line()",
+  { range = true }
+)
 
 local function toggle_virtual_lines()
   local config = vim.diagnostic.config()

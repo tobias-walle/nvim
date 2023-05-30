@@ -28,6 +28,7 @@ local plugin = {
   {
     'tpope/vim-fugitive',
     enabled = true,
+    event = 'VeryLazy',
     cmd = { 'G' },
     keys = {
       { '<leader>gs', '<cmd>G<cr><cmd>only<cr>', desc = 'Git Status' },
