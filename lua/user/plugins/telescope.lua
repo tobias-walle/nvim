@@ -5,6 +5,7 @@ local plugin = {
     'nvim-telescope/telescope-live-grep-args.nvim',
     'nvim-telescope/telescope-file-browser.nvim',
     'AckslD/nvim-neoclip.lua',
+    'aaronhallaert/advanced-git-search.nvim',
   },
   config = function()
     local lga_actions = require('telescope-live-grep-args.actions')
@@ -52,12 +53,20 @@ local plugin = {
           hidden = true,
           respect_gitignore = false,
         },
+        advanced_git_search = {
+          -- fugitive or diffview
+          diff_plugin = 'fugitive',
+          git_flags = { '--no-pager', '-c', 'delta.side-by-side=false' },
+          git_diff_flags = {},
+          show_builtin_git_pickers = false,
+        },
       },
     })
 
     require('telescope').load_extension('live_grep_args')
     require('telescope').load_extension('file_browser')
     require('telescope').load_extension('neoclip')
+    require('telescope').load_extension('advanced_git_search')
   end,
 }
 
