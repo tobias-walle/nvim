@@ -51,18 +51,32 @@ local plugin = {
       vim.g.mergetool_layout = 'mr'
       vim.g.mergetool_prefer_revision = 'local'
 
+      local function prefer_local()
+        vim.cmd.MergetoolPreferLocal()
+        vim.g.mergetool_layout = 'mr'
+        vim.cmd.MergetoolToggleLayout('mr')
+      end
+
+      local function prefer_remote()
+        vim.cmd.MergetoolPreferRemote()
+        vim.g.mergetool_layout = 'ml'
+        vim.cmd.MergetoolToggleLayout('ml')
+      end
+
       require('which-key').register({
         ['<leader>m'] = {
           name = 'Git Merge',
           l = {
             name = 'Layout',
             a = { ':MergetoolToggleLayout lmr<cr>', 'Toggle lmr layout' },
+            A = { ':MergetoolToggleLayout LmR<cr>', 'Toggle LmR layout' },
             b = { ':MergetoolToggleLayout blr,m<cr>', 'Toggle blr,m layout' },
+            B = { ':MergetoolToggleLayout BLR,m<cr>', 'Toggle blr,m layout' },
           },
           p = {
             name = 'Preference',
-            l = { ':MergetoolPreferLocal<cr>', 'Prefer local revision' },
-            r = { ':MergetoolPreferRemote<cr>', 'Prefer remote revision' },
+            l = { prefer_local, 'Prefer local revision' },
+            r = { prefer_remote, 'Prefer remote revision' },
           },
         },
       })

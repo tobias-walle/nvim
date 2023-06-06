@@ -55,6 +55,7 @@ local plugin = {
           })
         end,
         ['eslint'] = L.setup_default,
+        ['svelte'] = L.setup_default,
         ['csharp_ls'] = function(name)
           lspconfig[name].setup({
             on_attach = L.on_attach,
