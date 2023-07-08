@@ -109,6 +109,7 @@ local plugin = {
         ['stylua'] = L.setup_null_ls_formatting,
         ['black'] = L.setup_null_ls_formatting,
         ['prettier'] = L.setup_null_ls_formatting,
+        ['jsonnetfmt'] = { L.setup_null_ls_formatting, install = false },
       },
     }
 
