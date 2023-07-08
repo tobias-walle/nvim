@@ -16,7 +16,6 @@ local plugin = {
     local L = require('user.utils.lsp')
 
     local lspconfig = require('lspconfig')
-    local null_ls = require('null-ls')
 
     ---@type LspConfig
     local config = {
@@ -27,6 +26,8 @@ local plugin = {
         ['gopls'] = L.setup_default,
         ['kotlin_language_server'] = L.setup_without_formatting,
         ['taplo'] = L.setup_default,
+        ['bufls'] = L.setup_default,
+        ['jsonnet_ls'] = L.setup_default,
         ['hls'] = { L.setup_without_formatting, install = false },
         ['yamlls'] = function(name)
           lspconfig[name].setup({
