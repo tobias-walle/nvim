@@ -48,6 +48,12 @@ local plugin = {
             capabilities = L.snippet_capabilities,
           })
         end,
+        ['html'] = function(name)
+          lspconfig[name].setup({
+            on_attach = L.on_attach_disable_formatting,
+            capabilities = L.snippet_capabilities,
+          })
+        end,
         ['jsonls'] = function(name)
           lspconfig[name].setup({
             on_attach = L.on_attach_disable_formatting,
