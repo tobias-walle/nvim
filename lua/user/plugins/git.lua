@@ -38,7 +38,7 @@ local plugin = {
     'lewis6991/gitsigns.nvim',
     event = 'VeryLazy',
     config = function()
-      require('gitsigns').setup({ keymaps = {} })
+      require('gitsigns').setup()
     end,
   },
   {
