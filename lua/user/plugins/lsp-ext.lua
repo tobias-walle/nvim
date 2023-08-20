@@ -2,7 +2,7 @@
 local plugin = {
   {
     'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
-    event = 'VeryLazy',
+    event = 'LspAttach',
     config = function()
       require('lsp_lines').setup()
       vim.diagnostic.config({ virtual_lines = false })
@@ -11,7 +11,7 @@ local plugin = {
   },
   {
     'lvimuser/lsp-inlayhints.nvim',
-    event = 'VeryLazy',
+    event = 'LspAttach',
     config = function()
       local lspInlayhints = require('lsp-inlayhints')
       lspInlayhints.setup()
@@ -36,7 +36,11 @@ local plugin = {
     tag = 'legacy',
     event = 'LspAttach',
     config = function()
-      require('fidget').setup()
+      require('fidget').setup({
+        text = {
+          spinner = 'dots',
+        },
+      })
     end,
   },
 }

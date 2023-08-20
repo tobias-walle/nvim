@@ -45,7 +45,7 @@ local plugin = {
         local badSpell2 = { undercurl = true, sp = colors.teal }
         return {
           MiniStatuslineRecording = { fg = colors.base, bg = colors.red, style = { 'bold' } },
-          LspInlayHint = { fg = colors.surface1, style = { 'italic' } },
+          LspInlayHint = { bg = 'NONE', fg = colors.surface1, style = { 'italic' } },
           DiagnosticUnnecessary = { undercurl = true, sp = colors.yellow, fg = colors.overlay2 },
           SpellBad = badSpell1,
           SpellCap = badSpell2,

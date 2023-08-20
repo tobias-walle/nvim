@@ -19,6 +19,10 @@ map('n', '<Leader>y', '"+y')
 map('v', '<Leader>p', '"+p')
 map('n', '<Leader>p', '"+p')
 
+-- Resize
+map('n', '+', '<C-W>>')
+map('n', '-', '<C-W><')
+
 -- Increment
 map('n', '<C-n>', '<C-a>')
 

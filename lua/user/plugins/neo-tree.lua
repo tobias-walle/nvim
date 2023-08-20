@@ -79,7 +79,7 @@ local plugin = {
       },
       window = {
         position = 'left',
-        width = 40,
+        width = 80,
         mapping_options = { noremap = true, nowait = true },
         mappings = {
           ['<space>'] = 'none',
