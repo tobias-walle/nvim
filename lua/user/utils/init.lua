@@ -64,9 +64,7 @@ end
 --- @param list T[]
 --- @param check fun (item: T, index: integer): boolean
 --- @return boolean
-function M.some(list, check)
-  return M.find(list, check) ~= nil
-end
+function M.some(list, check) return M.find(list, check) ~= nil end
 
 --- @param table table
 --- @return integer
@@ -94,9 +92,7 @@ end
 
 --- @param ... string
 --- @return string
-function M.join_path(...)
-  return M.join({ ... }, '/')
-end
+function M.join_path(...) return M.join({ ... }, '/') end
 
 --- @param command string[]
 --- @param callback fun (): nil
@@ -128,15 +124,11 @@ end
 M.run_cmd_async = async.wrap(M.run_cmd, 2)
 
 --- @type fun (opts: table): string
-M.input_async = async.wrap(function(opts, on_confirm)
-  vim.ui.input(opts, on_confirm)
-end, 2)
+M.input_async = async.wrap(function(opts, on_confirm) vim.ui.input(opts, on_confirm) end, 2)
 
 --- @param content string
 --- @return string
-function M.quote(content)
-  return "'" .. content .. "'"
-end
+function M.quote(content) return "'" .. content .. "'" end
 
 --- @param title string
 --- @param content string[]
@@ -158,9 +150,7 @@ function M.show_edit_popup(title, content, callback)
 
   vim.api.nvim_buf_set_lines(popup.bufnr, 0, -1, false, content)
 
-  popup:on({ event.BufLeave }, function()
-    popup:unmount()
-  end, { once = true })
+  popup:on({ event.BufLeave }, function() popup:unmount() end, { once = true })
 
   popup:map('n', '<CR>', function()
     local edited_content = vim.api.nvim_buf_get_lines(popup.bufnr, 0, -1, false)
@@ -237,15 +227,11 @@ M.show_terminal_popup_async = async.wrap(M.show_terminal_popup, 3)
 
 --- @param s string
 --- @param prefix string
-function M.starts_with(s, prefix)
-  return string.sub(s, 1, string.len(prefix)) == prefix
-end
+function M.starts_with(s, prefix) return string.sub(s, 1, string.len(prefix)) == prefix end
 
 --- @param a table
 --- @param b table
 --- @return table
-function M.merge(a, b)
-  return vim.tbl_deep_extend('force', {}, a, b)
-end
+function M.merge(a, b) return vim.tbl_deep_extend('force', {}, a, b) end
 
 return M

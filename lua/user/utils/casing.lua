@@ -43,8 +43,6 @@ end
 
 --- @param names string[]
 --- @return string
-function M.snakeCase(names)
-  return U.join(names, '_')
-end
+function M.snakeCase(names) return U.join(names, '_') end
 
 return M

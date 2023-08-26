@@ -2,9 +2,7 @@
 local plugin = {
   'petertriho/nvim-scrollbar',
   lazy = false,
-  config = function()
-    require('scrollbar').setup({})
-  end,
+  config = function() require('scrollbar').setup({}) end,
 }
 
 return plugin

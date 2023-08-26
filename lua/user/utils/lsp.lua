@@ -22,9 +22,7 @@ function M.on_attach(client, bufnr)
   require('user.core.keymaps').attach_completion(bufnr)
 end
 
-function M.disable_formatting(client)
-  client.server_capabilities.documentFormattingProvider = false
-end
+function M.disable_formatting(client) client.server_capabilities.documentFormattingProvider = false end
 
 function M.on_attach_disable_formatting(client, bufnr)
   M.disable_formatting(client)
@@ -118,22 +116,14 @@ local function ts_filter(arr, fn)
   return filtered
 end
 
-local function ts_filter_react_dts(value)
-  return string.match(value.targetUri, 'react/index.d.ts') == nil
-end
+local function ts_filter_react_dts(value) return string.match(value.targetUri, 'react/index.d.ts') == nil end
 
 local function disable_typescript_lsp_renaming_if_angular_is_active()
   local clients = vim.lsp.get_active_clients()
-  local ts_active = U.some(clients, function(client)
-    return client.name == 'tsserver'
-  end)
-  local ng_active = U.some(clients, function(client)
-    return client.name == 'angularls'
-  end)
+  local ts_active = U.some(clients, function(client) return client.name == 'tsserver' end)
+  local ng_active = U.some(clients, function(client) return client.name == 'angularls' end)
   if ts_active and ng_active then
-    local ts_client = U.find(clients, function(client)
-      return client.name == 'tsserver'
-    end)
+    local ts_client = U.find(clients, function(client) return client.name == 'tsserver' end)
     if ts_client ~= nil then
       ts_client.server_capabilities.renameProvider = false
     end
