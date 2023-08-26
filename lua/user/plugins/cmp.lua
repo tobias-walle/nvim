@@ -16,16 +16,59 @@ local plugin = {
 
     cmp.register_source('filename', require('user.utils.cmp-sources.filename').new())
 
+    local has_words_before = function()
+      local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+      return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
+    end
+
     cmp.setup({
-      mapping = require('user.core.keymaps').cmp_mapping(cmp),
+      mapping = {
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<Tab>'] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_next_item()
+          elseif has_words_before() then
+            cmp.complete()
+          else
+            fallback()
+          end
+        end, { 'i', 's' }),
+
+        ['<S-Tab>'] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item()
+          else
+            fallback()
+          end
+        end, { 'i', 's' }),
+
+        ['<C-n>'] = cmp.mapping(function(fallback)
+          local luasnip = require('luasnip')
+          if luasnip.expand_or_jumpable() then
+            luasnip.expand_or_jump()
+          else
+            fallback()
+          end
+        end, { 'i', 's' }),
+
+        ['<C-p>'] = cmp.mapping(function(fallback)
+          local luasnip = require('luasnip')
+          if luasnip.jumpable(-1) then
+            luasnip.jump(-1)
+          else
+            fallback()
+          end
+        end, { 'i', 's' }),
+
+        ['<C-e>'] = cmp.mapping.close(),
+        ['<CR>'] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = true }),
+      },
       preselect = cmp.PreselectMode.None,
       completion = {
         completeopt = 'menu,menuone,noinsert,noselect',
       },
       snippet = {
-        expand = function(args)
-          luasnip.lsp_expand(args.body)
-        end,
+        expand = function(args) luasnip.lsp_expand(args.body) end,
       },
       window = {
         documentation = {
@@ -61,8 +104,6 @@ local plugin = {
       formatting = {
         fields = { 'abbr', 'menu', 'kind' },
 
-        ---@param entry cmp.Entry
-        ---@param item cmp.ItemField
         format = function(entry, item)
           local short_name = {
             nvim_lsp = 'LSP',
