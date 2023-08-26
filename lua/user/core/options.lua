@@ -62,9 +62,7 @@ local checktime_au_group = vim.api.nvim_create_augroup('checktime', { clear = tr
 vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter' }, {
   pattern = '*',
   group = checktime_au_group,
-  callback = function()
-    vim.cmd.checktime()
-  end,
+  callback = function() vim.cmd.checktime() end,
 })
 
 -- Init some utils

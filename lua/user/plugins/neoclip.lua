@@ -5,9 +5,7 @@ local plugin = {
     'nvim-telescope/telescope.nvim',
   },
   event = 'VeryLazy',
-  config = function()
-    require('neoclip').setup({})
-  end,
+  config = function() require('neoclip').setup({}) end,
 }
 
 return plugin

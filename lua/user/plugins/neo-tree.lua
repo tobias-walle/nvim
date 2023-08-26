@@ -141,9 +141,7 @@ local neo_tree_group = vim.api.nvim_create_augroup('neo_tree_group', { clear = t
 vim.api.nvim_create_autocmd({ 'FileType' }, {
   group = neo_tree_group,
   pattern = 'netrw',
-  callback = function()
-    vim.cmd([[Neotree position=current]])
-  end,
+  callback = function() vim.cmd([[Neotree position=current]]) end,
 })
 
 return plugin

@@ -3,9 +3,7 @@ local plugin = {
   'vim-test/vim-test',
   event = 'VeryLazy',
   build = function()
-    pcall(function()
-      vim.cmd([[UpdateRemotePlugins]])
-    end)
+    pcall(function() vim.cmd([[UpdateRemotePlugins]]) end)
   end,
   config = function()
     vim.g['test#strategy'] = 'neoterm'

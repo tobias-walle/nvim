@@ -5,16 +5,12 @@ local plugin = {
   keys = {
     {
       'gj',
-      function()
-        require('treesj').toggle()
-      end,
+      function() require('treesj').toggle() end,
       desc = 'Join/Split line',
     },
     {
       'gJ',
-      function()
-        require('treesj').toggle({ split = { recursive = true } })
-      end,
+      function() require('treesj').toggle({ split = { recursive = true } }) end,
       desc = 'Join/Split line recursive',
     },
   },

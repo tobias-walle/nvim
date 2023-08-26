@@ -59,9 +59,7 @@ function M.find_top_level_declarations()
     local query = vim.treesitter.parse_query(filetype, token_query)
     for _, node in query:iter_captures(root, 0, 0, -1) do
       local name = vim.treesitter.get_node_text(node, 0)
-      local range = U.map({ node:range() }, function(p)
-        return p + 1
-      end)
+      local range = U.map({ node:range() }, function(p) return p + 1 end)
       local start_pos = { range[1], range[2] }
       local end_pos = { range[3], range[4] }
       table.insert(results, { name = name, start_pos = start_pos, end_pos = end_pos })
@@ -73,9 +71,10 @@ end
 function M.rename_prefix()
   local word_under_cursor = vim.fn.expand('<cword>')
   vim.ui.input({ prompt = 'Prefix: ', default = word_under_cursor }, function(prefix)
-    vim.ui.input({ prompt = 'New Prefix: ', default = prefix }, function(new_prefix)
-      M.rename_top_level_declarations_by_prefix(prefix, new_prefix)
-    end)
+    vim.ui.input(
+      { prompt = 'New Prefix: ', default = prefix },
+      function(new_prefix) M.rename_top_level_declarations_by_prefix(prefix, new_prefix) end
+    )
   end)
 end
 

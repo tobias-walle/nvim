@@ -25,9 +25,7 @@ local plugin = {
     end
 
     local function get_cased_file_name_node(case)
-      return function()
-        return sn(nil, i(1, get_cased_file_name(case)))
-      end
+      return function() return sn(nil, i(1, get_cased_file_name(case))) end
     end
 
     ls.add_snippets('typescript', {
@@ -106,9 +104,7 @@ export const {name}: React.FC<{props}> = ({{{props_destructure}}}) => {{
             props_content = i(2),
             props_destructure = i(3),
             content = i(0, 'Hello World'),
-            props = f(function(args)
-              return args[1][1] .. 'Props'
-            end, { 1 }),
+            props = f(function(args) return args[1][1] .. 'Props' end, { 1 }),
           }
         )
       ),
@@ -121,9 +117,7 @@ const [{name}, {setter}] = useState({default});
           ]],
           {
             name = i(1),
-            setter = f(function(args)
-              return 'set' .. casing.pascalCase(casing.splitLowerCase(args[1][1]))
-            end, { 1 }),
+            setter = f(function(args) return 'set' .. casing.pascalCase(casing.splitLowerCase(args[1][1])) end, { 1 }),
             default = i(2),
           }
         )

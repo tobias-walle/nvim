@@ -1,12 +1,8 @@
 local S = {}
 
-function S:new()
-  return setmetatable({}, { __index = S })
-end
+function S:new() return setmetatable({}, { __index = S }) end
 
-function S:get_keyword_pattern()
-  return [[\k\+]]
-end
+function S:get_keyword_pattern() return [[\k\+]] end
 
 function S:complete(params, callback)
   local name = vim.fn.expand('%:t:r')

@@ -63,9 +63,7 @@ function M.rename_visual(state, selected_nodes)
 
     local destinations = U.show_edit_popup_async('Rename', sources)
 
-    local moves = U.map(sources, function(source, i)
-      return source .. '::' .. destinations[i]
-    end)
+    local moves = U.map(sources, function(source, i) return source .. '::' .. destinations[i] end)
     U.run_cmd_async({ 'refactor', 'move', table.unpack(moves) })
   end)
 end
@@ -82,9 +80,7 @@ function M.smart_rename_visual(state, selected_nodes)
 
     local destinations = U.show_edit_popup_async('Rename', sources)
 
-    local moves = U.map(sources, function(source, i)
-      return U.quote(source .. '::' .. destinations[i])
-    end)
+    local moves = U.map(sources, function(source, i) return U.quote(source .. '::' .. destinations[i]) end)
     U.show_terminal_popup('Rename', { 'refactor move --replace-usages ' .. U.join(moves, ' ') })
   end)
 end
