@@ -52,8 +52,10 @@ vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufWinEnter' }, {
     vim.o.foldlevelstart = 99
     vim.o.foldmethod = 'indent'
     vim.o.foldenable = false
+    -- Never include '-' in word navigation
+    vim.opt.iskeyword:remove('-')
     -- Disable autocomments
-    vim.cmd([[setlocal formatoptions-=o]])
+    vim.opt.formatoptions:remove('o')
   end,
 })
 

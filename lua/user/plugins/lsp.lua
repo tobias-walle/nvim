@@ -20,7 +20,6 @@ local plugin = {
     ---@type LspConfig
     local config = {
       lsp = {
-        ['tailwindcss'] = L.setup_default,
         ['pyright'] = L.setup_default,
         ['r_language_server'] = { L.setup_default, install = false },
         ['gopls'] = L.setup_default,
@@ -29,6 +28,30 @@ local plugin = {
         ['bufls'] = L.setup_default,
         ['jsonnet_ls'] = L.setup_default,
         ['hls'] = { L.setup_without_formatting, install = false },
+        ['tailwindcss'] = function(name)
+          lspconfig[name].setup({
+            on_attach = L.on_attach,
+            filetypes = {
+              'css',
+              'scss',
+              'sass',
+              'postcss',
+              'html',
+              'javascript',
+              'javascriptreact',
+              'typescript',
+              'typescriptreact',
+              'svelte',
+              'vue',
+              'rust',
+            },
+            init_options = {
+              userLanguages = {
+                rust = 'html',
+              },
+            },
+          })
+        end,
         ['yamlls'] = function(name)
           lspconfig[name].setup({
             on_attach = L.on_attach_disable_formatting,

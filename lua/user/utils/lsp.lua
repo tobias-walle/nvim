@@ -4,7 +4,7 @@ local U = require('user.utils')
 
 function M.format()
   vim.cmd('silent! EslintFixAll')
-  vim.lsp.buf.format()
+  vim.lsp.buf.format({ timeout_ms = 5000 })
 end
 
 ---@alias LspSetupFun fun(name: string)
