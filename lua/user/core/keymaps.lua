@@ -254,7 +254,7 @@ M.attach_completion = function()
   map('n', '<leader><leader>s', function() vim.lsp.buf.signature_help() end, 'Signature Help')
   map('n', '<leader><leader>r', function() vim.lsp.buf.rename() end, 'Rename')
   map('n', '<leader><leader>R', require('user.utils.refactor').rename_prefix, 'Rename Prefix')
-  map('n', '<leader><leader>a', function() vim.lsp.buf.code_action() end, 'Code Actions')
+  map({ 'n', 'v' }, '<leader><leader>a', function() vim.lsp.buf.code_action() end, 'Code Actions')
   map('n', '<leader><leader>e', function() vim.diagnostic.open_float() end, 'Show Errors')
   map('n', '<leader><leader>E', '<cmd>RustOpenExternalDocs<cr>', 'Rust External Docs')
   map('n', '<leader><leader>q', function() vim.diagnostic.setloclist() end, 'Save Errors to Loclist')
@@ -269,10 +269,11 @@ M.attach_completion = function()
 
   wk.register({ ['<leader><leader>t'] = { name = '+typescript' } })
   map('n', '<leader><leader>tr', '<cmd>TypescriptRenameFile<CR>', 'Rename TS file')
+  map('n', '<leader><leader>td', '<cmd>TSToolsGoToSourceDefinition<CR>', 'Rename TS file')
   map(
     'n',
     '<leader><leader>ti',
-    '<cmd>TypescriptAddMissingImports<CR><cmd>TypescriptOrganizeImports<CR>',
+    '<cmd>TSToolsAddMissingImports<CR><cmd>TSToolsRemoveUnusedImports<CR>',
     'Import All & Organize Imports'
   )
   map('n', '<leader><leader>tt', '<cmd>edit %:r.spec.%:e<CR>', 'Create TS Test')

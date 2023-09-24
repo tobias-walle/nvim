@@ -7,10 +7,13 @@ local plugin = {
     'williamboman/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     'b0o/schemastore.nvim',
-    'jose-elias-alvarez/typescript.nvim',
     'simrat39/rust-tools.nvim',
     'jose-elias-alvarez/null-ls.nvim',
     'folke/neodev.nvim',
+    {
+      'pmizio/typescript-tools.nvim',
+      dependencies = { 'nvim-lua/plenary.nvim' },
+    },
   },
   config = function()
     local L = require('user.utils.lsp')

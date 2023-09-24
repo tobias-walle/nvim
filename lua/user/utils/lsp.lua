@@ -120,10 +120,10 @@ local function ts_filter_react_dts(value) return string.match(value.targetUri, '
 
 local function disable_typescript_lsp_renaming_if_angular_is_active()
   local clients = vim.lsp.get_active_clients()
-  local ts_active = U.some(clients, function(client) return client.name == 'tsserver' end)
+  local ts_active = U.some(clients, function(client) return client.name == 'typescript-tools' end)
   local ng_active = U.some(clients, function(client) return client.name == 'angularls' end)
   if ts_active and ng_active then
-    local ts_client = U.find(clients, function(client) return client.name == 'tsserver' end)
+    local ts_client = U.find(clients, function(client) return client.name == 'typescript-tools' end)
     if ts_client ~= nil then
       ts_client.server_capabilities.renameProvider = false
     end
@@ -131,52 +131,31 @@ local function disable_typescript_lsp_renaming_if_angular_is_active()
 end
 
 function M.setup_typescript()
-  local lspconfig = require('lspconfig')
-  local ts_inlay_hint_options = {
-    includeInlayParameterNameHints = 'all',
-    includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-    includeInlayFunctionParameterTypeHints = true,
-    includeInlayVariableTypeHints = true,
-    includeInlayPropertyDeclarationTypeHints = true,
-    includeInlayFunctionLikeReturnTypeHints = true,
-    includeInlayEnumMemberValueHints = true,
-  }
+  require('typescript-tools').setup({
+    on_attach = function(client, bufnr)
+      M.disable_formatting(client)
 
-  require('typescript').setup({
-    server = {
-
-      on_attach = function(client, bufnr)
-        M.disable_formatting(client)
-
-        disable_typescript_lsp_renaming_if_angular_is_active()
-        M.on_attach(client, bufnr)
-      end,
-
-      handlers = {
-        ['textDocument/definition'] = function(err, result, method, ...)
-          if vim.tbl_islist(result) and #result > 1 then
-            local filtered_result = ts_filter(result, ts_filter_react_dts)
-            return vim.lsp.handlers['textDocument/definition'](err, filtered_result, method, ...)
-          end
-
-          vim.lsp.handlers['textDocument/definition'](err, result, method, ...)
-        end,
+      disable_typescript_lsp_renaming_if_angular_is_active()
+      M.on_attach(client, bufnr)
+    end,
+    settings = {
+      tsserver_plugins = {
+        '@styled/typescript-styled-plugin',
       },
-
-      root_dir = lspconfig.util.root_pattern('package.json'),
-
-      settings = {
-        typescript = { inlayHints = ts_inlay_hint_options },
-        javascript = { inlayHints = ts_inlay_hint_options },
+      tsserver_file_preferences = {
+        includeInlayParameterNameHints = 'all',
+        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayEnumMemberValueHints = true,
       },
     },
   })
 
   -- Allow comments in tsconfig
-  vim.cmd([[
-
-  autocmd BufNewFile,BufRead tsconfig*.json setlocal filetype=jsonc
-  ]])
+  vim.cmd('autocmd BufNewFile,BufRead tsconfig*.json setlocal filetype=jsonc')
 end
 
 function M.setup_angular()
