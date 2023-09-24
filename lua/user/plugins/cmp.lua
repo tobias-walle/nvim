@@ -16,19 +16,11 @@ local plugin = {
 
     cmp.register_source('filename', require('user.utils.cmp-sources.filename').new())
 
-    local has_words_before = function()
-      local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-      return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
-    end
-
     cmp.setup({
       mapping = {
-        ['<C-Space>'] = cmp.mapping.complete(),
         ['<Tab>'] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_next_item()
-          elseif has_words_before() then
-            cmp.complete()
           else
             fallback()
           end
@@ -44,10 +36,14 @@ local plugin = {
 
         ['<C-n>'] = cmp.mapping(function(fallback)
           local luasnip = require('luasnip')
-          if luasnip.expand_or_jumpable() then
-            luasnip.expand_or_jump()
+          if cmp.visible() then
+            if luasnip.expand_or_jumpable() then
+              luasnip.expand_or_jump()
+            else
+              fallback()
+            end
           else
-            fallback()
+            cmp.complete()
           end
         end, { 'i', 's' }),
 
@@ -93,7 +89,7 @@ local plugin = {
       },
 
       sources = cmp.config.sources({
-        { name = 'nvim_lsp', keyword_length = 0 },
+        { name = 'nvim_lsp', keyword_length = 0, max_item_count = 30 },
         { name = 'path' },
         { name = 'crates' },
         { name = 'buffer', keyword_length = 3, max_item_count = 5 },

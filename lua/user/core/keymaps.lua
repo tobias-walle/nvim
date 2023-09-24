@@ -88,6 +88,12 @@ wk.register({ ['<leader>l'] = { name = '+local list' } })
 map('n', '<leader>lo', '<cmd>lopen<cr>', 'Open List')
 map('n', '<leader>lq', '<cmd>lclose<cr>', 'Close List')
 map('n', '<leader>la', require('user.utils.quick-fix').activate_local_list, 'Activate LL for shortcut')
+map(
+  'n',
+  '<leader>ls',
+  '<cmd>g//laddexpr expand("%") . ":" . line(".") . ":" . getline(".")<cr> | <cmd>lopen<cr>',
+  'Move current search to local list'
+)
 
 -- Quick Fix List
 wk.register({ ['<leader>c'] = { name = '+quick fix list' } })
