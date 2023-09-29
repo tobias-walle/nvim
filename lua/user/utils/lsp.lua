@@ -3,6 +3,7 @@ local M = {}
 local U = require('user.utils')
 
 function M.format()
+  require('mini.trailspace').trim()
   vim.cmd('silent! EslintFixAll')
   vim.lsp.buf.format({ timeout_ms = 5000 })
 end
