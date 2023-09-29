@@ -2,11 +2,8 @@
 local plugin = {
   'echasnovski/mini.statusline',
   lazy = false,
-  dependencies = {
-    'folke/noice.nvim',
-  },
   config = function()
-    function render()
+    local function render()
       local mode, mode_hl = MiniStatusline.section_mode({ trunc_width = 120 })
       local git = MiniStatusline.section_git({ trunc_width = 75 })
       local diagnostics = MiniStatusline.section_diagnostics({ trunc_width = 75 })

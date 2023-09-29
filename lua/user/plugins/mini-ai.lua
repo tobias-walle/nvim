@@ -3,10 +3,11 @@ local plugin = {
   -- Custom surround text objects for example to replace text in ``
   'echasnovski/mini.ai',
   lazy = false,
+  enabled = false,
   config = function()
     local ai = require('mini.ai')
-    require('mini.ai').setup({
-      n_lines = 500,
+    ai.setup({
+      n_lines = 1000,
       custom_textobjects = {
         o = ai.gen_spec.treesitter({
           a = { '@block.outer', '@conditional.outer', '@loop.outer' },

@@ -4,7 +4,8 @@ local plugin = {
   event = 'VeryLazy',
   config = function()
     require('mini.surround').setup({
-      search_method = 'cover_or_next',
+      search_method = 'cover',
+      n_lines = 10000,
       mappings = {
         add = 'gsa',
         delete = 'gsd',
