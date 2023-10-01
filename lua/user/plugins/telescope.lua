@@ -14,6 +14,11 @@ local plugin = {
   },
   config = function()
     local lga_actions = require('telescope-live-grep-args.actions')
+    local make_entry = require('telescope.make_entry')
+
+    local quickfix_entry_maker = make_entry.gen_from_quickfix({
+      fname_width = false,
+    })
 
     require('telescope').setup({
       defaults = {
@@ -36,6 +41,8 @@ local plugin = {
             '--hidden',
           },
         },
+        lsp_references = { entry_maker = quickfix_entry_maker },
+        quickfix = { entry_maker = quickfix_entry_maker },
       },
       extensions = {
         fzf = {
