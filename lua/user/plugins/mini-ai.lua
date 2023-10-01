@@ -3,7 +3,6 @@ local plugin = {
   -- Custom surround text objects for example to replace text in ``
   'echasnovski/mini.ai',
   lazy = false,
-  enabled = false,
   config = function()
     local ai = require('mini.ai')
     ai.setup({
