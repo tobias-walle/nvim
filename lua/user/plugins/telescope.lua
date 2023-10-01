@@ -6,6 +6,11 @@ local plugin = {
     'nvim-telescope/telescope-file-browser.nvim',
     'AckslD/nvim-neoclip.lua',
     'aaronhallaert/advanced-git-search.nvim',
+    {
+      -- Native sorter for vastly improved performance
+      'nvim-telescope/telescope-fzf-native.nvim',
+      build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
+    },
   },
   config = function()
     local lga_actions = require('telescope-live-grep-args.actions')
@@ -33,6 +38,12 @@ local plugin = {
         },
       },
       extensions = {
+        fzf = {
+          fuzzy = true,
+          override_generic_sorter = true,
+          override_file_sorter = true,
+          case_mode = 'smart_case',
+        },
         live_grep_args = {
           vimgrep_arguments = {
             'rg',
@@ -63,6 +74,7 @@ local plugin = {
       },
     })
 
+    require('telescope').load_extension('fzf')
     require('telescope').load_extension('live_grep_args')
     require('telescope').load_extension('file_browser')
     require('telescope').load_extension('neoclip')
