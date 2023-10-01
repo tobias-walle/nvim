@@ -34,4 +34,9 @@ M.close_unused_buffers = function()
   end
 end
 
+M.close_unused_buffers_and_find_buffer = function()
+  require('user.utils.autoclose-unused-buffers').close_unused_buffers()
+  require('telescope.builtin').buffers({ sort_lastused = true, ignore_current_buffer = true })
+end
+
 return M
