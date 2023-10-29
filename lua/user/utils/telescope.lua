@@ -1,6 +1,8 @@
 local M = {}
 
-function M.find_files_all() require('telescope.builtin').find_files({ no_ignore = true }) end
+function M.find_files_all()
+  require('telescope.builtin').find_files({ no_ignore = true })
+end
 
 function M.live_grep_all()
   require('telescope').extensions.live_grep_args.live_grep_args({
@@ -17,6 +19,8 @@ function M.live_grep_all()
   })
 end
 
-function M.live_grep() require('telescope').extensions.live_grep_args.live_grep_args() end
+function M.live_grep()
+  require('telescope').extensions.live_grep_args.live_grep_args()
+end
 
 return M

@@ -15,7 +15,8 @@ end
 ---@alias LspConfig { lsp: LspMap, null_ls: NullMap }
 
 M.snippet_capabilities = vim.lsp.protocol.make_client_capabilities()
-M.snippet_capabilities.textDocument.completion.completionItem.snippetSupport = true
+M.snippet_capabilities.textDocument.completion.completionItem.snippetSupport =
+  true
 
 ---@diagnostic disable-next-line: unused-local
 function M.on_attach(client, bufnr)
@@ -23,7 +24,9 @@ function M.on_attach(client, bufnr)
   require('user.core.keymaps').attach_completion(bufnr)
 end
 
-function M.disable_formatting(client) client.server_capabilities.documentFormattingProvider = false end
+function M.disable_formatting(client)
+  client.server_capabilities.documentFormattingProvider = false
+end
 
 function M.on_attach_disable_formatting(client, bufnr)
   M.disable_formatting(client)
@@ -99,7 +102,9 @@ function M.apply_config(config)
 
   require('mason').setup()
   require('mason-lspconfig').setup({ ensure_installed = ensure_installed.lsp })
-  require('mason-tool-installer').setup({ ensure_installed = ensure_installed.null_ls })
+  require('mason-tool-installer').setup({
+    ensure_installed = ensure_installed.null_ls,
+  })
 end
 
 local function ts_filter(arr, fn)
@@ -117,14 +122,25 @@ local function ts_filter(arr, fn)
   return filtered
 end
 
-local function ts_filter_react_dts(value) return string.match(value.targetUri, 'react/index.d.ts') == nil end
+local function ts_filter_react_dts(value)
+  return string.match(value.targetUri, 'react/index.d.ts') == nil
+end
 
 local function disable_typescript_lsp_renaming_if_angular_is_active()
   local clients = vim.lsp.get_active_clients()
-  local ts_active = U.some(clients, function(client) return client.name == 'tsserver' end)
-  local ng_active = U.some(clients, function(client) return client.name == 'angularls' end)
+  local ts_active = U.some(
+    clients,
+    function(client) return client.name == 'tsserver' end
+  )
+  local ng_active = U.some(
+    clients,
+    function(client) return client.name == 'angularls' end
+  )
   if ts_active and ng_active then
-    local ts_client = U.find(clients, function(client) return client.name == 'tsserver' end)
+    local ts_client = U.find(
+      clients,
+      function(client) return client.name == 'tsserver' end
+    )
     if ts_client ~= nil then
       ts_client.server_capabilities.renameProvider = false
     end
@@ -157,7 +173,12 @@ function M.setup_typescript()
         ['textDocument/definition'] = function(err, result, method, ...)
           if vim.tbl_islist(result) and #result > 1 then
             local filtered_result = ts_filter(result, ts_filter_react_dts)
-            return vim.lsp.handlers['textDocument/definition'](err, filtered_result, method, ...)
+            return vim.lsp.handlers['textDocument/definition'](
+              err,
+              filtered_result,
+              method,
+              ...
+            )
           end
 
           vim.lsp.handlers['textDocument/definition'](err, result, method, ...)

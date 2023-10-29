@@ -61,7 +61,13 @@ local plugin = {
         follow_current_file = true,
         group_empty_dirs = true,
         show_unloaded = true,
-        window = { mappings = { ['bd'] = 'buffer_delete', ['<bs>'] = 'navigate_up', ['.'] = 'set_root' } },
+        window = {
+          mappings = {
+            ['bd'] = 'buffer_delete',
+            ['<bs>'] = 'navigate_up',
+            ['.'] = 'set_root',
+          },
+        },
       },
       git_status = {
         window = {
@@ -137,7 +143,8 @@ local plugin = {
   end,
 }
 
-local neo_tree_group = vim.api.nvim_create_augroup('neo_tree_group', { clear = true })
+local neo_tree_group =
+  vim.api.nvim_create_augroup('neo_tree_group', { clear = true })
 vim.api.nvim_create_autocmd({ 'FileType' }, {
   group = neo_tree_group,
   pattern = 'netrw',

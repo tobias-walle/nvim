@@ -15,7 +15,11 @@ function M.runTypescriptCommand(cmd)
     end
 
     if event == 'exit' then
-      vim.fn.setqflist({}, ' ', { title = cmd, lines = lines, efm = errorformat })
+      vim.fn.setqflist(
+        {},
+        ' ',
+        { title = cmd, lines = lines, efm = errorformat }
+      )
       vim.cmd([[ copen ]])
     end
   end

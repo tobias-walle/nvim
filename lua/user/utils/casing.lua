@@ -43,7 +43,9 @@ end
 
 --- @param filetype string
 --- @return boolean
-function M.languageUsesSnakeCase(filetype) return filetype == 'rust' or filetype == 'python' or filetype == 'ruby' end
+function M.languageUsesSnakeCase(filetype)
+  return filetype == 'rust' or filetype == 'python' or filetype == 'ruby'
+end
 
 --- @param names string[]
 --- @return string
