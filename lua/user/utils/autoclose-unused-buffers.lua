@@ -28,7 +28,11 @@ M.close_unused_buffers = function()
   local curbufnr = vim.api.nvim_get_current_buf()
   local buflist = vim.api.nvim_list_bufs()
   for _, bufnr in ipairs(buflist) do
-    if vim.bo[bufnr].buflisted and bufnr ~= curbufnr and (vim.fn.getbufvar(bufnr, 'bufpersist') ~= 1) then
+    if
+      vim.bo[bufnr].buflisted
+      and bufnr ~= curbufnr
+      and (vim.fn.getbufvar(bufnr, 'bufpersist') ~= 1)
+    then
       vim.cmd('bd ' .. tostring(bufnr))
     end
   end
@@ -36,7 +40,10 @@ end
 
 M.close_unused_buffers_and_find_buffer = function()
   require('user.utils.autoclose-unused-buffers').close_unused_buffers()
-  require('telescope.builtin').buffers({ sort_lastused = true, ignore_current_buffer = true })
+  require('telescope.builtin').buffers({
+    sort_lastused = true,
+    ignore_current_buffer = true,
+  })
 end
 
 return M

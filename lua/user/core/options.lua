@@ -43,7 +43,8 @@ opt.fillchars = opt.fillchars + 'diff:╱'
 require('editorconfig').properties.end_of_line = nil
 
 vim.cmd([[set formatoptions-=o]])
-local general_options_au_group = vim.api.nvim_create_augroup('general_options', { clear = true })
+local general_options_au_group =
+  vim.api.nvim_create_augroup('general_options', { clear = true })
 vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufWinEnter' }, {
   pattern = '*',
   group = general_options_au_group,
@@ -60,7 +61,8 @@ vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufWinEnter' }, {
 })
 
 -- Check for changes on focus/buffer enter
-local checktime_au_group = vim.api.nvim_create_augroup('checktime', { clear = true })
+local checktime_au_group =
+  vim.api.nvim_create_augroup('checktime', { clear = true })
 vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter' }, {
   pattern = '*',
   group = checktime_au_group,

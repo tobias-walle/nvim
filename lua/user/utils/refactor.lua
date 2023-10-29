@@ -29,7 +29,10 @@ function M.rename_top_level_declarations_by_prefix(old_prefix, new_prefix)
       for _, case in ipairs(cases) do
         local old = case(casing.splitLowerCase(old_prefix))
         local new = case(casing.splitLowerCase(new_prefix))
-        if U.starts_with(position.name, old) and not U.starts_with(position.name, new) then
+        if
+          U.starts_with(position.name, old)
+          and not U.starts_with(position.name, new)
+        then
           vim.fn.cursor(position.start_pos)
           M.lsp_rename_sync(string.gsub(position.name, '^' .. old, new))
           has_changed = true
@@ -62,7 +65,10 @@ function M.find_top_level_declarations()
       local range = U.map({ node:range() }, function(p) return p + 1 end)
       local start_pos = { range[1], range[2] }
       local end_pos = { range[3], range[4] }
-      table.insert(results, { name = name, start_pos = start_pos, end_pos = end_pos })
+      table.insert(
+        results,
+        { name = name, start_pos = start_pos, end_pos = end_pos }
+      )
     end
   end
   return results
@@ -70,12 +76,17 @@ end
 
 function M.rename_prefix()
   local word_under_cursor = vim.fn.expand('<cword>')
-  vim.ui.input({ prompt = 'Prefix: ', default = word_under_cursor }, function(prefix)
-    vim.ui.input(
-      { prompt = 'New Prefix: ', default = prefix },
-      function(new_prefix) M.rename_top_level_declarations_by_prefix(prefix, new_prefix) end
-    )
-  end)
+  vim.ui.input(
+    { prompt = 'Prefix: ', default = word_under_cursor },
+    function(prefix)
+      vim.ui.input(
+        { prompt = 'New Prefix: ', default = prefix },
+        function(new_prefix)
+          M.rename_top_level_declarations_by_prefix(prefix, new_prefix)
+        end
+      )
+    end
+  )
 end
 
 return M

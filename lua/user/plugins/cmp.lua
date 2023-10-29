@@ -14,7 +14,10 @@ local plugin = {
     local compare = cmp.config.compare
     local luasnip = require('luasnip')
 
-    cmp.register_source('filename', require('user.utils.cmp-sources.filename').new())
+    cmp.register_source(
+      'filename',
+      require('user.utils.cmp-sources.filename').new()
+    )
 
     cmp.setup({
       mapping = {
@@ -57,7 +60,10 @@ local plugin = {
         end, { 'i', 's' }),
 
         ['<C-e>'] = cmp.mapping.close(),
-        ['<CR>'] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = true }),
+        ['<CR>'] = cmp.mapping.confirm({
+          behavior = cmp.ConfirmBehavior.Insert,
+          select = true,
+        }),
       },
       preselect = cmp.PreselectMode.None,
       completion = {

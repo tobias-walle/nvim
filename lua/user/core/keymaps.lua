@@ -1,3 +1,4 @@
+-- stylua: ignore start
 local M = {}
 
 local wk = require('which-key')
@@ -31,7 +32,9 @@ end, 'Format & Save')
 new_cmd('SpellAddAll', 'let @a = "]Szg" | norm 1000@a', 'Add all words in buffer to spell check white list')
 
 -- Line Numbers
-local function toggle_line_numbers() vim.opt.relativenumber = not vim.opt.relativenumber._value end
+local function toggle_line_numbers()
+  vim.opt.relativenumber = not vim.opt.relativenumber.get()
+end
 new_cmd('ToggleLine', toggle_line_numbers, 'Toggle line numbers')
 new_cmd('TL', toggle_line_numbers, 'Toggle line numbers')
 
@@ -199,7 +202,6 @@ map('n', '<leader>tdn', ':UltestDebugNearest<cr>', 'Debug test close to cursor')
 -- Search
 map('n', '<C-p>', function() require('telescope.builtin').find_files() end, 'Find files')
 
--- stylua: ignore start
 wk.register({ ['<leader>s'] = { name = '+search' } })
 map('n', '<leader>sb', function() require('user.utils.autoclose-unused-buffers').close_unused_buffers_and_find_buffer() end, 'Find buffer')
 map('n', '<leader>sc', function() require('telescope.builtin').commands() end, 'Find command')
@@ -221,7 +223,6 @@ map('n', '<leader>su', function() require('telescope.builtin').resume() end, 'Re
 map('n', '<leader>sx', function() require('telescope.builtin').builtin() end, 'Prompt Picker')
 map('n', '<leader>sy', function() require('telescope').extensions.neoclip.neoclip() end, 'Find command')
 map('n', '<leader>sz', function() require('telescope.builtin').lsp_workspace_symbols() end, 'Find workspace symbols')
--- stylua: ignore end
 
 -- Completion
 local function toggle_virtual_lines()
@@ -271,3 +272,4 @@ M.attach_completion = function()
 end
 
 return M
+-- stylua: ignore end

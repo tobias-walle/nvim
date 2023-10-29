@@ -14,7 +14,13 @@ function M.assert_type(variable, name, expected_type)
   local actual_type = type(variable)
   assert(
     actual_type == expected_type,
-    'Expected type of "' .. name .. '" to be "' .. expected_type .. '", but it was actual "' .. actual_type .. '"'
+    'Expected type of "'
+      .. name
+      .. '" to be "'
+      .. expected_type
+      .. '", but it was actual "'
+      .. actual_type
+      .. '"'
   )
 end
 
@@ -124,7 +130,10 @@ end
 M.run_cmd_async = async.wrap(M.run_cmd, 2)
 
 --- @type fun (opts: table): string
-M.input_async = async.wrap(function(opts, on_confirm) vim.ui.input(opts, on_confirm) end, 2)
+M.input_async = async.wrap(
+  function(opts, on_confirm) vim.ui.input(opts, on_confirm) end,
+  2
+)
 
 --- @param content string
 --- @return string
@@ -227,7 +236,9 @@ M.show_terminal_popup_async = async.wrap(M.show_terminal_popup, 3)
 
 --- @param s string
 --- @param prefix string
-function M.starts_with(s, prefix) return string.sub(s, 1, string.len(prefix)) == prefix end
+function M.starts_with(s, prefix)
+  return string.sub(s, 1, string.len(prefix)) == prefix
+end
 
 --- @param a table
 --- @param b table

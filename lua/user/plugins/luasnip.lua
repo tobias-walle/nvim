@@ -79,7 +79,10 @@ export const {name}: React.FC = () => {{
   );
 }}
           ]],
-          { name = d(1, get_cased_file_name_node(casing.pascalCase)), content = i(0, 'Hello World') }
+          {
+            name = d(1, get_cased_file_name_node(casing.pascalCase)),
+            content = i(0, 'Hello World'),
+          }
         )
       ),
 
@@ -117,7 +120,13 @@ const [{name}, {setter}] = useState({default});
           ]],
           {
             name = i(1),
-            setter = f(function(args) return 'set' .. casing.pascalCase(casing.splitLowerCase(args[1][1])) end, { 1 }),
+            setter = f(
+              function(args)
+                return 'set'
+                  .. casing.pascalCase(casing.splitLowerCase(args[1][1]))
+              end,
+              { 1 }
+            ),
             default = i(2),
           }
         )
@@ -138,7 +147,10 @@ export const {name}: Component = () => {{
   );
 }}
           ]],
-          { name = d(1, get_cased_file_name_node(casing.pascalCase)), content = i(0, 'Hello World') }
+          {
+            name = d(1, get_cased_file_name_node(casing.pascalCase)),
+            content = i(0, 'Hello World'),
+          }
         )
       ),
 
@@ -154,7 +166,10 @@ export const {name}: ParentComponent = () => {{
   );
 }}
           ]],
-          { name = d(1, get_cased_file_name_node(casing.pascalCase)), content = i(0, 'Hello World') }
+          {
+            name = d(1, get_cased_file_name_node(casing.pascalCase)),
+            content = i(0, 'Hello World'),
+          }
         )
       ),
 

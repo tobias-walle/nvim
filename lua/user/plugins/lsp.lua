@@ -81,7 +81,9 @@ local plugin = {
           lspconfig[name].setup({
             on_attach = L.on_attach_disable_formatting,
             capabilities = L.snippet_capabilities,
-            settings = { json = { schemas = require('schemastore').json.schemas() } },
+            settings = {
+              json = { schemas = require('schemastore').json.schemas() },
+            },
           })
         end,
         ['eslint'] = L.setup_default,

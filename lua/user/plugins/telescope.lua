@@ -22,7 +22,14 @@ local plugin = {
 
     require('telescope').setup({
       defaults = {
-        file_ignore_patterns = { '.git/', 'yarn.lock', 'pnpm-lock.yaml', '.yarn/', 'node_modules/', 'dist/' },
+        file_ignore_patterns = {
+          '.git/',
+          'yarn.lock',
+          'pnpm-lock.yaml',
+          '.yarn/',
+          'node_modules/',
+          'dist/',
+        },
         layout_strategy = 'vertical',
         layout_config = { vertical = { width = 0.9 } },
       },

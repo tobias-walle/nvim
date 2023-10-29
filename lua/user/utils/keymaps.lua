@@ -7,7 +7,11 @@ local M = {}
 ---@param opts? table<string, any>
 ---@return nil
 function M.map(mode, shortcut, command, desc, opts)
-  local options = vim.tbl_extend('force', { noremap = true, silent = true, desc = desc }, opts or {})
+  local options = vim.tbl_extend(
+    'force',
+    { noremap = true, silent = true, desc = desc },
+    opts or {}
+  )
   vim.keymap.set(mode, shortcut, command, options)
 end
 
