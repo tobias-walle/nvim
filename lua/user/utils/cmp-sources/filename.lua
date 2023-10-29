@@ -13,16 +13,23 @@ function S:complete(params, callback)
   name = string.gsub(name, '%.spec', '')
   local casing = require('user.utils.casing')
   local split = casing.splitLowerCase(name)
-  local pc = { label = casing.pascalCase(split) }
-  local cc = { label = casing.camelCase(split) }
-  local sc = { label = casing.snakeCase(split) }
-  if params.context.filetype == 'rust' then
-    callback({ pc, sc })
-  elseif params.context.filetype == 'python' then
-    callback({ pc, sc })
-  else
-    callback({ pc, cc })
+  local items = {}
+
+  local function add_items()
+    local casing = require('user.utils.casing')
+    table.insert(items, { label = casing.pascalCase(split) })
+    if casing.languageUsesSnakeCase(params.context.filetype) then
+      table.insert(items, { label = casing.snakeCase(split) })
+    else
+      table.insert(items, { label = casing.camelCase(split) })
+    end
   end
+
+  add_items()
+  table.remove(split, #split)
+  add_items()
+
+  callback(items)
 end
 
 return S
