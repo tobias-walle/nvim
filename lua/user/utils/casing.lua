@@ -10,7 +10,7 @@ function M.splitLowerCase(names)
   end
   local result = {}
   for _, name in ipairs(names) do
-    for str in string.gmatch(name, '(%u?[^%u%._]+)') do
+    for str in string.gmatch(name, '(%u?[^%u%._-]+)') do
       table.insert(result, string.lower(str))
     end
   end
@@ -40,6 +40,10 @@ function M.camelCase(names)
   end
   return result
 end
+
+--- @param filetype string
+--- @return boolean
+function M.languageUsesSnakeCase(filetype) return filetype == 'rust' or filetype == 'python' or filetype == 'ruby' end
 
 --- @param names string[]
 --- @return string
