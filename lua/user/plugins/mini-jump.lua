@@ -2,6 +2,7 @@
 local plugin = {
   'echasnovski/mini.jump',
   lazy = false,
+  enabled = false, -- Disable for now to test if I really want it
   config = function()
     require('mini.jump').setup({
       mappings = {

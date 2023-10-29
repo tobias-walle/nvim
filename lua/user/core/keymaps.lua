@@ -118,6 +118,7 @@ wk.register({ ['t'] = { name = '+tabs' } })
 map('n', 'th', ':tabprev<CR>', 'Previous Tab')
 map('n', 'tl', ':tabnext<CR>', 'Next Tab')
 map('n', 'tn', ':tabnew<CR>', 'New Tab')
+map('n', 'te', ':tabedit %<CR>', 'Edit current buffer in a tab')
 map('n', 'ts', ':tab split<CR>', 'Split (Clone) Tab')
 map('n', 'tq', ':tabclose<CR>', 'Close Tab')
 map('n', 'tb', '<C-W>T', 'Open Current Buffer as Tab')
@@ -233,13 +234,14 @@ local function toggle_virtual_lines()
 end
 
 M.attach_completion = function()
+  wk.register({ ['<leader><leader>'] = { name = '+lsp' } })
+
   map('n', 'gD', function() vim.lsp.buf.declaration() end, 'Go to declaration')
   map('n', 'gd', function() vim.lsp.buf.definition() end, 'Go to definition')
   map('n', 'gt', function() vim.lsp.buf.type_definition() end, 'Go to type definitions')
   map('n', 'gi', function() vim.lsp.buf.implementation() end, 'Go to implementation')
   map('n', 'gr', function() vim.lsp.buf.references() end, 'Go to references')
 
-  wk.register({ ['<leader><leader>'] = { name = '+lsp' } })
   map('n', '<leader><leader>h', function() vim.lsp.buf.hover() end, 'Hover')
   map('n', '<leader><leader>s', function() vim.lsp.buf.signature_help() end, 'Signature Help')
   map('n', '<leader><leader>r', function() vim.lsp.buf.rename() end, 'Rename')
