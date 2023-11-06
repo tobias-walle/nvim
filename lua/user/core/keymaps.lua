@@ -204,15 +204,16 @@ map('n', '<C-p>', function() require('telescope.builtin').find_files() end, 'Fin
 
 wk.register({ ['<leader>s'] = { name = '+search' } })
 map('n', '<leader>sb', function() require('user.utils.autoclose-unused-buffers').close_unused_buffers_and_find_buffer() end, 'Find buffer')
-map('n', '<leader>sc', function() require('telescope.builtin').commands() end, 'Find command')
+map('n', '<leader>scc', function() require('telescope.builtin').commands() end, 'Find command')
+map('n', '<leader>sch', function() require('telescope.builtin').search_history() end, 'Search command history')
 map('n', '<leader>sd', function() require('telescope.builtin').diagnostics({ severity_limit = vim.diagnostic.severity.WARN }) end, 'Search lsp diagnostics messages/errors in workspace')
 map('n', '<leader>se', function() require('telescope').extensions.file_browser.file_browser({ path = vim.fn.expand('%:p:h') }) end, 'Open FileBrowser relative to current path')
 map('n', '<leader>sE', function() require('telescope').extensions.file_browser.file_browser() end, 'Open FileBrowser relative to cwd')
 map('n', '<leader>sf', function() require('telescope.builtin').find_files() end, 'Find files')
 map('n', '<leader>sF', function() require('user.utils.telescope').find_files_all() end, 'Find files (include ignored)')
 map('n', '<leader>sg', function() require('telescope.builtin').git_status() end, 'Find staged files')
-map('n', '<leader>sh', function() require('telescope.builtin').help_tags() end, 'Help')
-map('n', '<leader>sH', function() require('telescope.builtin').search_history() end, 'Search History')
+map('n', '<leader>shh', function() require('telescope').extensions.file_history.history() end, 'Find in file history')
+map('n', '<leader>she', function() require('telescope.builtin').help_tags() end, 'Help')
 map('n', '<leader>sk', function() require('telescope.builtin').keymaps() end, 'Find keymap')
 map('n', '<leader>sn', function() require('telescope').extensions.notify.notify() end, 'Find notifications')
 map('n', '<leader>sp', function() require('telescope.builtin').spell_suggest() end, 'Suggest spelling')
@@ -221,7 +222,7 @@ map('n', '<leader>ss', function() require('user.utils.telescope').live_grep() en
 map('n', '<leader>sS', function() require('telescope.builtin').grep_string() end, 'Find string under cursor')
 map('n', '<leader>su', function() require('telescope.builtin').resume() end, 'Resume')
 map('n', '<leader>sx', function() require('telescope.builtin').builtin() end, 'Prompt Picker')
-map('n', '<leader>sy', function() require('telescope').extensions.neoclip.neoclip() end, 'Find command')
+map('n', '<leader>sy', function() require('telescope').extensions.neoclip.neoclip() end, 'Search clipboard')
 map('n', '<leader>sz', function() require('telescope.builtin').lsp_workspace_symbols() end, 'Find workspace symbols')
 
 -- Completion
