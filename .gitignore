@@ -4,3 +4,4 @@ plugin
 sessions
 spell
 .DS_Store
+.file-history-git

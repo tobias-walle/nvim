@@ -6,12 +6,14 @@ local plugin = {
     'nvim-telescope/telescope-file-browser.nvim',
     'AckslD/nvim-neoclip.lua',
     'aaronhallaert/advanced-git-search.nvim',
+    'dawsers/telescope-file-history.nvim',
     {
       -- Native sorter for vastly improved performance
       'nvim-telescope/telescope-fzf-native.nvim',
       build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
     },
   },
+  cmd = { 'Telescope' },
   config = function()
     local lga_actions = require('telescope-live-grep-args.actions')
     local make_entry = require('telescope.make_entry')
@@ -88,11 +90,17 @@ local plugin = {
       },
     })
 
+    require('file_history').setup({
+      backup_dir = '~/.config/nvim/.file-history-git',
+      git_cmd = 'git',
+    })
+
     require('telescope').load_extension('fzf')
     require('telescope').load_extension('live_grep_args')
     require('telescope').load_extension('file_browser')
     require('telescope').load_extension('neoclip')
     require('telescope').load_extension('advanced_git_search')
+    require('telescope').load_extension('file_history')
   end,
 }
 
