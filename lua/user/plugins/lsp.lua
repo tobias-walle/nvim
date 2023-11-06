@@ -87,7 +87,25 @@ local plugin = {
           })
         end,
         ['eslint'] = L.setup_default,
-        ['svelte'] = L.setup_default,
+        ['svelte'] = function(name)
+          L.setup_default(name)
+          lspconfig[name].setup({
+            on_attach = function(client, bufnr)
+              L.on_attach(client, bufnr)
+              --- Workaround for https://github.com/sveltejs/language-tools/issues/2008
+              vim.api.nvim_create_autocmd('BufWritePost', {
+                pattern = { '*.js', '*.ts' },
+                callback = function(ctx)
+                  client.notify('$/onDidChangeTsOrJsFile', { uri = ctx.file })
+                end,
+                group = vim.api.nvim_create_augroup(
+                  'svelte_file_watcher',
+                  { clear = true }
+                ),
+              })
+            end,
+          })
+        end,
         ['csharp_ls'] = function(name)
           lspconfig[name].setup({
             on_attach = L.on_attach,
@@ -108,6 +126,9 @@ local plugin = {
               on_attach = L.on_attach,
               settings = {
                 ['rust-analyzer'] = {
+                  rustfmt = {
+                    extraArgs = { '+nightly' },
+                  },
                   checkOnSave = { command = 'clippy' },
                   cargo = {
                     allFeatures = true,
