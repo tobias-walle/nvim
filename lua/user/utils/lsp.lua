@@ -21,7 +21,7 @@ M.snippet_capabilities.textDocument.completion.completionItem.snippetSupport =
 ---@diagnostic disable-next-line: unused-local
 function M.on_attach(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-  require('user.core.keymaps').attach_completion(bufnr)
+  require('user.core.keymaps').attach_completion()
 end
 
 function M.disable_formatting(client)
