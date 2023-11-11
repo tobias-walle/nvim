@@ -6,7 +6,7 @@ local plugin = {
     'nvim-telescope/telescope-file-browser.nvim',
     'AckslD/nvim-neoclip.lua',
     'aaronhallaert/advanced-git-search.nvim',
-    'dawsers/telescope-file-history.nvim',
+    'tobias-walle/telescope-file-history.nvim',
     {
       -- Native sorter for vastly improved performance
       'nvim-telescope/telescope-fzf-native.nvim',

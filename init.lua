@@ -17,6 +17,11 @@ require('lazy').setup('user.plugins', {
   defaults = {
     lazy = true,
   },
+  dev = {
+    path = '~/Projects',
+    patterns = {},
+    fallback = true,
+  },
 })
 require('user.core.keymaps')
 require('user.core.options')
