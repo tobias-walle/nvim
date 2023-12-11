@@ -19,6 +19,7 @@ local plugin = {
       require('user.utils.cmp-sources.filename').new()
     )
 
+    ---@diagnostic disable-next-line: missing-fields
     cmp.setup({
       mapping = {
         ['<Tab>'] = cmp.mapping(function(fallback)
@@ -66,19 +67,23 @@ local plugin = {
         }),
       },
       preselect = cmp.PreselectMode.None,
+      ---@diagnostic disable-next-line: missing-fields
       completion = {
         completeopt = 'menu,menuone,noinsert,noselect',
       },
       snippet = {
         expand = function(args) luasnip.lsp_expand(args.body) end,
       },
+      ---@diagnostic disable-next-line: missing-fields
       window = {
+        ---@diagnostic disable-next-line: missing-fields
         documentation = {
           max_height = 15,
           max_width = 60,
         },
       },
 
+      ---@diagnostic disable-next-line: missing-fields
       sorting = {
         comparators = {
           compare.score,
@@ -103,6 +108,7 @@ local plugin = {
         { name = 'luasnip', keyword_length = 2, max_item_count = 5 },
       }),
 
+      ---@diagnostic disable-next-line: missing-fields
       formatting = {
         fields = { 'abbr', 'menu', 'kind' },
 
