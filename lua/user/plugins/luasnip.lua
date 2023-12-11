@@ -13,6 +13,7 @@ local plugin = {
     local sn = ls.snippet_node
     local isn = ls.indent_snippet_node
     local fmt = require('luasnip.extras.fmt').fmt
+    local fmta = require('luasnip.extras.fmt').fmta
 
     local casing = require('user.utils.casing')
 
@@ -58,6 +59,24 @@ export function {name}({arguments}): {return_type} {{
             arguments = i(2),
             return_type = i(3, 'void'),
             end_pos = i(0),
+          }
+        )
+      ),
+      s(
+        'asinput',
+        fmta(
+          [[
+@Input({ alias: '<name>', required: true })
+public _<name>!: <type>;
+public <name> = observePropertyAsSignal(this, '_<name>');<end_pos>
+          ]],
+          {
+            name = i(1, 'inputName'),
+            type = i(2, 'InputType'),
+            end_pos = i(0),
+          },
+          {
+            repeat_duplicates = true,
           }
         )
       ),

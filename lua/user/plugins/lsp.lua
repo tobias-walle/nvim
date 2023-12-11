@@ -86,7 +86,23 @@ local plugin = {
             },
           })
         end,
-        ['eslint'] = L.setup_default,
+        ['eslint'] = function(name)
+          lspconfig[name].setup({
+            on_attach = L.on_attach,
+            filetypes = {
+              'javascript',
+              'javascriptreact',
+              'javascript.jsx',
+              'typescript',
+              'typescriptreact',
+              'typescript.tsx',
+              'vue',
+              'svelte',
+              'astro',
+              'html',
+            },
+          })
+        end,
         ['svelte'] = function(name)
           L.setup_default(name)
           lspconfig[name].setup({
