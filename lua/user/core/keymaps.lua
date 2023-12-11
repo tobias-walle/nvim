@@ -21,7 +21,6 @@ wk.register({ ['<leader>f'] = { name = '+files' } })
 map('n', '<leader>fD', '<cmd>!rm %<cr><cmd>bd!<cr>', 'Delete file of current buffer')
 
 -- General
-map('n', '?', ':nohl<CR>', 'Hide search highlight')
 new_cmd('X', function() vim.cmd('wqa') end, 'Save & Close')
 
 new_cmd('W', function()
@@ -73,6 +72,11 @@ new_cmd(
   function() require('user.utils.make').runTypescriptCommand('yarn ng build') end,
   'Run yarn ng build and save result in quickfix list'
 )
+
+-- highlight
+wk.register({ ['<leader>v'] = { name = '+highlight' } })
+map('n', '<leader>vv', '<cmd>nohl<cr>', 'Remove highlight')
+map('n', '<leader>vg', 'GVgg', 'Highlight file')
 
 -- Terminal
 wk.register({ ['<leader>x'] = { name = '+terminal' } })
@@ -172,17 +176,17 @@ new_cmd(
 
 -- Mergetool
 wk.register({ ['<leader>m'] = { name = '+mergetool' } })
-map('n', '<leader>mt', ':MergetoolToogle<cr>', 'Toggle Mergetool')
-map('n', '<leader>mla', ':MergetoolToggleLayout lmr<cr>', 'Toggle lmr layout')
-map('n', '<leader>mlA', ':MergetoolToggleLayout LmR<cr>', 'Toggle LmR layout')
-map('n', '<leader>mlb', ':MergetoolToggleLayout blr,m<cr>', 'Toggle blr,m layout')
-map('n', '<leader>mlB', ':MergetoolToggleLayout BLR,m<cr>', 'Toggle BLR,m layout')
+map('n', '<leader>mt', '<cmd>MergetoolToggle<cr>', 'Toggle Mergetool')
+map('n', '<leader>mla', '<cmd>MergetoolToggleLayout lmr<cr>', 'Toggle lmr layout')
+map('n', '<leader>mlA', '<cmd>MergetoolToggleLayout LmR<cr>', 'Toggle LmR layout')
+map('n', '<leader>mlb', '<cmd>MergetoolToggleLayout blr,m<cr>', 'Toggle blr,m layout')
+map('n', '<leader>mlB', '<cmd>MergetoolToggleLayout BLR,m<cr>', 'Toggle BLR,m layout')
 map('n', '<leader>mpl', require('user.utils.mergetool').prefer_local, 'Prefer local revision')
 map('n', '<leader>mpr', require('user.utils.mergetool').prefer_remote, 'Prefer remote revision')
 
 -- Luasnip
-map('i', '<C-E>', '<Plug>luasnip-next-choice', 'Next Snippet')
-map('s', '<C-E>', '<Plug>luasnip-next-choice', 'Next Snippet')
+map({'i', 's'}, '<C-l>', function() require('luasnip').jump(1) end, 'Next Snippet')
+map({'i', 's'}, '<C-j>', function() require('luasnip').jump(-1) end, 'Next Snippet')
 
 -- Debugging (WIP)
 -- wk.register({ ['<leader>b'] = { name = '+debugging' } })
