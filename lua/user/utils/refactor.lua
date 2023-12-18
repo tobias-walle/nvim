@@ -3,21 +3,6 @@ local M = {}
 local U = require('user.utils')
 local casing = require('user.utils.casing')
 
---- @param new_name string
-function M.lsp_rename_sync(new_name)
-  local params = vim.lsp.util.make_position_params()
-  params.newName = new_name
-  local responses = vim.lsp.buf_request_sync(0, 'textDocument/rename', params)
-  if responses == nil then
-    print('Nothing to rename')
-    return
-  end
-  for _, response in pairs(responses) do
-    vim.lsp.util.apply_workspace_edit(response.result, 'utf-8')
-  end
-  vim.api.nvim_command('wa')
-end
-
 --- @param old_prefix string
 --- @param new_prefix string
 function M.rename_top_level_declarations_by_prefix(old_prefix, new_prefix)
@@ -34,7 +19,7 @@ function M.rename_top_level_declarations_by_prefix(old_prefix, new_prefix)
           and not U.starts_with(position.name, new)
         then
           vim.fn.cursor(position.start_pos)
-          M.lsp_rename_sync(string.gsub(position.name, '^' .. old, new))
+          M.rename(string.gsub(position.name, '^' .. old, new))
           has_changed = true
         end
       end
@@ -87,6 +72,45 @@ function M.rename_prefix()
       )
     end
   )
+end
+
+--- Custom rename that works synchronously.
+--- @param new_name string The new name. May contains % that will be replaced with the original name.
+function M.rename(new_name)
+  if string.find(new_name, '%%') then
+    new_name = string.gsub(new_name, '%%', vim.fn.expand('<cword>'))
+  end
+
+  local bufnr = vim.api.nvim_get_current_buf()
+  local clients = vim.lsp.get_active_clients({
+    bufnr = bufnr,
+    method = vim.lsp.textDocument_rename,
+  })
+
+  if #clients == 0 then
+    vim.notify(
+      '[LSP] Rename, no matching language servers with rename capability.'
+    )
+  end
+
+  local win = vim.api.nvim_get_current_win()
+  for _, client in ipairs(clients) do
+    local params =
+      vim.lsp.util.make_position_params(win, client.offset_encoding)
+    params.newName = new_name
+
+    local result, err =
+      client.request_sync('textDocument/rename', params, 5000, bufnr)
+
+    if result and result.result then
+      vim.lsp.util.apply_workspace_edit(result.result, client.offset_encoding)
+    elseif err then
+      vim.notify(
+        string.format('[LSP][%s] %s', client.name, err),
+        vim.log.levels.WARN
+      )
+    end
+  end
 end
 
 return M
