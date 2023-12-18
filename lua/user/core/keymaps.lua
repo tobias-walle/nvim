@@ -260,6 +260,10 @@ end
 M.attach_completion = function()
   wk.register({ ['<leader><leader>'] = { name = '+lsp' } })
 
+  new_cmd('LspRename', function(args)
+    require('user.utils.refactor').rename(args.args)
+  end, 'Rename syncronously (can be used in macros)', { nargs=1 });
+
   map('n', 'gD', function() vim.lsp.buf.declaration() end, 'Go to declaration')
   map('n', 'gd', function() vim.lsp.buf.definition() end, 'Go to definition')
   map('n', 'gt', function() vim.lsp.buf.type_definition() end, 'Go to type definitions')
