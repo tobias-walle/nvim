@@ -2,7 +2,7 @@
 local plugin = {
   -- Highlight trailing whitespace
   'echasnovski/mini.trailspace',
-  event = 'VeryLazy',
+  lazy = false,
   config = function() require('mini.trailspace').setup() end,
 }
 

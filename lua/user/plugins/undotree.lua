@@ -1,8 +1,8 @@
 ---@type LazySpec
 local plugin = {
-  'mbbill/undotree',
-  cmd = { 'UndotreeToggle' },
-  config = function() vim.g.undotree_WindowLayout = 2 end,
+  'jiaoshijie/undotree',
+  dependencies = 'nvim-lua/plenary.nvim',
+  config = function() require('undotree').setup() end,
 }
 
 return plugin

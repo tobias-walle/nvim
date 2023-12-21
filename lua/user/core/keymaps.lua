@@ -118,7 +118,7 @@ map('n', '<leader>w', function()
 end, 'Write Window')
 
 -- Undo Tree
-map('n', '<leader>u', ':UndotreeToggle<CR>', 'Toggle Undo Tree')
+map('n', '<leader>u', function() require('undotree').toggle() end, 'Toggle Undo Tree')
 
 -- Tabs
 wk.register({ ['t'] = { name = '+tabs' } })
@@ -227,23 +227,25 @@ map('n', '<leader>sS', function() require('telescope.builtin').grep_string() end
 map('n', '<leader>su', function() require('telescope.builtin').resume() end, 'Resume')
 map('n', '<leader>sx', function() require('telescope.builtin').builtin() end, 'Prompt Picker')
 map('n', '<leader>sy', function() require('telescope').extensions.neoclip.neoclip() end, 'Search clipboard')
+map('n', '<leader>su', function() require('telescope').extensions.undo.undo() end, 'Undotree')
 map('n', '<leader>sz', function() require('telescope.builtin').lsp_workspace_symbols() end, 'Find workspace symbols')
 
 --- AI
 wk.register({ ['<leader>a'] = { name = '+ai' } })
 map('n', '<leader>ac', "<cmd>GpContext<cr>", 'Open a context file to provide context information for the project')
 
+map('n', '<leader>ai', "<cmd>GpImplement<cr>", 'Implement new functionality based on a given prompt')
 map('n', '<leader>ar', "<cmd>GpRewrite<cr>", 'Rewrite line')
 map('n', '<leader>aa', "<cmd>GpAppend<cr>", 'Like rewrite but append after selection')
 map('n', '<leader>ap', "<cmd>GpPrepend<cr>", 'Like rewrite but prepend before selection')
 map('n', '<leader>as', "<cmd>GpVnew<cr>", 'Like rewrite but generate into a vertical split')
 
+map({'v', 'x'}, '<leader>ai', "<cmd>'<,'>GpImplementWithContext<cr>", 'Implement and use selection as context')
 map({'v', 'x'}, '<leader>ar', "<cmd>'<,'>GpRewrite<cr>", 'Rewrite selection')
 map({'v', 'x'}, '<leader>aa', "<cmd>'<,'>GpAppend<cr>", 'Like rewrite but append after selection')
 map({'v', 'x'}, '<leader>ap', "<cmd>'<,'>GpPrepend<cr>", 'Like rewrite but prepend before selection')
 map({'v', 'x'}, '<leader>as', "<cmd>'<,'>GpVnew<cr>", 'Like rewrite but generate into a vertical split')
 
-map({'v', 'x'}, '<leader>ai', "<cmd>'<,'>GpImplement<cr>", 'Implement selection')
 map({'v', 'x'}, '<leader>ax', "<cmd>'<,'>GpExplain<cr>", 'Explain selection')
 map({'v', 'x'}, '<leader>at', "<cmd>'<,'>GpUnit<cr>", 'Generate unit tests for selection')
 
