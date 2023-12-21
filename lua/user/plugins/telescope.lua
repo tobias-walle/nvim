@@ -7,6 +7,7 @@ local plugin = {
     'AckslD/nvim-neoclip.lua',
     'aaronhallaert/advanced-git-search.nvim',
     'tobias-walle/telescope-file-history.nvim',
+    'debugloop/telescope-undo.nvim',
     {
       -- Native sorter for vastly improved performance
       'nvim-telescope/telescope-fzf-native.nvim',
@@ -87,6 +88,13 @@ local plugin = {
           git_diff_flags = {},
           show_builtin_git_pickers = false,
         },
+        undo = {
+          side_by_side = true,
+          layout_strategy = 'vertical',
+          layout_config = {
+            preview_height = 0.7,
+          },
+        },
       },
     })
 
@@ -101,6 +109,7 @@ local plugin = {
     require('telescope').load_extension('neoclip')
     require('telescope').load_extension('advanced_git_search')
     require('telescope').load_extension('file_history')
+    require('telescope').load_extension('undo')
   end,
 }
 

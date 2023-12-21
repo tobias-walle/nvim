@@ -2,7 +2,7 @@
 local plugin = {
   -- Paste Images
   'ekickx/clipboard-image.nvim',
-  event = 'VeryLazy',
+  lazy = false,
   config = function()
     require('clipboard-image').setup({
       default = {
