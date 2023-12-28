@@ -117,9 +117,6 @@ map('n', '<leader>w', function()
   vim.cmd('write')
 end, 'Write Window')
 
--- Undo Tree
-map('n', '<leader>u', function() require('undotree').toggle() end, 'Toggle Undo Tree')
-
 -- Tabs
 wk.register({ ['t'] = { name = '+tabs' } })
 map('n', 'th', ':tabprev<CR>', 'Previous Tab')
