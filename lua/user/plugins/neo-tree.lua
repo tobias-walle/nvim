@@ -1,18 +1,16 @@
 ---@type LazySpec
 local plugin = {
   'nvim-neo-tree/neo-tree.nvim',
-  branch = 'v2.x',
+  branch = 'v3.x',
   dependencies = {
     'nvim-lua/plenary.nvim',
     'nvim-tree/nvim-web-devicons',
     'MunifTanjim/nui.nvim',
   },
-  cmd = { 'Neotree' },
+  lazy = false,
   config = function()
     local U = require('user.utils.neo-tree')
     local events = require('neo-tree.events')
-
-    vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 
     require('neo-tree').setup({
       close_if_last_window = false,
@@ -31,7 +29,8 @@ local plugin = {
           always_show = {},
           never_show = {},
         },
-        follow_current_file = false,
+        hijack_netrw_behavior = 'open_current',
+        follow_current_file = { enabled = true },
         group_empty_dirs = false,
         use_libuv_file_watcher = true,
         window = {
@@ -58,7 +57,7 @@ local plugin = {
         },
       },
       buffers = {
-        follow_current_file = true,
+        follow_current_file = { enabled = true },
         group_empty_dirs = true,
         show_unloaded = true,
         window = {
@@ -142,13 +141,5 @@ local plugin = {
     })
   end,
 }
-
-local neo_tree_group =
-  vim.api.nvim_create_augroup('neo_tree_group', { clear = true })
-vim.api.nvim_create_autocmd({ 'FileType' }, {
-  group = neo_tree_group,
-  pattern = 'netrw',
-  callback = function() vim.cmd([[Neotree position=current]]) end,
-})
 
 return plugin
