@@ -11,6 +11,7 @@ local plugin = {
     'simrat39/rust-tools.nvim',
     'jose-elias-alvarez/null-ls.nvim',
     'folke/neodev.nvim',
+    'towolf/vim-helm',
   },
   config = function()
     local L = require('user.utils.lsp')
@@ -21,6 +22,7 @@ local plugin = {
     local config = {
       lsp = {
         ['pyright'] = L.setup_default,
+        ['ruff_lsp'] = L.setup_default,
         ['r_language_server'] = { L.setup_default, install = false },
         ['gopls'] = L.setup_default,
         ['kotlin_language_server'] = L.setup_without_formatting,
@@ -28,6 +30,7 @@ local plugin = {
         ['bufls'] = L.setup_default,
         ['jsonnet_ls'] = L.setup_default,
         ['hls'] = { L.setup_without_formatting, install = false },
+        ['helm_ls'] = L.setup_default,
         ['tailwindcss'] = function(name)
           lspconfig[name].setup({
             on_attach = L.on_attach,
@@ -175,7 +178,6 @@ local plugin = {
       },
       null_ls = {
         ['stylua'] = L.setup_null_ls_formatting,
-        ['black'] = L.setup_null_ls_formatting,
         ['prettier'] = L.setup_null_ls_formatting,
         ['jsonnetfmt'] = { L.setup_null_ls_formatting, install = false },
       },
