@@ -13,7 +13,7 @@ opt.shiftround = true
 opt.smarttab = true
 opt.expandtab = true
 opt.number = true
-opt.relativenumber = true
+opt.relativenumber = false
 opt.signcolumn = 'yes'
 opt.mouse = 'a'
 opt.pastetoggle = '<F2>'
@@ -50,9 +50,9 @@ vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufWinEnter' }, {
   group = general_options_au_group,
   callback = function()
     -- Folding
-    vim.o.foldlevelstart = 99
-    vim.o.foldmethod = 'indent'
-    vim.o.foldenable = false
+    vim.opt.foldlevelstart = 99
+    vim.opt.foldmethod = 'indent'
+    vim.opt.foldenable = false
     -- Never include '-' in word navigation
     vim.opt.iskeyword:remove('-')
     -- Disable autocomments

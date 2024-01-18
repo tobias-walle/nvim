@@ -32,10 +32,13 @@ new_cmd('SpellAddAll', 'let @a = "]Szg" | norm 1000@a', 'Add all words in buffer
 
 -- Line Numbers
 local function toggle_line_numbers()
-  vim.opt.relativenumber = not vim.opt.relativenumber.get()
+  local tab = vim.fn.tabpagenr()
+  vim.cmd('tabdo windo set relativenumber!')
+  vim.cmd.tabnext(tab)
 end
 new_cmd('ToggleLine', toggle_line_numbers, 'Toggle line numbers')
 new_cmd('TL', toggle_line_numbers, 'Toggle line numbers')
+map('n', '<leader>L', toggle_line_numbers, 'Toggle line numbers')
 
 -- Neovide
 if vim.g.neovide == true then
