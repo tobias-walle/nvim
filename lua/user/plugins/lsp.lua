@@ -23,6 +23,7 @@ local plugin = {
       lsp = {
         ['pyright'] = L.setup_default,
         ['ruff_lsp'] = L.setup_default,
+        ['graphql'] = L.setup_default,
         ['r_language_server'] = { L.setup_default, install = false },
         ['gopls'] = L.setup_default,
         ['kotlin_language_server'] = L.setup_without_formatting,
