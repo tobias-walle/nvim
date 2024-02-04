@@ -12,6 +12,9 @@ local plugin = {
     require('treesitter-context').setup({
       enable = true,
     })
+    vim.g.skip_ts_context_commentstring_module = true
+    ---@diagnostic disable-next-line: missing-fields
+    require('ts_context_commentstring').setup({})
     ---@diagnostic disable-next-line: missing-fields
     require('nvim-treesitter.configs').setup({
       ensure_installed = 'all',
