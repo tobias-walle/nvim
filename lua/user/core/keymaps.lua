@@ -231,8 +231,10 @@ map('n', '<leader>su', function() require('telescope').extensions.undo.undo() en
 map('n', '<leader>sz', function() require('telescope.builtin').lsp_workspace_symbols() end, 'Find workspace symbols')
 
 --- AI
--- wk.register({ ['<leader>a'] = { name = '+ai' } })
--- map('n', '<leader>ac', "<cmd>GpContext<cr>", 'Open a context file to provide context information for the project')
+wk.register({ ['<leader>a'] = { name = '+ai' } })
+map('n', '<leader>ac', function() require("copilot.suggestion").toggle_auto_trigger() end, 'Toggle Copilot')
+
+map('n', '<leader>aa', '<cmd>!ai-chat --no-editor %<cr>', 'Complete ai chat on current file')
 --
 -- map('n', '<leader>ai', "<cmd>GpImplement<cr>", 'Implement new functionality based on a given prompt')
 -- map('n', '<leader>ar', "<cmd>GpRewrite<cr>", 'Rewrite line')
