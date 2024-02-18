@@ -194,10 +194,9 @@ function M.setup_typescript()
     },
   })
 
-  -- Allow comments in tsconfig
+  -- Allow comments in json files
   vim.cmd([[
-
-  autocmd BufNewFile,BufRead tsconfig*.json setlocal filetype=jsonc
+  autocmd BufNewFile,BufRead *.json setlocal filetype=jsonc
   ]])
 end
 
