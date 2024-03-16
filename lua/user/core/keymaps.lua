@@ -145,17 +145,19 @@ map('n', '<leader>eq', '<cmd>Neotree close<CR>', 'Close Explorer')
 
 -- Diffs
 wk.register({ ['<leader>d'] = { name = '+diffs' } })
-map('n', '<leader>dg', '<cmd>diffget<cr>', 'Apply from other buffer')
-map('n', '<leader>dp', '<cmd>diffput<cr>', 'Apply to other buffer')
+map('n', '<leader>dg', '<cmd>diffget<cr>', 'diffget - Apply diff from other buffer')
+map('v', '<leader>dg', ':\'<,\'>diffget<cr>', 'diffget - Apply diff from other buffer')
+map('n', '<leader>dp', '<cmd>diffput<cr>', 'diffput - Apply diff to other buffer')
+map('v', '<leader>dp', ':\'<,\'>diffput<cr>', 'diffput - Apply diff from other buffer')
 
 -- Git
 wk.register({ ['<leader>g'] = { name = '+git' } })
-map('n', '<leader>gs', '<cmd>G<cr><cmd>only<cr>', 'Git Status')
+map('n', '<leader>gs', '<cmd>Neogit<cr>', 'Git Status')
 map({ 'n', 'v' }, '<leader>gp', function() require('gitsigns').preview_hunk() end, 'Preview Hunk')
 map({ 'n', 'v' }, '<leader>gr', function() require('gitsigns').reset_hunk() end, 'Reset Hunk')
 map('n', '<leader>gR', '<cmd>silent !git checkout -- %<CR>', 'Reset file')
-map('n', '<leader>gx', '<cmd>DiffviewOpen --base=LOCAL<cr>', 'Open diffview against local changes')
-map('n', '<leader>gf', '<cmd>DiffviewFileHistory --base=LOCAL %<cr>', 'Get see history of current file')
+map('n', '<leader>gf', '<cmd>DiffviewOpen --base=LOCAL -- %<cr><cmd>DiffviewToggleFiles<cr>', 'See changes of current file')
+map('n', '<leader>gh', '<cmd>DiffviewFileHistory --base=LOCAL %<cr>', 'Get see history of current file')
 map('n', '<leader>gc', '<cmd>DiffviewOpen <C-r><C-w><cr>', 'Open diff between HEAD and commit under cursor')
 map({ 'n', 'v' }, '<leader>gb', function() require('gitsigns').blame_line({ full = true }) end, 'Blame Line')
 map('v', '<leader>gl', ':DiffCommitLine<CR>', 'Show diff of selected lines')
@@ -171,7 +173,7 @@ new_cmd(
   'DiffO',
   function(opts) vim.cmd('DiffviewOpen --base=LOCAL ' .. opts.args) end,
   'Open Diff from locale',
-  { nargs = 1 }
+  { nargs = '?' }
 )
 
 -- Mergetool
