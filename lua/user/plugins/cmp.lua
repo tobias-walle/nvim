@@ -8,6 +8,7 @@ local plugin = {
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-path',
+    'onsails/lspkind.nvim',
   },
   config = function()
     local cmp = require('cmp')
@@ -100,30 +101,25 @@ local plugin = {
       },
 
       sources = cmp.config.sources({
+        { name = 'luasnip', max_item_count = 5 },
         { name = 'nvim_lsp', keyword_length = 0, max_item_count = 30 },
         { name = 'path' },
         { name = 'crates' },
+        { name = 'codeium' },
         { name = 'buffer', keyword_length = 3, max_item_count = 5 },
         { name = 'filename' },
-        { name = 'luasnip', keyword_length = 2, max_item_count = 5 },
       }),
 
       ---@diagnostic disable-next-line: missing-fields
       formatting = {
         fields = { 'abbr', 'menu', 'kind' },
 
-        format = function(entry, item)
-          local short_name = {
-            nvim_lsp = 'LSP',
-            nvim_lua = 'nvim',
-            luasnip = 'snip',
-          }
-
-          local menu_name = short_name[entry.source.name] or entry.source.name
-
-          item.menu = string.format('[%s]', menu_name)
-          return item
-        end,
+        format = require('lspkind').cmp_format({
+          mode = 'symbol_text',
+          maxwidth = 50,
+          ellipsis_char = '...',
+          symbol_map = { Codeium = '' },
+        }),
       },
 
       experimental = { ghost_text = true },

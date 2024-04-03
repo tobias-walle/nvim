@@ -2,6 +2,7 @@ plugged
 pack
 plugin
 sessions
-spell
+spell/*.spl
+spell/*.sug
 .DS_Store
 .file-history-git
