@@ -98,10 +98,10 @@ local plugin = {
       },
     })
 
-    require('file_history').setup({
-      backup_dir = '~/.config/nvim/.file-history-git',
-      git_cmd = 'git',
-    })
+    -- require('file_history').setup({
+    --   backup_dir = '~/.config/nvim/.file-history-git',
+    --   git_cmd = 'git',
+    -- })
 
     require('telescope').load_extension('fzf')
     require('telescope').load_extension('live_grep_args')
