@@ -1,21 +1,23 @@
+local disable_big_files = function(lang, buf)
+  -- ignore big files
+  local max_filesize = 50 * 1024 -- 50 KB
+  local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+  if ok and stats and stats.size > max_filesize then
+    return true
+  end
+  return false
+end
+
+---@diagnostic disable: missing-fields
 ---@type LazySpec
 local plugin = {
   'nvim-treesitter/nvim-treesitter',
   event = 'VeryLazy',
   build = ':TSUpdate',
   dependencies = {
-    'nvim-treesitter/playground',
     'nvim-treesitter/nvim-treesitter-textobjects',
-    'nvim-treesitter/nvim-treesitter-context',
   },
   config = function()
-    require('treesitter-context').setup({
-      enable = true,
-    })
-    vim.g.skip_ts_context_commentstring_module = true
-    ---@diagnostic disable-next-line: missing-fields
-    require('ts_context_commentstring').setup({})
-    ---@diagnostic disable-next-line: missing-fields
     require('nvim-treesitter.configs').setup({
       ensured_installed = {
         'angular',
@@ -87,39 +89,21 @@ local plugin = {
       highlight = {
         enable = true,
         additional_vim_regex_highlighting = false,
-        disable = function(lang, buf)
-          -- ignore big files
-          local max_filesize = 100 * 1024 -- 100 KB
-          local ok, stats =
-            pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-          if ok and stats and stats.size > max_filesize then
-            return true
-          end
-        end,
+        disable = disable_big_files,
       },
-      indent = { enable = true },
-      context_commentstring = { enable = true, enable_autocmd = false },
-      playground = {
+      indent = {
         enable = true,
-        disable = {},
-        updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
-        persist_queries = false, -- Whether the query persists across vim sessions
-        keybindings = {
-          toggle_query_editor = 'o',
-          toggle_hl_groups = 'i',
-          toggle_injected_languages = 't',
-          toggle_anonymous_nodes = 'a',
-          toggle_language_display = 'I',
-          focus_language = 'f',
-          unfocus_language = 'F',
-          update = 'R',
-          goto_node = '<cr>',
-          show_help = '?',
-        },
+        disable = disable_big_files,
+      },
+      context_commentstring = {
+        enable = true,
+        disable = disable_big_files,
+        enable_autocmd = false,
       },
       textobjects = {
         swap = {
           enable = true,
+          disable = disable_big_files,
           swap_next = {
             ['<leader>np'] = '@parameter.inner',
             ['<leader>nb'] = '@block.outer',

@@ -2,6 +2,7 @@
 local plugin = {
   -- Autoclose tags
   'windwp/nvim-ts-autotag',
+  enabled = false,
   event = 'VeryLazy',
   config = function()
     require('nvim-ts-autotag').setup({
