@@ -6,7 +6,7 @@ local plugin = {
     'nvim-telescope/telescope-file-browser.nvim',
     'AckslD/nvim-neoclip.lua',
     'aaronhallaert/advanced-git-search.nvim',
-    'tobias-walle/telescope-file-history.nvim',
+    { 'tobias-walle/telescope-file-history.nvim', dev = false },
     'debugloop/telescope-undo.nvim',
     {
       -- Native sorter for vastly improved performance
@@ -43,6 +43,7 @@ local plugin = {
         live_grep = {
           vimgrep_arguments = {
             'rg',
+            '--ignore-case',
             '--color=never',
             '--no-heading',
             '--with-filename',
@@ -98,10 +99,10 @@ local plugin = {
       },
     })
 
-    -- require('file_history').setup({
-    --   backup_dir = '~/.config/nvim/.file-history-git',
-    --   git_cmd = 'git',
-    -- })
+    require('file_history').setup({
+      backup_dir = '~/.config/nvim/.file-history-git',
+      git_cmd = 'git',
+    })
 
     require('telescope').load_extension('fzf')
     require('telescope').load_extension('live_grep_args')
