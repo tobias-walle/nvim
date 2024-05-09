@@ -185,7 +185,7 @@ function M.setup_typescript()
         end,
       },
 
-      root_dir = lspconfig.util.root_pattern('package.json'),
+      root_dir = lspconfig.util.root_pattern('.git'),
 
       settings = {
         typescript = { inlayHints = ts_inlay_hint_options },
