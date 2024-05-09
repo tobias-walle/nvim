@@ -6,8 +6,8 @@ local map = require('user.utils.keymaps').map
 local new_cmd = require('user.utils.keymaps').new_cmd
 
 -- Copy/Pasta
-map({ 'v', 'n' }, '<Leader>y', '"+y', 'Yank to system clipboard')
-map({ 'v', 'n' }, '<Leader>p', '"+p', 'Paste from system clipboard')
+map({ 'v', 'n' }, '<leader>y', '"+y', 'Yank to system clipboard')
+map({ 'v', 'n' }, '<leader>p', '"+p', 'Paste from system clipboard')
 
 -- Resize
 map('n', '+', '<C-W>>', 'Increase width of window')
@@ -19,6 +19,10 @@ map('n', '<C-n>', '<C-a>', 'Increment number under cursor')
 -- Files
 wk.register({ ['<leader>f'] = { name = '+files' } })
 map('n', '<leader>fD', '<cmd>!rm %<cr><cmd>bd!<cr>', 'Delete file of current buffer')
+
+
+-- Profiler
+map('n', '<leader>p', '"+p', 'Paste from system clipboard')
 
 -- General
 new_cmd('X', function() vim.cmd('wqa') end, 'Save & Close')
