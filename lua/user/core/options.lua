@@ -60,6 +60,12 @@ vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufWinEnter' }, {
   end,
 })
 
+-- Fix .env files
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+  pattern = '*.env.*',
+  callback = function() vim.bo.filetype = 'sh' end,
+})
+
 -- Check for changes on focus/buffer enter
 local checktime_au_group =
   vim.api.nvim_create_augroup('checktime', { clear = true })
