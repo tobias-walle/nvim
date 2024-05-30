@@ -16,7 +16,6 @@ opt.number = true
 opt.relativenumber = false
 opt.signcolumn = 'yes'
 opt.mouse = 'a'
-opt.pastetoggle = '<F2>'
 opt.cursorline = true
 opt.autoread = true
 opt.shortmess = opt.shortmess + 'c'
