@@ -1,6 +1,7 @@
 {
   "Comment.nvim": { "branch": "master", "commit": "0236521ea582747b58869cb72f70ccfa967d2e89" },
   "LuaSnip": { "branch": "master", "commit": "878ace11983444d865a72e1759dbcc331d1ace4c" },
+  "Navigator.nvim": { "branch": "master", "commit": "91d86506ac2a039504d5205d32a1d4bc7aa57072" },
   "advanced-git-search.nvim": { "branch": "main", "commit": "d11e1360b7cdb9270673b7852bbc1e91e1af25da" },
   "aerial.nvim": { "branch": "master", "commit": "bd5f141a547c082e9c1644026f38590407dad659" },
   "catppuccin": { "branch": "main", "commit": "5215ea59df6d0a7e27da9a5cd1165e06d1b04cbe" },
@@ -73,6 +74,5 @@
   "vim-obsession": { "branch": "master", "commit": "fe9d3e1a9a50171e7d316a52e1e56d868e4c1fe5" },
   "vim-repeat": { "branch": "master", "commit": "24afe922e6a05891756ecf331f39a1f6743d3d5a" },
   "vim-test": { "branch": "master", "commit": "4d5d49ca9a402066cbb1c85b8348874f109d8565" },
-  "vim-tmux-navigator": { "branch": "master", "commit": "5b3c701686fb4e6629c100ed32e827edf8dad01e" },
   "which-key.nvim": { "branch": "main", "commit": "4433e5ec9a507e5097571ed55c02ea9658fb268a" }
 }
