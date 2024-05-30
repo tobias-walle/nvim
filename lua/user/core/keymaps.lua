@@ -9,6 +9,12 @@ local new_cmd = require('user.utils.keymaps').new_cmd
 map({ 'v', 'n' }, '<leader>y', '"+y', 'Yank to system clipboard')
 map({ 'v', 'n' }, '<leader>p', '"+p', 'Paste from system clipboard')
 
+-- Navigate
+map({'n', 't'}, '<C-j>', '<cmd>NavigatorDown<cr>', 'Navigate to a different split')
+map({'n', 't'}, '<C-k>', '<cmd>NavigatorUp<cr>', 'Navigate to a different split')
+map({'n', 't'}, '<C-h>', '<cmd>NavigatorLeft<cr>', 'Navigate to a different split')
+map({'n', 't'}, '<C-l>', '<cmd>NavigatorRight<cr>', 'Navigate to a different split')
+
 -- Resize
 map('n', '+', '<C-W>>', 'Increase width of window')
 map('n', '-', '<C-W><', 'Decrease width of window')
