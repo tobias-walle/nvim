@@ -29,6 +29,18 @@ local plugin = {
         ['kotlin_language_server'] = L.setup_without_formatting,
         ['taplo'] = L.setup_default,
         ['bufls'] = L.setup_default,
+        ['nil_ls'] = function(name)
+          lspconfig[name].setup({
+            on_attach = L.on_attach_with({ L.disable_semantic_tokens }),
+            settings = {
+              ['nil'] = {
+                formatting = {
+                  command = { 'nixpkgs-fmt' },
+                },
+              },
+            },
+          })
+        end,
         ['jsonnet_ls'] = L.setup_default,
         ['hls'] = { L.setup_without_formatting, install = false },
         ['helm_ls'] = L.setup_default,
@@ -58,7 +70,7 @@ local plugin = {
         end,
         ['yamlls'] = function(name)
           lspconfig[name].setup({
-            on_attach = L.on_attach_disable_formatting,
+            on_attach = L.on_attach_with({ L.disable_formatting }),
             settings = {
               keyOrdering = false,
               yaml = {
@@ -71,19 +83,19 @@ local plugin = {
         ['angularls'] = { L.setup_angular, install = false },
         ['cssls'] = function(name)
           lspconfig[name].setup({
-            on_attach = L.on_attach_disable_formatting,
+            on_attach = L.on_attach_with({ L.disable_formatting }),
             capabilities = L.snippet_capabilities,
           })
         end,
         ['html'] = function(name)
           lspconfig[name].setup({
-            on_attach = L.on_attach_disable_formatting,
+            on_attach = L.on_attach_with({ L.disable_formatting }),
             capabilities = L.snippet_capabilities,
           })
         end,
         ['jsonls'] = function(name)
           lspconfig[name].setup({
-            on_attach = L.on_attach_disable_formatting,
+            on_attach = L.on_attach_with({ L.disable_formatting }),
             capabilities = L.snippet_capabilities,
             settings = {
               json = { schemas = require('schemastore').json.schemas() },
@@ -166,7 +178,7 @@ local plugin = {
         ['lua_ls'] = function(name)
           require('neodev').setup({})
           lspconfig[name].setup({
-            on_attach = L.on_attach_disable_formatting,
+            on_attach = L.on_attach_with({ L.disable_formatting }),
             settings = {
               Lua = {
                 hint = { enable = true },
