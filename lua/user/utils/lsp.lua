@@ -28,9 +28,17 @@ function M.disable_formatting(client)
   client.server_capabilities.documentFormattingProvider = false
 end
 
-function M.on_attach_disable_formatting(client, bufnr)
-  M.disable_formatting(client)
-  M.on_attach(client, bufnr)
+function M.disable_semantic_tokens(client)
+  client.server_capabilities.semanticTokensProvider = nil
+end
+
+function M.on_attach_with(on_attach_extras)
+  return function(client, bufnr)
+    for _, on_attach_extra in ipairs(on_attach_extras) do
+      on_attach_extra(client)
+    end
+    M.on_attach(client, bufnr)
+  end
 end
 
 function M.setup_default(server_name)
@@ -43,7 +51,7 @@ end
 function M.setup_without_formatting(server_name)
   local lspconfig = require('lspconfig')
   lspconfig[server_name].setup({
-    on_attach = M.on_attach_disable_formatting,
+    on_attach = M.on_attach_with({ M.disable_formatting }),
   })
 end
 
