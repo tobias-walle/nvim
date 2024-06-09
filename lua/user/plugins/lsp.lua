@@ -11,7 +11,6 @@ local plugin = {
     'simrat39/rust-tools.nvim',
     'jose-elias-alvarez/null-ls.nvim',
     'folke/neodev.nvim',
-    'towolf/vim-helm',
   },
   config = function()
     local L = require('user.utils.lsp')
