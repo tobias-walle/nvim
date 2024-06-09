@@ -51,6 +51,20 @@ local plugin = {
             cmp.complete()
           end
         end, { 'i', 's' }),
+        -- Switch to codium results if completion winodw is open
+        ['<C-a>'] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.complete({
+              config = {
+                sources = cmp.config.sources({
+                  { name = 'codeium' },
+                }),
+              },
+            })
+          else
+            fallback()
+          end
+        end, { 'i', 's' }),
 
         ['<C-p>'] = cmp.mapping(function(fallback)
           local luasnip = require('luasnip')
@@ -103,9 +117,9 @@ local plugin = {
         { name = 'luasnip', max_item_count = 5 },
         { name = 'nvim_lsp', keyword_length = 0, max_item_count = 30 },
         { name = 'path' },
-        { name = 'codeium' },
         { name = 'buffer', keyword_length = 3, max_item_count = 5 },
         { name = 'filename' },
+        { name = 'codeium' },
       }),
 
       ---@diagnostic disable-next-line: missing-fields
