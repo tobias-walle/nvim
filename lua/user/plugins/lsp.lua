@@ -3,9 +3,6 @@ local plugin = {
   'neovim/nvim-lspconfig',
   lazy = false,
   dependencies = {
-    'williamboman/mason.nvim',
-    'williamboman/mason-lspconfig.nvim',
-    'WhoIsSethDaniel/mason-tool-installer.nvim',
     'b0o/schemastore.nvim',
     'jose-elias-alvarez/typescript.nvim',
     'simrat39/rust-tools.nvim',
@@ -17,13 +14,14 @@ local plugin = {
 
     local lspconfig = require('lspconfig')
 
+    --- NOTE: I am using nix to manager the installed language servers
     ---@type LspConfig
     local config = {
       lsp = {
         ['pyright'] = L.setup_default,
         ['ruff_lsp'] = L.setup_default,
         ['graphql'] = L.setup_default,
-        ['r_language_server'] = { L.setup_default, install = false },
+        ['r_language_server'] = L.setup_default,
         ['gopls'] = L.setup_default,
         ['kotlin_language_server'] = L.setup_without_formatting,
         ['taplo'] = L.setup_default,
@@ -41,7 +39,7 @@ local plugin = {
           })
         end,
         ['jsonnet_ls'] = L.setup_default,
-        ['hls'] = { L.setup_without_formatting, install = false },
+        ['hls'] = L.setup_without_formatting,
         ['helm_ls'] = L.setup_default,
         ['tailwindcss'] = function(name)
           lspconfig[name].setup({
@@ -79,7 +77,7 @@ local plugin = {
           })
         end,
         ['tsserver'] = L.setup_typescript,
-        ['angularls'] = { L.setup_angular, install = false },
+        ['angularls'] = L.setup_angular,
         ['cssls'] = function(name)
           lspconfig[name].setup({
             on_attach = L.on_attach_with({ L.disable_formatting }),
@@ -191,7 +189,7 @@ local plugin = {
       null_ls = {
         ['stylua'] = L.setup_null_ls_formatting,
         ['prettier'] = L.setup_null_ls_formatting,
-        ['jsonnetfmt'] = { L.setup_null_ls_formatting, install = false },
+        ['jsonnetfmt'] = L.setup_null_ls_formatting,
       },
     }
 

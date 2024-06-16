@@ -42,6 +42,7 @@ local plugin = {
       },
       columns = {
         'icon',
+        'mtime',
       },
       lsp_file_methods = {
         timeout_ms = 10000,

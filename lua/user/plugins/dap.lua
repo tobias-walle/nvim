@@ -6,11 +6,6 @@ local plugin = {
     'nvim-neotest/nvim-nio',
     'theHamsta/nvim-dap-virtual-text',
     {
-      'jay-babu/mason-nvim-dap.nvim',
-      dependencies = 'mason.nvim',
-      cmd = { 'DapInstall', 'DapUninstall' },
-    },
-    {
       'folke/which-key.nvim',
       opts = {
         defaults = {
@@ -41,11 +36,6 @@ local plugin = {
     { "<leader>dw", function() require("dap.ui.widgets").hover() end, desc = "Widgets" },
   },
   config = function()
-    -- Mason integration
-    require('mason-nvim-dap').setup({
-      ensure_installed = { 'js-debug-adapter' },
-    })
-
     -- Configure adapters
     require('dap').adapters['pwa-node'] = {
       type = 'server',
