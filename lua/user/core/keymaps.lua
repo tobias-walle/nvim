@@ -154,6 +154,7 @@ map('n', '<leader>ef', '<cmd>Neotree reveal<CR>', 'Open Explorer and focus curre
 map('n', '<leader>eq', '<cmd>Neotree close<CR>', 'Close Explorer')
 
 map('n', '-', '<cmd>Oil<CR>', 'Open Oil File Manager')
+map('n', 'H', '<cmd>Oil<CR>', 'Open Oil File Manager')
 
 -- Diffs
 wk.register({ ['<leader>d'] = { name = '+diffs' } })

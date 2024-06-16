@@ -4,6 +4,7 @@ local plugin = {
   lazy = false,
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   config = function()
+    local show_detail = false
     require('oil').setup({
       default_file_explorer = true,
       skip_confirm_for_simple_edits = false,
@@ -39,17 +40,30 @@ local plugin = {
         ['gx'] = 'actions.open_external',
         ['g.'] = 'actions.toggle_hidden',
         ['g\\'] = 'actions.toggle_trash',
+        ['gd'] = {
+          desc = 'Toggle file detail view',
+          callback = function()
+            show_detail = not show_detail
+            if show_detail then
+              require('oil').set_columns({
+                'icon',
+                'permissions',
+                'size',
+                'mtime',
+              })
+            else
+              require('oil').set_columns({ 'icon' })
+            end
+          end,
+        },
       },
-      columns = {
-        'icon',
-        'mtime',
-      },
+      columns = { 'icon' },
       lsp_file_methods = {
         timeout_ms = 10000,
         autosave_changes = true,
       },
       view_options = {
-        show_hidden = true,
+        show_hidden = false,
       },
     })
   end,
