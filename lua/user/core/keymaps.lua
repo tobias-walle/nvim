@@ -153,6 +153,8 @@ map('n', '<leader>eo', '<cmd>AerialToggle<CR>', 'Toggle Outline Explorer')
 map('n', '<leader>ef', '<cmd>Neotree reveal<CR>', 'Open Explorer and focus current file')
 map('n', '<leader>eq', '<cmd>Neotree close<CR>', 'Close Explorer')
 
+map('n', '-', '<cmd>Oil<CR>', 'Open Oil File Manager')
+
 -- Diffs
 wk.register({ ['<leader>d'] = { name = '+diffs' } })
 map('n', '<leader>dg', '<cmd>diffget<cr>', 'diffget - Apply diff from other buffer')
