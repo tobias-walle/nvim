@@ -7,7 +7,7 @@ local plugin = {
     'nvim-tree/nvim-web-devicons',
     'MunifTanjim/nui.nvim',
   },
-  lazy = false,
+  cmd = { 'Neotree' },
   config = function()
     local U = require('user.utils.neo-tree')
     local events = require('neo-tree.events')
@@ -29,7 +29,7 @@ local plugin = {
           always_show = {},
           never_show = {},
         },
-        hijack_netrw_behavior = 'open_current',
+        hijack_netrw_behavior = 'disabled',
         follow_current_file = { enabled = true },
         group_empty_dirs = false,
         use_libuv_file_watcher = true,
