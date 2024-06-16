@@ -73,20 +73,11 @@ end
 function M.apply_config(config)
   local null_ls = require('null-ls')
 
-  local ensure_installed = {
-    lsp = {},
-    null_ls = {},
-  }
-
   for server_name, options in pairs(config.lsp) do
     if type(options) == 'function' then
       options = { options }
     end
     local setup = options[1]
-    local install = options.install ~= false
-    if install then
-      table.insert(ensure_installed.lsp, server_name)
-    end
     setup(server_name)
   end
 
@@ -96,22 +87,12 @@ function M.apply_config(config)
       options = { options }
     end
     local get_sources = options[1]
-    local install = options.install ~= false
-    if install then
-      table.insert(ensure_installed.null_ls, name)
-    end
     local new_sources = get_sources(name)
     vim.list_extend(null_ls_sources, new_sources)
   end
   null_ls.setup({
     sources = null_ls_sources,
     on_attach = M.on_attach,
-  })
-
-  require('mason').setup()
-  require('mason-lspconfig').setup({ ensure_installed = ensure_installed.lsp })
-  require('mason-tool-installer').setup({
-    ensure_installed = ensure_installed.null_ls,
   })
 end
 

@@ -13,7 +13,6 @@ local plugin = {
         gitsigns = true,
         harpoon = true,
         leap = true,
-        mason = true,
         mini = true,
         neotree = true,
         neogit = true,
