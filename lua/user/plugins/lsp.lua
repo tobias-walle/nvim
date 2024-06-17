@@ -41,30 +41,6 @@ local plugin = {
         ['jsonnet_ls'] = L.setup_default,
         ['hls'] = L.setup_without_formatting,
         ['helm_ls'] = L.setup_default,
-        ['tailwindcss'] = function(name)
-          lspconfig[name].setup({
-            on_attach = L.on_attach,
-            filetypes = {
-              'css',
-              'scss',
-              'sass',
-              'postcss',
-              'html',
-              'javascript',
-              'javascriptreact',
-              'typescript',
-              'typescriptreact',
-              'svelte',
-              'vue',
-              'rust',
-            },
-            init_options = {
-              userLanguages = {
-                rust = 'html',
-              },
-            },
-          })
-        end,
         ['yamlls'] = function(name)
           lspconfig[name].setup({
             on_attach = L.on_attach_with({ L.disable_formatting }),
