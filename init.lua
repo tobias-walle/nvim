@@ -18,8 +18,8 @@ require('lazy').setup('user.plugins', {
     lazy = true,
   },
   dev = {
-    path = '~/.local/share/nvim/nix',
-    fallback = true,
+    path = '~/Projects',
+    fallback = false,
   },
 })
 

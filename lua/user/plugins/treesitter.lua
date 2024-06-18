@@ -11,9 +11,8 @@ end
 ---@diagnostic disable: missing-fields
 ---@type LazySpec
 local plugin = {
-  'nvim-treesitter/nvim-treesitter',
-  dev = true, --- The treesitter plugin is managed by nix
-  main = 'nvim-treesitter.configs',
+  --- The treesitter plugin is managed by nix
+  dir = '~/.local/share/nvim/nix/nvim-treesitter',
   event = { 'BufReadPost', 'BufNewFile' },
   dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects' },
   config = function()
