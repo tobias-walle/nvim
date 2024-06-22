@@ -63,7 +63,7 @@ local plugin = {
         autosave_changes = true,
       },
       view_options = {
-        show_hidden = false,
+        show_hidden = true,
       },
     })
   end,

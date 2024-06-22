@@ -16,19 +16,19 @@ local plugin = {
         },
       },
       -- Navigation
-      ['<M-a>'] = {
+      ['<Leader>ha'] = {
         function() require('harpoon.ui').nav_file(1) end,
         'Go to File 1',
       },
-      ['<M-s>'] = {
+      ['<Leader>hs'] = {
         function() require('harpoon.ui').nav_file(2) end,
         'Go to File 2',
       },
-      ['<M-d>'] = {
+      ['<Leader>hd'] = {
         function() require('harpoon.ui').nav_file(3) end,
         'Go to File 3',
       },
-      ['<M-f>'] = {
+      ['<Leader>hf'] = {
         function() require('harpoon.ui').nav_file(4) end,
         'Go to File 4',
       },
