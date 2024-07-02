@@ -2,6 +2,7 @@
 local plugin = {
   -- Autoclose brackets
   'windwp/nvim-autopairs',
+  enabled = false,
   event = 'VeryLazy',
   config = function()
     require('nvim-autopairs').setup({
