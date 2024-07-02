@@ -20,6 +20,7 @@ opt.cursorline = true
 opt.autoread = true
 opt.shortmess = opt.shortmess + 'c'
 opt.shell = 'fish'
+opt.cmdheight = 2
 
 opt.backup = false
 opt.writebackup = false
