@@ -20,7 +20,7 @@ local plugin = {
       highlight = {
         enable = true,
         additional_vim_regex_highlighting = false,
-        -- disable = disable_big_files,
+        disable = disable_big_files,
       },
       indent = {
         enable = true,
