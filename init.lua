@@ -23,13 +23,5 @@ require('lazy').setup('user.plugins', {
   },
 })
 
--- Addional options injected by nix
-local nixpath = os.getenv('HOME') .. '/.local/share/nvim/nix/init.lua'
-if vim.loop.fs_stat(nixpath) then
-  dofile(nixpath)
-else
-  print("Couldn't find " .. nixpath)
-end
-
 require('user.core.keymaps')
 require('user.core.options')
