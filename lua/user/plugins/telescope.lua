@@ -100,7 +100,7 @@ local plugin = {
     })
 
     require('file_history').setup({
-      backup_dir = '~/.config/nvim/.file-history-git',
+      backup_dir = '~/.local/share/nvim/.file-history-git',
       git_cmd = 'git',
     })
 

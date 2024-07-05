@@ -11,12 +11,12 @@ end
 ---@diagnostic disable: missing-fields
 ---@type LazySpec
 local plugin = {
-  --- The treesitter plugin is managed by nix
-  dir = '~/.local/share/nvim/nix/nvim-treesitter',
-  event = { 'BufReadPost', 'BufNewFile' },
+  'nvim-treesitter/nvim-treesitter',
+  build = function() vim.cmd('TSUpdate') end,
   dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects' },
   config = function()
     require('nvim-treesitter.configs').setup({
+      ensure_installed = 'all',
       highlight = {
         enable = true,
         additional_vim_regex_highlighting = false,
