@@ -248,9 +248,8 @@ map('n', '<leader>sz', function() require('telescope.builtin').lsp_workspace_sym
 --- AI
 wk.register({ ['<leader>a'] = { name = '+ai' } })
 map('n', '<leader>ac', function() require("copilot.suggestion").toggle_auto_trigger() end, 'Toggle Copilot')
-
-map('n', '<leader>aa', '<cmd>!ai-chat --no-editor %<cr>', 'Complete ai chat on current file')
-map('n', '<leader>ai', function() require("user.utils.ai").implement() end, 'Implement new functionality based on a given prompt')
+map('n', '<leader>ai', '<cmd>PrtImplement<cr>', 'Implement new functionality based on a given prompt')
+map({'v', 'x'}, '<leader>ar', "<cmd>'<,'>PrtRewrite<cr>", 'Rewrite selected section based on the given prompt')
 
 -- map('n', '<leader>ar', "<cmd>GpRewrite<cr>", 'Rewrite line')
 -- map('n', '<leader>aa', "<cmd>GpAppend<cr>", 'Like rewrite but append after selection')
