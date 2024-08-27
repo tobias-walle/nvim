@@ -148,38 +148,39 @@ function M.setup_typescript()
     includeInlayEnumMemberValueHints = true,
   }
 
-  require('typescript').setup({
-    server = {
+  require('typescript-tools').setup({
+    on_attach = function(client, bufnr)
+      M.disable_formatting(client)
 
-      on_attach = function(client, bufnr)
-        M.disable_formatting(client)
+      disable_typescript_lsp_renaming_if_angular_is_active()
+      M.on_attach(client, bufnr)
+    end,
 
-        disable_typescript_lsp_renaming_if_angular_is_active()
-        M.on_attach(client, bufnr)
+    handlers = {
+      ['textDocument/definition'] = function(err, result, method, ...)
+        if vim.tbl_islist(result) and #result > 1 then
+          local filtered_result = ts_filter(result, ts_filter_react_dts)
+          return vim.lsp.handlers['textDocument/definition'](
+            err,
+            filtered_result,
+            method,
+            ...
+          )
+        end
+
+        vim.lsp.handlers['textDocument/definition'](err, result, method, ...)
       end,
+    },
 
-      handlers = {
-        ['textDocument/definition'] = function(err, result, method, ...)
-          if vim.tbl_islist(result) and #result > 1 then
-            local filtered_result = ts_filter(result, ts_filter_react_dts)
-            return vim.lsp.handlers['textDocument/definition'](
-              err,
-              filtered_result,
-              method,
-              ...
-            )
-          end
+    root_dir = lspconfig.util.root_pattern('.git'),
 
-          vim.lsp.handlers['textDocument/definition'](err, result, method, ...)
-        end,
+    settings = {
+      tsserver_file_preferences = ts_inlay_hint_options,
+      tsserver_plugins = {
+        '@styled/typescript-styled-plugin',
       },
-
-      root_dir = lspconfig.util.root_pattern('.git'),
-
-      settings = {
-        typescript = { inlayHints = ts_inlay_hint_options },
-        javascript = { inlayHints = ts_inlay_hint_options },
-      },
+      -- typescript = { inlayHints = ts_inlay_hint_options },
+      -- javascript = { inlayHints = ts_inlay_hint_options },
     },
   })
 

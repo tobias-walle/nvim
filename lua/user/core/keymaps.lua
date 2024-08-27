@@ -306,11 +306,13 @@ M.attach_completion = function()
   map('n', '<leader><leader>wl', function() dbg(vim.lsp.buf.list_workspace_folders()) end, 'List Workspaces')
 
   wk.register({ ['<leader><leader>t'] = { name = '+typescript' } })
-  map('n', '<leader><leader>tr', '<cmd>TypescriptRenameFile<CR>', 'Rename TS file')
+  map('n', '<leader><leader>tr', '<cmd>TSToolsRenameFile<CR>', 'Rename TS file')
   map(
     'n',
     '<leader><leader>ti',
-    '<cmd>TypescriptAddMissingImports<CR><cmd>TypescriptOrganizeImports<CR>',
+    '<cmd>TSToolsAddMissingImports<CR>' ..
+    '<cmd>TSToolsRemoveUnusedImports<CR>' ..
+    '<cmd>TSToolsOrganizeImports<CR>',
     'Import All & Organize Imports'
   )
   map('n', '<leader><leader>tt', '<cmd>edit %:r.spec.%:e<CR>', 'Create TS Test')

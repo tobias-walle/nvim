@@ -8,6 +8,7 @@ local plugin = {
     'simrat39/rust-tools.nvim',
     'jose-elias-alvarez/null-ls.nvim',
     'folke/neodev.nvim',
+    'pmizio/typescript-tools.nvim',
   },
   config = function()
     local L = require('user.utils.lsp')
@@ -20,7 +21,6 @@ local plugin = {
       lsp = {
         ['pyright'] = L.setup_default,
         ['ruff_lsp'] = L.setup_default,
-        ['graphql'] = L.setup_default,
         ['r_language_server'] = L.setup_default,
         ['gopls'] = L.setup_default,
         ['kotlin_language_server'] = L.setup_without_formatting,
@@ -72,6 +72,19 @@ local plugin = {
             capabilities = L.snippet_capabilities,
             settings = {
               json = { schemas = require('schemastore').json.schemas() },
+            },
+          })
+        end,
+        ['graphql'] = function(name)
+          lspconfig[name].setup({
+            on_attach = L.on_attach,
+            filetypes = {
+              'javascript',
+              'javascriptreact',
+              'javascript.jsx',
+              'typescript',
+              'typescriptreact',
+              'typescript.tsx',
             },
           })
         end,
