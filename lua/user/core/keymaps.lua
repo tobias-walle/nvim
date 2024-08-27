@@ -23,7 +23,7 @@ map('n', '-', '<C-W><', 'Decrease width of window')
 map('n', '<C-n>', '<C-a>', 'Increment number under cursor')
 
 -- Files
-wk.register({ ['<leader>f'] = { name = '+files' } })
+wk.add({ { '<leader>f', group = '+files' } })
 map('n', '<leader>fD', '<cmd>!rm %<cr><cmd>bd!<cr>', 'Delete file of current buffer')
 
 
@@ -87,12 +87,12 @@ new_cmd(
 )
 
 -- highlight
-wk.register({ ['<leader>v'] = { name = '+highlight' } })
+wk.add({ { '<leader>v', group = '+highlight' } })
 map('n', '<leader>vv', '<cmd>nohl<cr>', 'Remove highlight')
 map('n', '<leader>vg', 'GVgg', 'Highlight file')
 
 -- Terminal
-wk.register({ ['<leader>x'] = { name = '+terminal' } })
+wk.add({ { '<leader>x', group = '+terminal' } })
 map('n', '<leader>xx', '<cmd>vert Ttoggle<cr>', 'Toggle terminal')
 map('n', '<leader>xc', '<cmd>Tclear<cr>', 'Clear terminal')
 map('n', '<leader>xq', '<cmd>Tclose<cr>', 'Close terminal')
@@ -104,7 +104,7 @@ map('n', '<M-j>', require('user.utils.quick-fix').next_in_active_list, 'Next QL 
 map('n', '<M-k>', require('user.utils.quick-fix').previous_in_active_list, 'Previous QL Item')
 
 -- Local list
-wk.register({ ['<leader>l'] = { name = '+local list' } })
+wk.add({ { '<leader>l', group = '+local list' } })
 map('n', '<leader>lo', '<cmd>lopen<cr>', 'Open List')
 map('n', '<leader>lq', '<cmd>lclose<cr>', 'Close List')
 map('n', '<leader>la', require('user.utils.quick-fix').activate_local_list, 'Activate LL for shortcut')
@@ -116,7 +116,7 @@ map(
 )
 
 -- Quick Fix List
-wk.register({ ['<leader>c'] = { name = '+quick fix list' } })
+wk.add({ { '<leader>c', group = '+quick fix list' } })
 map('n', '<leader>co', '<cmd>copen<cr>', 'Open List')
 map('n', '<leader>cq', '<cmd>cclose<cr>', 'Close List')
 map('n', '<leader>ca', require('user.utils.quick-fix').activate_quick_fix_list, 'Activate QL for shortcut')
@@ -131,7 +131,7 @@ map('n', '<leader>w', function()
 end, 'Write Window')
 
 -- Tabs
-wk.register({ ['t'] = { name = '+tabs' } })
+wk.add({ { 't', group = '+tabs' } })
 map('n', 'th', ':tabprev<CR>', 'Previous Tab')
 map('n', 'tl', ':tabnext<CR>', 'Next Tab')
 map('n', 'tn', ':tabnew<CR>', 'New Tab')
@@ -143,11 +143,11 @@ map('n', 'tb', '<C-W>T', 'Open Current Buffer as Tab')
 -- Buffers
 local close_unused_buffers = require('user.utils.autoclose-unused-buffers').close_unused_buffers
 
-wk.register({ ['<leader>b'] = { name = '+buffers' } })
+wk.add({ { '<leader>b', group = '+buffers' } })
 map('n', '<leader>bc', close_unused_buffers, 'Close unused buffers')
 
 -- Explorer (File/Outline)
-wk.register({ ['<leader>e'] = { name = '+explorer' } })
+wk.add({ { '<leader>e', group = '+explorer' } })
 map('n', '<leader>ee', '<cmd>Neotree toggle<CR>', 'Open Explorer')
 map('n', '<leader>eo', '<cmd>AerialToggle<CR>', 'Toggle Outline Explorer')
 map('n', '<leader>ef', '<cmd>Neotree reveal<CR>', 'Open Explorer and focus current file')
@@ -157,14 +157,14 @@ map('n', '-', '<cmd>Oil<CR>', 'Open Oil File Manager')
 map('n', 'H', '<cmd>Oil<CR>', 'Open Oil File Manager')
 
 -- Diffs
-wk.register({ ['<leader>d'] = { name = '+diffs' } })
+wk.add({ { '<leader>d', group = '+diffs' } })
 map('n', '<leader>dg', '<cmd>diffget<cr>', 'diffget - Apply diff from other buffer')
 map('v', '<leader>dg', ':\'<,\'>diffget<cr>', 'diffget - Apply diff from other buffer')
 map('n', '<leader>dp', '<cmd>diffput<cr>', 'diffput - Apply diff to other buffer')
 map('v', '<leader>dp', ':\'<,\'>diffput<cr>', 'diffput - Apply diff from other buffer')
 
 -- Git
-wk.register({ ['<leader>g'] = { name = '+git' } })
+wk.add({ { '<leader>g', group = '+git' } })
 map('n', '<leader>gs', '<cmd>Neogit<cr>', 'Git Status')
 map({ 'n', 'v' }, '<leader>gp', function() require('gitsigns').preview_hunk() end, 'Preview Hunk')
 map({ 'n', 'v' }, '<leader>gr', function() require('gitsigns').reset_hunk() end, 'Reset Hunk')
@@ -190,7 +190,7 @@ new_cmd(
 )
 
 -- Mergetool
-wk.register({ ['<leader>m'] = { name = '+mergetool' } })
+wk.add({ { '<leader>m', group = '+mergetool' } })
 map('n', '<leader>mt', '<cmd>MergetoolToggle<cr>', 'Toggle Mergetool')
 map('n', '<leader>mla', '<cmd>MergetoolToggleLayout lmr<cr>', 'Toggle lmr layout')
 map('n', '<leader>mlA', '<cmd>MergetoolToggleLayout LmR<cr>', 'Toggle LmR layout')
@@ -204,12 +204,12 @@ map({'i', 's'}, '<C-l>', function() require('luasnip').jump(1) end, 'Next Snippe
 map({'i', 's'}, '<C-j>', function() require('luasnip').jump(-1) end, 'Next Snippet')
 
 -- Debugging (WIP)
--- wk.register({ ['<leader>b'] = { name = '+debugging' } })
+-- wk.add({ { '<leader>b', group = '+debugging' } })
 -- map('n', '<leader>bb', function() require('dap').toggle_breakpoint() end, 'Toggle Breakpoint')
 -- map('n', '<leader>bc', function() require('dap').continue() end, 'Continue')
 
 -- Testing
-wk.register({ ['<leader>t'] = { name = '+testing' } })
+wk.add({ { '<leader>t', group = '+testing' } })
 map('n', '<leader>tl', '<cmd>Tclear!<cr><cmd>TestLast<cr>', 'Run previous test again')
 map('n', '<leader>tt', '<cmd>Tclear!<cr><cmd>TestFile<cr>', 'Run tests in file')
 map('n', '<leader>tn', '<cmd>Tclear!<cr><cmd>TestNearest<cr>', 'Run test close to cursor')
@@ -221,7 +221,7 @@ map('n', '<leader>tdn', ':UltestDebugNearest<cr>', 'Debug test close to cursor')
 -- Search
 map('n', '<C-p>', function() require('telescope.builtin').find_files() end, 'Find files')
 
-wk.register({ ['<leader>s'] = { name = '+search' } })
+wk.add({ { '<leader>s', group = '+search' } })
 map('n', '<leader>sb', function() require('user.utils.autoclose-unused-buffers').close_unused_buffers_and_find_buffer() end, 'Find buffer')
 map('n', '<leader>scc', function() require('telescope.builtin').commands() end, 'Find command')
 map('n', '<leader>sch', function() require('telescope.builtin').search_history() end, 'Search command history')
@@ -246,7 +246,7 @@ map('n', '<leader>su', function() require('telescope').extensions.undo.undo() en
 map('n', '<leader>sz', function() require('telescope.builtin').lsp_workspace_symbols() end, 'Find workspace symbols')
 
 --- AI
-wk.register({ ['<leader>a'] = { name = '+ai' } })
+wk.add({ { '<leader>a', group = '+ai' } })
 map('n', '<leader>ac', function() require("copilot.suggestion").toggle_auto_trigger() end, 'Toggle Copilot')
 map('n', '<leader>ai', '<cmd>PrtImplement<cr>', 'Implement new functionality based on a given prompt')
 map({'v', 'x'}, '<leader>ar', "<cmd>'<,'>PrtRewrite<cr>", 'Rewrite selected section based on the given prompt')
@@ -276,7 +276,7 @@ local function toggle_virtual_lines()
 end
 
 M.attach_completion = function()
-  wk.register({ ['<leader><leader>'] = { name = '+lsp' } })
+  wk.add({ { '<leader><leader>', group = '+lsp' } })
 
   new_cmd('LspRename', function(args)
     require('user.utils.refactor').rename(args.args)
@@ -300,12 +300,12 @@ M.attach_completion = function()
   map('n', '<leader><leader>d', function() vim.lsp.buf.type_definition() end, 'Type Definition')
   map('n', '<leader><leader>l', function() toggle_virtual_lines() end, 'Toggle diagnostic lines')
 
-  wk.register({ ['<leader><leader>w'] = { name = '+workspaces' } })
+  wk.add({ { '<leader><leader>w', group = '+workspaces' } })
   map('n', '<leader><leader>wa', function() vim.lsp.buf.add_workspace_folder() end, 'Add Workspace')
   map('n', '<leader><leader>wd', function() vim.lsp.buf.remove_workspace_folder() end, 'Remove Workspace')
   map('n', '<leader><leader>wl', function() dbg(vim.lsp.buf.list_workspace_folders()) end, 'List Workspaces')
 
-  wk.register({ ['<leader><leader>t'] = { name = '+typescript' } })
+  wk.add({ { '<leader><leader>t', group = '+typescript' } })
   map('n', '<leader><leader>tr', '<cmd>TSToolsRenameFile<CR>', 'Rename TS file')
   map(
     'n',
