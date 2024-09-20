@@ -9,6 +9,7 @@ local plugin = {
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-path',
     'onsails/lspkind.nvim',
+    { 'tzachar/cmp-ai', dependencies = 'nvim-lua/plenary.nvim' },
   },
   config = function()
     local cmp = require('cmp')
@@ -19,6 +20,28 @@ local plugin = {
       'filename',
       require('user.utils.cmp-sources.filename').new()
     )
+
+    local cmp_ai = require('cmp_ai.config')
+    cmp_ai:setup({
+      max_lines = 100,
+      provider = 'Ollama',
+      provider_options = {
+        -- The official codegemma version has problems right now, so we use this fork
+        model = 'edwardz/codegemmaq6',
+        prompt = function(lines_before, lines_after) return lines_before end,
+        suffix = function(lines_after) return lines_after end,
+        temperature = 0.1,
+        num_predict = 128,
+      },
+      notify = true,
+      notify_callback = function(msg) vim.notify(msg) end,
+      run_on_every_keystroke = false,
+      ignored_file_types = {
+        -- default is not to ignore
+        -- uncomment to ignore in lua:
+        -- lua = true
+      },
+    })
 
     ---@diagnostic disable-next-line: missing-fields
     cmp.setup({
@@ -51,21 +74,16 @@ local plugin = {
             cmp.complete()
           end
         end, { 'i', 's' }),
-        -- Switch to codium results if completion winodw is open
-        ['<C-a>'] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.complete({
-              config = {
-                sources = cmp.config.sources({
-                  { name = 'codeium' },
-                }),
-              },
-            })
-          else
-            fallback()
-          end
-        end, { 'i', 's' }),
-
+        ['<C-x>'] = cmp.mapping(
+          cmp.mapping.complete({
+            config = {
+              sources = cmp.config.sources({
+                { name = 'cmp_ai' },
+              }),
+            },
+          }),
+          { 'i', 's' }
+        ),
         ['<C-p>'] = cmp.mapping(function(fallback)
           local luasnip = require('luasnip')
           if luasnip.jumpable(-1) then
@@ -74,7 +92,6 @@ local plugin = {
             fallback()
           end
         end, { 'i', 's' }),
-
         ['<C-e>'] = cmp.mapping.close(),
         ['<CR>'] = cmp.mapping.confirm({
           behavior = cmp.ConfirmBehavior.Insert,
@@ -119,7 +136,6 @@ local plugin = {
         { name = 'path' },
         { name = 'buffer', keyword_length = 1, max_item_count = 5 },
         { name = 'filename' },
-        { name = 'codeium' },
       }),
 
       ---@diagnostic disable-next-line: missing-fields
