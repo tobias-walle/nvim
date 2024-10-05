@@ -246,24 +246,8 @@ map('n', '<leader>su', function() require('telescope').extensions.undo.undo() en
 map('n', '<leader>sz', function() require('telescope.builtin').lsp_workspace_symbols() end, 'Find workspace symbols')
 
 --- AI
-wk.add({ { '<leader>a', group = '+ai' } })
-map('n', '<leader>ac', function() require("copilot.suggestion").toggle_auto_trigger() end, 'Toggle Copilot')
-map('n', '<leader>ai', '<cmd>PrtImplement<cr>', 'Implement new functionality based on a given prompt')
-map({'v', 'x'}, '<leader>ar', "<cmd>'<,'>PrtRewrite<cr>", 'Rewrite selected section based on the given prompt')
-
--- map('n', '<leader>ar', "<cmd>GpRewrite<cr>", 'Rewrite line')
--- map('n', '<leader>aa', "<cmd>GpAppend<cr>", 'Like rewrite but append after selection')
--- map('n', '<leader>ap', "<cmd>GpPrepend<cr>", 'Like rewrite but prepend before selection')
--- map('n', '<leader>as', "<cmd>GpVnew<cr>", 'Like rewrite but generate into a vertical split')
---
--- map({'v', 'x'}, '<leader>ai', "<cmd>'<,'>GpImplementWithContext<cr>", 'Implement and use selection as context')
--- map({'v', 'x'}, '<leader>ar', "<cmd>'<,'>GpRewrite<cr>", 'Rewrite selection')
--- map({'v', 'x'}, '<leader>aa', "<cmd>'<,'>GpAppend<cr>", 'Like rewrite but append after selection')
--- map({'v', 'x'}, '<leader>ap', "<cmd>'<,'>GpPrepend<cr>", 'Like rewrite but prepend before selection')
--- map({'v', 'x'}, '<leader>as', "<cmd>'<,'>GpVnew<cr>", 'Like rewrite but generate into a vertical split')
---
--- map({'v', 'x'}, '<leader>ax', "<cmd>'<,'>GpExplain<cr>", 'Explain selection')
--- map({'v', 'x'}, '<leader>at', "<cmd>'<,'>GpUnit<cr>", 'Generate unit tests for selection')
+local map = require('user.utils.keymaps').map
+map({'i'}, '<C-x>', function() require('ai').trigger_completion() end)
 
 -- Completion
 local function toggle_virtual_lines()
