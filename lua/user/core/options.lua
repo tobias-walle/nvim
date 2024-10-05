@@ -65,12 +65,13 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
 })
 
 -- Check for changes on focus/buffer enter
-local checktime_au_group =
-  vim.api.nvim_create_augroup('checktime', { clear = true })
 vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter' }, {
   pattern = '*',
-  group = checktime_au_group,
-  callback = function() vim.cmd.checktime() end,
+  callback = function()
+    if vim.fn.bufexists('[Command Line]') == 0 and vim.fn.mode() ~= 'c' then
+      vim.cmd.checktime()
+    end
+  end,
 })
 
 -- Init some utils
