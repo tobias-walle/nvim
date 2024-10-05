@@ -25,7 +25,9 @@ function M.on_attach(client, bufnr)
 end
 
 function M.disable_formatting(client)
-  client.server_capabilities.documentFormattingProvider = false
+  client.server_capabilities.documentFormattingProvider = nil
+  client.server_capabilities.documentRangeFormattingProvider = nil
+  client.server_capabilities.documentOnTypeFormattingProvider = nil
 end
 
 function M.disable_semantic_tokens(client)
