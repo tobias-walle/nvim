@@ -24,6 +24,18 @@ local plugin = {
         ['r_language_server'] = L.setup_default,
         ['gopls'] = L.setup_default,
         ['kotlin_language_server'] = L.setup_without_formatting,
+        ['jdtls'] = function(name)
+          lspconfig[name].setup({
+            on_attach = L.on_attach,
+            settings = {
+              java = {
+                format = {
+                  enabled = false,
+                },
+              },
+            },
+          })
+        end,
         ['taplo'] = L.setup_default,
         ['bufls'] = L.setup_default,
         ['nil_ls'] = function(name)
