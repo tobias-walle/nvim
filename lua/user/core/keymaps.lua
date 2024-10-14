@@ -248,6 +248,13 @@ map('n', '<leader>sz', function() require('telescope.builtin').lsp_workspace_sym
 --- AI
 local map = require('user.utils.keymaps').map
 map({'i'}, '<C-x>', function() require('ai').trigger_completion() end)
+--- AI > CodeCompanion
+map("n", "<C-a>", "<cmd>CodeCompanionActions<cr>")
+map("v", "<C-a>", "<cmd>CodeCompanionActions<cr>")
+map("n", "<LocalLeader>a", "<cmd>CodeCompanionChat Toggle<cr>")
+map("v", "<LocalLeader>a", "<cmd>CodeCompanionChat Toggle<cr>")
+map("v", "ga", "<cmd>CodeCompanionChat Add<cr>")
+vim.cmd.cabbrev('cc', 'CodeCompanion')
 
 -- Completion
 local function toggle_virtual_lines()
