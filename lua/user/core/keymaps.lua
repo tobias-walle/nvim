@@ -130,15 +130,25 @@ map('n', '<leader>w', function()
   vim.cmd('write')
 end, 'Write Window')
 
--- Tabs
-wk.add({ { 't', group = '+tabs' } })
-map('n', 'th', ':tabprev<CR>', 'Previous Tab')
-map('n', 'tl', ':tabnext<CR>', 'Next Tab')
-map('n', 'tn', ':tabnew<CR>', 'New Tab')
-map('n', 'te', ':tabedit %<CR>', 'Edit current buffer in a tab')
-map('n', 'ts', ':tab split<CR>', 'Split (Clone) Tab')
-map('n', 'tq', ':tabclose<CR>', 'Close Tab')
-map('n', 'tb', '<C-W>T', 'Open Current Buffer as Tab')
+-- Tabs & Testing
+wk.add({ { '<leader>t', group = '+tabs+testing' } })
+map('n', '<leader>th', ':tabprev<CR>', 'Previous Tab')
+map('n', '<leader>tl', ':tabnext<CR>', 'Next Tab')
+map('n', '<leader>tn', ':tabnew<CR>', 'New Tab')
+map('n', '<leader>te', ':tabedit %<CR>', 'Edit current buffer in a tab')
+map('n', '<leader>ts', ':tab split<CR>', 'Split (Clone) Tab')
+map('n', '<leader>tq', ':tabclose<CR>', 'Close Tab')
+map('n', '<leader>tb', '<C-W>T', 'Open Current Buffer as Tab')
+
+-- Testing
+wk.add({ { '<leader>tt', group = '+testing' } })
+map('n', '<leader>ttl', '<cmd>Tclear!<cr><cmd>TestLast<cr>', 'Run previous test again')
+map('n', '<leader>ttt', '<cmd>Tclear!<cr><cmd>TestFile<cr>', 'Run tests in file')
+map('n', '<leader>ttn', '<cmd>Tclear!<cr><cmd>TestNearest<cr>', 'Run test close to cursor')
+map('n', '<leader>ttv', '<cmd>Tclear!<cr><cmd>TestVisit<cr>', 'Open test close to cursor')
+map('n', '<leader>ttu', ':Ultest<cr>', 'Run tests in file (Ultitest)')
+map('n', '<leader>ttdt', ':UltestDebug<cr>', 'Debug tests in file')
+map('n', '<leader>ttdn', ':UltestDebugNearest<cr>', 'Debug test close to cursor')
 
 -- Buffers
 local close_unused_buffers = require('user.utils.autoclose-unused-buffers').close_unused_buffers
@@ -208,15 +218,6 @@ map({'i', 's'}, '<C-j>', function() require('luasnip').jump(-1) end, 'Next Snipp
 -- map('n', '<leader>bb', function() require('dap').toggle_breakpoint() end, 'Toggle Breakpoint')
 -- map('n', '<leader>bc', function() require('dap').continue() end, 'Continue')
 
--- Testing
-wk.add({ { '<leader>t', group = '+testing' } })
-map('n', '<leader>tl', '<cmd>Tclear!<cr><cmd>TestLast<cr>', 'Run previous test again')
-map('n', '<leader>tt', '<cmd>Tclear!<cr><cmd>TestFile<cr>', 'Run tests in file')
-map('n', '<leader>tn', '<cmd>Tclear!<cr><cmd>TestNearest<cr>', 'Run test close to cursor')
-map('n', '<leader>tv', '<cmd>Tclear!<cr><cmd>TestVisit<cr>', 'Open test close to cursor')
-map('n', '<leader>tu', ':Ultest<cr>', 'Run tests in file (Ultitest)')
-map('n', '<leader>tdt', ':UltestDebug<cr>', 'Debug tests in file')
-map('n', '<leader>tdn', ':UltestDebugNearest<cr>', 'Debug test close to cursor')
 
 -- Search
 map('n', '<C-p>', function() require('telescope.builtin').find_files() end, 'Find files')
@@ -244,6 +245,14 @@ map('n', '<leader>sx', function() require('telescope.builtin').builtin() end, 'P
 map('n', '<leader>sy', function() require('telescope').extensions.neoclip.neoclip() end, 'Search clipboard')
 map('n', '<leader>su', function() require('telescope').extensions.undo.undo() end, 'Undotree')
 map('n', '<leader>sz', function() require('telescope.builtin').lsp_workspace_symbols() end, 'Find workspace symbols')
+
+
+-- Replace
+wk.add({ { '<leader>r', group = '+replace' } })
+map('n', '<leader>rr', function() require("spectre").toggle() end, 'Toggle Spectre')
+map('n', '<leader>rw', function() require("spectre").open_visual({select_word=true}) end, 'Search current word')
+map('v', '<leader>rw', function() vim.cmd('esc') require("spectre").open_visual() end, 'Search current word')
+map('n', '<leader>rf', function() require("spectre").open_file_search({select_word=true}) end, 'Search on current file')
 
 --- AI
 local map = require('user.utils.keymaps').map
