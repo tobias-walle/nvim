@@ -4,15 +4,15 @@ local U = require('user.utils')
 
 function M.format()
   require('mini.trailspace').trim()
-  vim.cmd('silent! EslintFixAll')
-  vim.lsp.buf.format({ timeout_ms = 5000 })
+  require('conform').format({ timeout_ms = 5000 })
+  -- vim.lsp.buf.format({ timeout_ms = 5000 })
 end
 
 ---@alias LspSetupFun fun(name: string)
 ---@alias NullSetupFun fun(name: string): unknown[]
 ---@alias LspMap table<string, LspSetupFun | { [1]: LspSetupFun, install: boolean }>
 ---@alias NullMap table<string, NullSetupFun | { [1]: NullSetupFun, install: boolean }>
----@alias LspConfig { lsp: LspMap, null_ls: NullMap }
+---@alias LspConfig { lsp: LspMap }
 
 M.snippet_capabilities = vim.lsp.protocol.make_client_capabilities()
 M.snippet_capabilities.textDocument.completion.completionItem.snippetSupport =
@@ -57,24 +57,8 @@ function M.setup_without_formatting(server_name)
   })
 end
 
-function M.setup_null_ls_formatting(name)
-  local null_ls = require('null-ls')
-  return {
-    null_ls.builtins.formatting[name],
-  }
-end
-
-function M.setup_null_ls_diagnostics(name)
-  local null_ls = require('null-ls')
-  return {
-    null_ls.builtins.diagnostics[name],
-  }
-end
-
 ---@param config LspConfig
 function M.apply_config(config)
-  local null_ls = require('null-ls')
-
   for server_name, options in pairs(config.lsp) do
     if type(options) == 'function' then
       options = { options }
@@ -82,20 +66,6 @@ function M.apply_config(config)
     local setup = options[1]
     setup(server_name)
   end
-
-  local null_ls_sources = {}
-  for name, options in pairs(config.null_ls) do
-    if type(options) == 'function' then
-      options = { options }
-    end
-    local get_sources = options[1]
-    local new_sources = get_sources(name)
-    vim.list_extend(null_ls_sources, new_sources)
-  end
-  null_ls.setup({
-    sources = null_ls_sources,
-    on_attach = M.on_attach,
-  })
 end
 
 local function ts_filter(arr, fn)

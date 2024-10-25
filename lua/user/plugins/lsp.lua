@@ -6,7 +6,6 @@ local plugin = {
     'b0o/schemastore.nvim',
     'jose-elias-alvarez/typescript.nvim',
     'simrat39/rust-tools.nvim',
-    'jose-elias-alvarez/null-ls.nvim',
     'folke/neodev.nvim',
     'pmizio/typescript-tools.nvim',
   },
@@ -187,11 +186,6 @@ local plugin = {
             },
           })
         end,
-      },
-      null_ls = {
-        ['stylua'] = L.setup_null_ls_formatting,
-        ['prettier'] = L.setup_null_ls_formatting,
-        ['jsonnetfmt'] = L.setup_null_ls_formatting,
       },
     }
 

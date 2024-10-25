@@ -29,6 +29,23 @@ local plugin = {
       return function() return sn(nil, i(1, get_cased_file_name(case))) end
     end
 
+    ls.add_snippets('lua', {
+      s(
+        'plugin',
+        fmt(
+          [[
+---@type LazySpec
+local plugin = {end_pos}
+
+return plugin
+          ]],
+          {
+            end_pos = i(0),
+          }
+        )
+      ),
+    })
+
     ls.add_snippets('typescript', {
       s(
         'fun',
