@@ -13,6 +13,7 @@ local plugin = {
     local L = require('user.utils.lsp')
 
     local lspconfig = require('lspconfig')
+    local root_pattern = lspconfig.util.root_pattern
 
     --- NOTE: I am using nix to manager the installed language servers
     ---@type LspConfig
@@ -64,8 +65,14 @@ local plugin = {
             },
           })
         end,
-        ['tsserver'] = L.setup_typescript,
         ['angularls'] = L.setup_angular,
+        ['tsserver'] = L.setup_typescript,
+        ['denols'] = function(name)
+          lspconfig[name].setup({
+            on_attach = L.on_attach,
+            root_dir = L.deno_root_pattern(),
+          })
+        end,
         ['cssls'] = function(name)
           lspconfig[name].setup({
             on_attach = L.on_attach_with({ L.disable_formatting }),
@@ -140,10 +147,10 @@ local plugin = {
           lspconfig[name].setup({
             on_attach = L.on_attach,
             root_dir = function(startpath)
-              return lspconfig.util.root_pattern('*.sln')(startpath)
-                or lspconfig.util.root_pattern('*.csproj')(startpath)
-                or lspconfig.util.root_pattern('*.fsproj')(startpath)
-                or lspconfig.util.root_pattern('.git')(startpath)
+              return root_pattern('*.sln')(startpath)
+                or root_pattern('*.csproj')(startpath)
+                or root_pattern('*.fsproj')(startpath)
+                or root_pattern('.git')(startpath)
             end,
           })
         end,

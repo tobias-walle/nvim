@@ -144,7 +144,11 @@ function M.setup_typescript()
       end,
     },
 
-    root_dir = lspconfig.util.root_pattern('.git'),
+    root_dir = M.rp_if_not(
+      M.deno_root_pattern(),
+      lspconfig.util.root_pattern('.git')
+    ),
+    single_file_support = false,
 
     settings = {
       tsserver_file_preferences = ts_inlay_hint_options,
@@ -172,6 +176,20 @@ function M.setup_angular()
       M.on_attach(client, bufnr)
     end,
   })
+end
+
+function M.deno_root_pattern()
+  local lspconfig = require('lspconfig')
+  return lspconfig.util.root_pattern('deno.json', 'deno.jsonc')
+end
+
+function M.rp_if_not(root_pattern, other_pattern)
+  return function(fname)
+    if root_pattern(fname) then
+      return nil
+    end
+    return other_pattern(fname)
+  end
 end
 
 return M
