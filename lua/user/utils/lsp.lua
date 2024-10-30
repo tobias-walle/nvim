@@ -146,7 +146,7 @@ function M.setup_typescript()
 
     root_dir = M.rp_if_not(
       M.deno_root_pattern(),
-      lspconfig.util.root_pattern('.git')
+      lspconfig.util.root_pattern({ 'package.json', '.git' })
     ),
     single_file_support = false,
 

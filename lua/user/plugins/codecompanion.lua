@@ -25,7 +25,7 @@ local plugin = {
         anthropic = function()
           return require('codecompanion.adapters').extend('anthropic', {
             model = {
-              default = 'claude-3-sonnet-20240229',
+              default = 'claude-3-5-sonnet-20241022',
             },
             env = {
               api_key = os.getenv('ANTHROPIC_API_KEY'),
