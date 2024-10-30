@@ -249,20 +249,18 @@ map('n', '<leader>sz', function() require('telescope.builtin').lsp_workspace_sym
 
 -- Replace
 wk.add({ { '<leader>r', group = '+replace' } })
-map('n', '<leader>rr', function() require("spectre").toggle() end, 'Toggle Spectre')
-map('n', '<leader>rw', function() require("spectre").open_visual({select_word=true}) end, 'Search current word')
-map('v', '<leader>rw', function() vim.cmd('esc') require("spectre").open_visual() end, 'Search current word')
-map('n', '<leader>rf', function() require("spectre").open_file_search({select_word=true}) end, 'Search on current file')
+map('n', '<leader>rr', function() require('spectre').toggle() end, 'Toggle Spectre')
+map('n', '<leader>rw', function() require('spectre').open_visual({select_word=true}) end, 'Search current word')
+map('v', '<leader>rw', function() vim.cmd('esc') require('spectre').open_visual() end, 'Search current word')
+map('n', '<leader>rf', function() require('spectre').open_file_search({select_word=true}) end, 'Search on current file')
 
 --- AI
 local map = require('user.utils.keymaps').map
 map({'i'}, '<C-x>', function() require('ai').trigger_completion() end)
---- AI > CodeCompanion
-map("n", "<C-a>", "<cmd>CodeCompanionActions<cr>")
-map("v", "<C-a>", "<cmd>CodeCompanionActions<cr>")
-map("n", "<LocalLeader>a", "<cmd>CodeCompanionChat Toggle<cr>")
-map("v", "<LocalLeader>a", "<cmd>CodeCompanionChat Toggle<cr>")
-map("v", "ga", "<cmd>CodeCompanionChat Add<cr>")
+--- AI | CodeCompanion
+map({'n', 'v'}, '<C-a>', '<cmd>CodeCompanionActions<cr>')
+map({'n', 'v'}, '<Leader>a', '<cmd>CodeCompanionChat Toggle<cr>')
+map('v', 'ga', '<cmd>CodeCompanionChat Add<cr>')
 vim.cmd.cabbrev('cc', 'CodeCompanion')
 
 -- Completion

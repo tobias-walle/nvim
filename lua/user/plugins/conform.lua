@@ -1,7 +1,7 @@
 ---@type LazySpec
 local plugin = {
   'stevearc/conform.nvim',
-  event = 'BufEnter',
+  lazy = false,
   config = function()
     local is_deno_project = function(bufnr)
       local filepath = vim.api.nvim_buf_get_name(bufnr)
