@@ -257,9 +257,9 @@ map('n', '<leader>rf', function() require('spectre').open_file_search({select_wo
 --- AI
 local map = require('user.utils.keymaps').map
 map({'i'}, '<C-x>', function() require('ai').trigger_completion() end)
+map({'n', 'v'}, '<Leader>a', '<cmd>AiChat<cr>')
 --- AI | CodeCompanion
 map({'n', 'v'}, '<C-a>', '<cmd>CodeCompanionActions<cr>')
-map({'n', 'v'}, '<Leader>a', '<cmd>CodeCompanionChat Toggle<cr>')
 map('v', 'ga', '<cmd>CodeCompanionChat Add<cr>')
 vim.cmd.cabbrev('cc', 'CodeCompanion')
 
