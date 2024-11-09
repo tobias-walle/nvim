@@ -133,7 +133,7 @@ local plugin = {
               vim.api.nvim_create_autocmd('BufWritePost', {
                 pattern = { '*.js', '*.ts' },
                 callback = function(ctx)
-                  client.notify('$/onDidChangeTsOrJsFile', { uri = ctx.file })
+                  client.notify('$/onDidChangeTsOrJsFile', { uri = ctx.match })
                 end,
                 group = vim.api.nvim_create_augroup(
                   'svelte_file_watcher',
