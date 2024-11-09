@@ -74,5 +74,11 @@ vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter' }, {
   end,
 })
 
+vim.filetype.add({
+  pattern = {
+    ['.*/templates/.*%.yaml'] = 'helm',
+  },
+})
+
 -- Init some utils
 require('user.utils.autoclose-unused-buffers').setup()
