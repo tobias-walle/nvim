@@ -67,22 +67,22 @@ end
 -- Make
 new_cmd(
   'Mtc',
-  function() require('user.utils.make').runTypescriptCommand('yarn type-check') end,
+  function() require('user.utils.make').runTypescriptCommand('pnpm typecheck') end,
   'Run yarn type-check and save result in quickfix list'
 )
 new_cmd(
   'Mtsc',
-  function() require('user.utils.make').runTypescriptCommand('yarn tsc --noEmit') end,
+  function() require('user.utils.make').runTypescriptCommand('pnpm tsc --noEmit') end,
   'Run yarn tsc --noEmit and save result in quickfix list'
 )
 new_cmd(
   'Mtsb',
-  function() require('user.utils.make').runTypescriptCommand('yarn tsc --build') end,
+  function() require('user.utils.make').runTypescriptCommand('pnpm tsc --build') end,
   'Run yarn tsc --build and save result in quickfix list'
 )
 new_cmd(
   'Mng',
-  function() require('user.utils.make').runTypescriptCommand('yarn ng build') end,
+  function() require('user.utils.make').runTypescriptCommand('pnpm ng build') end,
   'Run yarn ng build and save result in quickfix list'
 )
 
@@ -90,6 +90,10 @@ new_cmd(
 wk.add({ { '<leader>v', group = '+highlight' } })
 map('n', '<leader>vv', '<cmd>nohl<cr>', 'Remove highlight')
 map('n', '<leader>vg', 'GVgg', 'Highlight file')
+
+-- Notifications
+wk.add({ { '<leader>n', group = '+notifications' } })
+map('n', '<leader>nh', function () require('user.utils.notifications').show_fidget_history_in_popup() end, 'Show fidget notification history')
 
 -- Terminal
 wk.add({ { '<leader>x', group = '+terminal' } })
