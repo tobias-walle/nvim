@@ -187,6 +187,9 @@ local plugin = {
             settings = {
               Lua = {
                 hint = { enable = true },
+                diagnostics = {
+                  globals = { 'MiniTest' },
+                },
               },
               workspace = { checkThirdParty = false },
               telemetry = { enable = false },
