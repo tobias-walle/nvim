@@ -28,12 +28,10 @@ function M.show_fidget_history_in_popup()
   -- Write messages to buffer
   local messages = {}
   for _, msg in ipairs(history) do
-    if msg.annote then
-      table.insert(messages, string.format('--- %s ---', msg.annote))
-    else
-      table.insert(messages, '---')
-    end
-    for _, line in ipairs(vim.split(msg.message, '\n')) do
+    for i, line in ipairs(vim.split(msg.message, '\n')) do
+      if i == 1 and msg.annote then
+        line = string.format('[%s] %s', msg.annote, line)
+      end
       table.insert(messages, line)
     end
   end
