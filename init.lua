@@ -37,6 +37,5 @@ require('lazy').setup({
   },
 })
 
-require('user.cmd')
 require('user.core.keymaps')
 require('user.core.options')
