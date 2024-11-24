@@ -52,8 +52,34 @@ local function run_command(opts)
     return
   end
 
-  -- Notify the result
-  vim.notify(string.format('%s = %s', expression, result), vim.log.levels.INFO)
+  -- Open the result in a popup buffer
+  local buf = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, {
+    expression .. ' = ' .. result,
+  })
+  -- Set the filetype to lua for syntax highlighting
+  vim.api.nvim_buf_set_option(buf, 'filetype', 'lua')
+  vim.api.nvim_buf_set_option(buf, 'wrap', true)
+  -- Close with q
+  vim.api.nvim_buf_set_keymap(
+    buf,
+    'n',
+    'q',
+    '<cmd>bd!<CR>',
+    { noremap = true, silent = true }
+  )
+  -- Open the window
+  local width = 60
+  local height = 20
+  vim.api.nvim_open_win(buf, true, {
+    style = 'minimal',
+    relative = 'editor',
+    width = width,
+    height = height,
+    row = (vim.o.lines - height) / 2,
+    col = (vim.o.columns - width) / 2,
+    border = 'rounded',
+  })
 end
 
 vim.api.nvim_create_user_command('QuickMath', run_command, { range = true })
