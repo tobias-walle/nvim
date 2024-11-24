@@ -1,3 +1,35 @@
+local function render_result_buffer(expression, result)
+  local buf = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, {
+    expression .. ' = ' .. result,
+  })
+  vim.api.nvim_buf_set_name(buf, 'Quick Math Result')
+  vim.api.nvim_buf_set_option(buf, 'buftype', 'nofile')
+  vim.api.nvim_buf_set_option(buf, 'modifiable', false)
+  vim.api.nvim_buf_set_option(buf, 'wrap', true)
+  vim.api.nvim_buf_set_option(buf, 'filetype', 'lua')
+  -- Close with q
+  vim.api.nvim_buf_set_keymap(
+    buf,
+    'n',
+    'q',
+    '<cmd>close<CR>',
+    { noremap = true, silent = true }
+  )
+  -- Open the window
+  local width = 60
+  local height = 20
+  vim.api.nvim_open_win(buf, true, {
+    style = 'minimal',
+    relative = 'editor',
+    width = width,
+    height = height,
+    row = (vim.o.lines - height) / 2,
+    col = (vim.o.columns - width) / 2,
+    border = 'rounded',
+  })
+end
+
 local function run_command(opts)
   if opts.line1 == nil or opts.line2 == nil then
     error('Selection required')
@@ -52,34 +84,7 @@ local function run_command(opts)
     return
   end
 
-  -- Open the result in a popup buffer
-  local buf = vim.api.nvim_create_buf(false, true)
-  vim.api.nvim_buf_set_lines(buf, 0, -1, false, {
-    expression .. ' = ' .. result,
-  })
-  -- Set the filetype to lua for syntax highlighting
-  vim.api.nvim_buf_set_option(buf, 'filetype', 'lua')
-  vim.api.nvim_buf_set_option(buf, 'wrap', true)
-  -- Close with q
-  vim.api.nvim_buf_set_keymap(
-    buf,
-    'n',
-    'q',
-    '<cmd>bd!<CR>',
-    { noremap = true, silent = true }
-  )
-  -- Open the window
-  local width = 60
-  local height = 20
-  vim.api.nvim_open_win(buf, true, {
-    style = 'minimal',
-    relative = 'editor',
-    width = width,
-    height = height,
-    row = (vim.o.lines - height) / 2,
-    col = (vim.o.columns - width) / 2,
-    border = 'rounded',
-  })
+  render_result_buffer(expression, result)
 end
 
 vim.api.nvim_create_user_command('QuickMath', run_command, { range = true })
