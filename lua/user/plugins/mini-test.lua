@@ -8,6 +8,11 @@ local plugin = {
     test.setup({})
     vim.api.nvim_create_user_command(
       'Test',
+      function() require('mini.test').run_file(vim.fn.expand('%')) end,
+      {}
+    )
+    vim.api.nvim_create_user_command(
+      'TestAll',
       function() require('mini.test').run() end,
       {}
     )
