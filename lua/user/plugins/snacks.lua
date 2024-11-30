@@ -46,16 +46,7 @@ local function configure_lsp_progress()
   })
 end
 
-local function override_builtins()
-  ---@diagnostic disable-next-line: duplicate-set-field
-  vim.api.nvim_echo = function(chunks, _, opts)
-    local messages = vim
-      .iter(chunks)
-      :map(function(chunk) return chunk[1] end)
-      :totable()
-    vim.notify(table.concat(messages, ' '), opts.verbose and 'trace' or 'info')
-  end
-
+local function override_print()
   _G.dd = function(...) Snacks.debug.inspect(...) end
   _G.bt = function() Snacks.debug.backtrace() end
   vim.print = _G.dd
@@ -78,7 +69,7 @@ local plugin = {
       },
     })
 
-    override_builtins()
+    override_print()
     configure_lsp_progress()
   end,
 }
