@@ -93,7 +93,7 @@ map('n', '<leader>vg', 'GVgg', 'Highlight file')
 
 -- Notifications
 wk.add({ { '<leader>n', group = '+notifications' } })
-map('n', '<leader>nh', function () require('user.utils.notifications').show_fidget_history_in_popup() end, 'Show fidget notification history')
+map('n', '<leader>nh', function () require('snacks').notifier.show_history() end, 'Show notify history')
 
 -- Terminal
 wk.add({ { '<leader>x', group = '+terminal' } })
