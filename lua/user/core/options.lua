@@ -51,8 +51,9 @@ vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufWinEnter' }, {
   callback = function()
     -- Folding
     vim.opt.foldlevelstart = 99
-    vim.opt.foldmethod = 'indent'
     vim.opt.foldenable = false
+    vim.wo.foldmethod = 'expr'
+    vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
     -- Disable autocomments
     vim.opt.formatoptions:remove('o')
   end,
