@@ -31,6 +31,7 @@ local plugin = {
         json = prettier_or_deno,
         json5 = prettier_or_deno,
         jsonc = prettier_or_deno,
+        html = prettier_or_deno,
         jsonnet = { 'jsonnetfmt' },
       },
       default_format_opts = {
