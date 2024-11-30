@@ -47,11 +47,6 @@ local function configure_lsp_progress()
 end
 
 local function override_builtins()
-  print = function(...)
-    local messages = vim.iter({ ... }):map(tostring):totable()
-    vim.notify(table.concat(messages, ' '), 'debug')
-  end
-
   ---@diagnostic disable-next-line: duplicate-set-field
   vim.api.nvim_echo = function(chunks, _, opts)
     local messages = vim
@@ -60,6 +55,11 @@ local function override_builtins()
       :totable()
     vim.notify(table.concat(messages, ' '), opts.verbose and 'trace' or 'info')
   end
+
+  _G.dd = function(...) Snacks.debug.inspect(...) end
+  _G.bt = function() Snacks.debug.backtrace() end
+  vim.print = _G.dd
+  print = _G.dd
 end
 
 ---@type LazySpec
@@ -69,6 +69,7 @@ local plugin = {
   lazy = false,
   config = function()
     require('snacks').setup({
+      debug = { enabled = true },
       notifier = {
         enabled = true,
         top_down = true,
