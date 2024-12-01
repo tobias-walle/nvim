@@ -32,8 +32,17 @@ opt.guifont = 'JetBrainsMono Nerd Font'
 opt.spelllang = 'en,de'
 opt.spell = true
 opt.spellcapcheck = ''
-
 opt.undofile = true
+
+-- Enable the display of whitespace characters
+opt.list = true
+vim.opt.listchars = {
+  tab = '▸ ',
+  trail = '·', -- Show trailing spaces as dots
+  extends = '>', -- Character to show when text extends beyond the window
+  precedes = '<', -- Character to show when text precedes the window
+  nbsp = '␣', -- Character to represent non-breaking spaces
+}
 
 -- see https://github.com/sindrets/diffview.nvim/issues/35
 opt.fillchars = opt.fillchars + 'diff:╱'
