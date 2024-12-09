@@ -4,9 +4,45 @@ local plugin = {
   dependencies = {
     'MunifTanjim/nui.nvim',
   },
+  enabled = true,
   event = 'VeryLazy',
   config = function()
     require('noice').setup({
+      cmdline = {
+        enabled = true,
+        view = 'cmdline_popup',
+        format = {
+          -- conceal: (default=true) This will hide the text in the cmdline that matches the pattern.
+          -- view: (default is cmdline view)
+          -- opts: any options passed to the view
+          -- icon_hl_group: optional hl_group for the icon
+          -- title: set to anything or empty string to hide
+          filter = false,
+          lua = false,
+          help = false,
+          cmdline = {
+            pattern = '^:',
+            icon = ':',
+            lang = 'vim',
+          },
+          search_down = {
+            kind = 'search',
+            pattern = '^/',
+            icon = ' ',
+            lang = 'regex',
+          },
+          search_up = {
+            kind = 'search',
+            pattern = '^%?',
+            icon = ' ',
+            lang = 'regex',
+          },
+          input = {
+            view = 'cmdline_input',
+            icon = '󰥻 ',
+          },
+        },
+      },
       lsp = {
         -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
         override = {
