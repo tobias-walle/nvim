@@ -2,11 +2,6 @@ local M = {}
 
 local async = require('plenary.async')
 
-function dbg(arg)
-  print(vim.inspect(arg))
-  return arg
-end
-
 --- @param variable unknown
 --- @param name string
 --- @param expected_type string
