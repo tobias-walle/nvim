@@ -1,8 +1,7 @@
 local function override_print()
-  _G.dd = function(...) Snacks.debug.inspect(...) end
-  _G.bt = function() Snacks.debug.backtrace() end
-  vim.print = _G.dd
-  print = _G.dd
+  dbg = Snacks.debug.inspect
+  bt = Snacks.debug.backtrace
+  vim.print = dbg
 end
 
 ---@type LazySpec
