@@ -5,7 +5,8 @@
         "redefined-local"
     ],
     "Lua.diagnostics.globals": [
-        "dbg"
+        "dbg",
+        "bt"
     ],
     "Lua.workspace.checkThirdParty": false,
     "workspace.checkThirdParty": false
