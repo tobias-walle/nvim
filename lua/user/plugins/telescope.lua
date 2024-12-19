@@ -83,8 +83,7 @@ local plugin = {
           respect_gitignore = false,
         },
         advanced_git_search = {
-          -- fugitive or diffview
-          diff_plugin = 'fugitive',
+          diff_plugin = 'diffview',
           git_flags = { '--no-pager', '-c', 'delta.side-by-side=false' },
           git_diff_flags = {},
           show_builtin_git_pickers = false,
