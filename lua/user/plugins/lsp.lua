@@ -20,7 +20,7 @@ local plugin = {
     local config = {
       lsp = {
         ['pyright'] = L.setup_default,
-        ['ruff_lsp'] = L.setup_default,
+        ['ruff'] = L.setup_default,
         ['r_language_server'] = L.setup_default,
         ['gopls'] = L.setup_default,
         ['terraformls'] = L.setup_default,
@@ -38,7 +38,7 @@ local plugin = {
           })
         end,
         ['taplo'] = L.setup_default,
-        ['bufls'] = L.setup_default,
+        ['buf_ls'] = L.setup_default,
         ['nil_ls'] = function(name)
           lspconfig[name].setup({
             on_attach = L.on_attach_with({ L.disable_semantic_tokens }),
