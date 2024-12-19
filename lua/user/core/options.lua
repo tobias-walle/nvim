@@ -20,6 +20,7 @@ opt.cursorline = true
 opt.autoread = true
 opt.shortmess = opt.shortmess + 'c'
 opt.shell = 'fish'
+opt.conceallevel = 2 -- Set conceal level to 2, This e.g hides quotes in json files, or links in markdown.
 
 opt.backup = false
 opt.writebackup = false
@@ -39,8 +40,6 @@ opt.list = true
 vim.opt.listchars = {
   tab = '▸ ',
   trail = '·', -- Show trailing spaces as dots
-  extends = '>', -- Character to show when text extends beyond the window
-  precedes = '<', -- Character to show when text precedes the window
   nbsp = '␣', -- Character to represent non-breaking spaces
 }
 
