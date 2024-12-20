@@ -4,8 +4,11 @@ local plugin = {
   lazy = false,
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   config = function()
+    local oil = require('oil')
     local show_detail = false
-    require('oil').setup({
+    local oil_git_status = require('user.plugins.oil.git-status')
+
+    oil.setup({
       default_file_explorer = true,
       skip_confirm_for_simple_edits = false,
       delete_to_trash = true,
@@ -64,8 +67,16 @@ local plugin = {
       },
       view_options = {
         show_hidden = true,
+        is_hidden_file = function(name, bufnr)
+          local status = oil_git_status.get_status(bufnr, name)
+          local is_git_ignored = status and status.status == '!!' or false
+          local m = name:match('^%.')
+          return m ~= nil or is_git_ignored
+        end,
       },
     })
+
+    oil_git_status.setup()
   end,
 }
 
