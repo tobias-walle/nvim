@@ -133,8 +133,13 @@ function M.setup()
   vim.api.nvim_create_autocmd({ 'User' }, {
     pattern = { 'OilEnter' },
     callback = function(args)
-      local buf_id = args.data.buf
       local oil = require('oil')
+      local buf_id = args.data.buf
+
+      --- Cancel if git is not used
+      if not vim.fs.root(buf_id, '.git') then
+        return
+      end
 
       local highlight_default = { symbol = '  ', hl_group = 'NonText' }
       local highlights = {}

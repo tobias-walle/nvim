@@ -8,6 +8,8 @@ local plugin = {
     local show_detail = false
     local oil_git_status = require('user.plugins.oil.git-status')
 
+    -- oil_git_status.setup()
+
     oil.setup({
       default_file_explorer = true,
       skip_confirm_for_simple_edits = false,
@@ -67,16 +69,14 @@ local plugin = {
       },
       view_options = {
         show_hidden = true,
-        is_hidden_file = function(name, bufnr)
-          local status = oil_git_status.get_status(bufnr, name)
-          local is_git_ignored = status and status.status == '!!' or false
-          local m = name:match('^%.')
-          return m ~= nil or is_git_ignored
-        end,
+        -- is_hidden_file = function(name, bufnr)
+        --   local status = oil_git_status.get_status(bufnr, name)
+        --   local is_git_ignored = status and status.status == '!!' or false
+        --   local starts_with_dot = name:match('^%.') ~= nil
+        --   return starts_with_dot or is_git_ignored
+        -- end,
       },
     })
-
-    oil_git_status.setup()
   end,
 }
 
