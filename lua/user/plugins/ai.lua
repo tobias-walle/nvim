@@ -6,6 +6,10 @@ local plugin = {
   event = 'BufEnter',
   config = function()
     require('ai').setup({
+      -- default_model = 'anthropic',
+      -- default_model = 'openrouter:deepseek/deepseek-chat',
+      -- default_model = 'openrouter:qwen/qwen-2.5-coder-32b-instruct',
+      -- default_model = 'ollama:qwen2.5-coder:32b',
       default_model = 'azure:gpt-4o',
       completion = {
         model = 'azure:gpt-4o-mini',
