@@ -5,14 +5,14 @@ local plugin = {
   enabled = true,
   event = 'BufEnter',
   config = function()
+    local use_insecure_models = os.getenv('AI_NVIM_INSECURE_MODELS') == 'true'
+      or vim.g.use_insecure_models == true
     require('ai').setup({
-      -- default_model = 'anthropic',
-      -- default_model = 'openrouter:deepseek/deepseek-chat',
-      -- default_model = 'openrouter:qwen/qwen-2.5-coder-32b-instruct',
-      -- default_model = 'ollama:qwen2.5-coder:32b',
-      default_model = 'azure:gpt-4o',
-      completion = {
-        model = 'azure:gpt-4o-mini',
+      default_models = use_insecure_models and {
+        default = 'openrouter:deepseek/deepseek-chat',
+      } or {
+        default = 'azure:gpt-4o',
+        mini = 'azure:gpt-4o-mini',
       },
     })
 
