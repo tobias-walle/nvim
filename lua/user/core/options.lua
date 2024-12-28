@@ -21,6 +21,7 @@ opt.autoread = true
 opt.shortmess = opt.shortmess + 'c'
 opt.shell = 'fish'
 opt.conceallevel = 0
+opt.exrc = true
 
 opt.backup = false
 opt.writebackup = false
@@ -37,6 +38,7 @@ opt.undofile = true
 
 -- Enable the display of whitespace characters
 opt.list = true
+---@diagnostic disable-next-line: missing-fields
 vim.opt.listchars = {
   tab = '▸ ',
   trail = '·', -- Show trailing spaces as dots
