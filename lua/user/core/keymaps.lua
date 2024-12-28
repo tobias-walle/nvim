@@ -260,6 +260,7 @@ map('n', '<leader>rf', function() require('spectre').open_file_search({select_wo
 local map = require('user.utils.keymaps').map
 map({'i'}, '<C-x>', function() require('ai').trigger_completion() end)
 map('n', '<Leader>aa', '<cmd>AiChat<cr>')
+map('n', '<Leader>am', '<cmd>AiChangeModels<cr>')
 map('n', '<Leader>ap', function()
   vim.ui.input({ prompt = "Prompt" }, function(input)
     if input then
