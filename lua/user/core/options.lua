@@ -20,7 +20,7 @@ opt.cursorline = true
 opt.autoread = true
 opt.shortmess = opt.shortmess + 'c'
 opt.shell = 'fish'
-opt.conceallevel = 2 -- Set conceal level to 2, This e.g hides quotes in json files, or links in markdown.
+opt.conceallevel = 0
 
 opt.backup = false
 opt.writebackup = false
