@@ -28,10 +28,17 @@
 (
   (comment
     content: (comment_content) @injection.language
-    (#trim! @injection.language)
-    (#gsub! @injection.language "%s*(.+)%s*" "%1")
+    (#offset! @injection.language 0 1 0 -1)
   )
   (expression_list
     value:
       (string content: (string_content) @injection.content))
+)
+
+(
+  (comment
+    content: (comment_content) @injection.language
+    (#offset! @injection.language 0 1 0 -1)
+  )
+  (string content: (string_content) @injection.content)
 )
