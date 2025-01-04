@@ -21,3 +21,17 @@
   (#match? @name "^lua(_.*)?$")
   (#set! injection.language "lua")
 )
+
+; Inject language from comments, like this:
+; --[[ markdown ]] '...'
+; --[[ python ]] [[...]]
+(
+  (comment
+    content: (comment_content) @injection.language
+    (#trim! @injection.language)
+    (#gsub! @injection.language "%s*(.+)%s*" "%1")
+  )
+  (expression_list
+    value:
+      (string content: (string_content) @injection.content))
+)
