@@ -14,6 +14,16 @@ local plugin = {
         default = 'azure:gpt-4o',
         mini = 'azure:gpt-4o-mini',
       },
+      selectable_models = {
+        { default = 'openai:gpt-4o', mini = 'openai:gpt-4o-mini' },
+        { default = 'azure:gpt-4o', mini = 'azure:gpt-4o-mini' },
+        {
+          default = 'anthropic:claude-3-5-sonnet-20241022',
+          mini = 'anthropic:claude-3-5-haiku-20241022',
+        },
+        { default = 'openrouter:deepseek/deepseek-chat' },
+        { default = 'ollama:qwen2.5-coder:32b' },
+      },
     })
 
     -- Reload for development
@@ -23,6 +33,12 @@ local plugin = {
       function() require('lazy').reload({ plugins = { 'ai.nvim' } }) end
     )
   end,
+  -- keys = {
+  --   { '<C-x>', function() require('ai').trigger_completion() end, mode = 'i', desc = 'Trigger Ai Completion' },
+  --   { '<Leader>aa', '<cmd>AiChat<cr>', mode = 'n', desc = 'Toggle AI Chat' },
+  --   { '<Leader>ar', '<cmd>AiRewrite<cr>', mode = 'v', desc = 'Rewrite Selected Text' },
+  --   { '<Leader>am', '<cmd>AiChangeModels<cr>', mode = 'n', desc = 'Change AI Models' },
+  -- },
 }
 
 return plugin
