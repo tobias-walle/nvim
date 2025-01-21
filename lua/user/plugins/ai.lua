@@ -22,6 +22,7 @@ local plugin = {
           mini = 'anthropic:claude-3-5-haiku-20241022',
         },
         { default = 'openrouter:deepseek/deepseek-chat' },
+        { default = 'openrouter:deepseek/deepseek-r1' },
         { default = 'ollama:qwen2.5-coder:32b' },
       },
     })
