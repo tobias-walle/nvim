@@ -17,13 +17,16 @@ local plugin = {
       selectable_models = {
         { default = 'openai:gpt-4o', mini = 'openai:gpt-4o-mini' },
         { default = 'azure:gpt-4o', mini = 'azure:gpt-4o-mini' },
+        { default = 'azure:gpt-4o-mini' },
         {
           default = 'anthropic:claude-3-5-sonnet-20241022',
           mini = 'anthropic:claude-3-5-haiku-20241022',
         },
         { default = 'openrouter:deepseek/deepseek-chat' },
         { default = 'openrouter:deepseek/deepseek-r1' },
+        { default = 'ollama:mistral-small:24b' },
         { default = 'ollama:qwen2.5-coder:32b' },
+        { default = 'ollama:qwen2.5-coder:7b' },
       },
     })
 
