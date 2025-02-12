@@ -9,7 +9,8 @@ local plugin = {
       or vim.g.use_insecure_models == true
     require('ai').setup({
       default_models = use_insecure_models and {
-        default = 'openrouter:deepseek/deepseek-chat',
+        default = 'anthropic:claude-3-5-sonnet-latest',
+        mini = 'anthropic:claude-3-5-haiku-latest',
       } or {
         default = 'azure:gpt-4o',
         mini = 'azure:gpt-4o-mini',
@@ -19,8 +20,8 @@ local plugin = {
         { default = 'azure:gpt-4o', mini = 'azure:gpt-4o-mini' },
         { default = 'azure:gpt-4o-mini' },
         {
-          default = 'anthropic:claude-3-5-sonnet-20241022',
-          mini = 'anthropic:claude-3-5-haiku-20241022',
+          default = 'anthropic:claude-3-5-sonnet-latest',
+          mini = 'anthropic:claude-3-5-haiku-latest',
         },
         { default = 'openrouter:deepseek/deepseek-chat' },
         { default = 'openrouter:deepseek/deepseek-r1' },
