@@ -186,6 +186,7 @@ map('n', '<leader>gh', '<cmd>DiffviewFileHistory --base=LOCAL %<cr>', 'Get see h
 map('n', '<leader>gc', '<cmd>DiffviewOpen <C-r><C-w><cr>', 'Open diff between HEAD and commit under cursor')
 map({ 'n', 'v' }, '<leader>gb', function() require('gitsigns').blame_line({ full = true }) end, 'Blame Line')
 map('v', '<leader>gl', ':DiffCommitLine<CR>', 'Show diff of selected lines')
+map('n', '<leader>gm', function() require('user.utils.git').insert_git_log_message() end, 'Choose one of the last log messages and insert it to the buffer.')
 
 new_cmd(
   'DiffCommitLine',
