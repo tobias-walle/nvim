@@ -64,8 +64,10 @@ local plugin = {
       },
       columns = { 'icon' },
       lsp_file_methods = {
+        enabled = true,
         timeout_ms = 10000,
-        autosave_changes = true,
+        -- Buggy at the moment
+        autosave_changes = false,
       },
       view_options = {
         show_hidden = true,
