@@ -8,7 +8,7 @@ local plugin = {
     local show_detail = false
     local oil_git_status = require('user.plugins.oil.git-status')
 
-    -- oil_git_status.setup()
+    oil_git_status.setup()
 
     oil.setup({
       default_file_explorer = true,

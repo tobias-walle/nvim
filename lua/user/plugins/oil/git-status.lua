@@ -81,49 +81,62 @@ local function parse_git_status(content)
 end
 
 ---@param cwd string
----@return table
-local function update_git_status(cwd)
-  local content = vim
-    .system(
-      { 'git', 'status', '--ignored', '--porcelain' },
-      { text = true, cwd = cwd }
-    )
-    :wait()
-  if content.code == 0 then
-    vim.g.content = content.stdout
-  end
-  return parse_git_status(content.stdout)
+---@param callback fun(status_map: table | nil)
+local function update_git_status(cwd, callback)
+  vim.system(
+    { 'git', 'status', '--ignored', '--porcelain' },
+    { text = true, cwd = cwd },
+    function(content)
+      if content.code == 0 then
+        vim.g.content = content.stdout
+        callback(parse_git_status(content.stdout))
+      else
+        callback(nil)
+      end
+    end
+  )
 end
 
 ---@param buf_id integer
 ---@param file_name string
-function M.get_status(buf_id, file_name)
+---@param callback fun(result: { status: string, highlight: { symbol: string, hl_group: string } } | nil)
+function M.get_status(buf_id, file_name, callback)
   local cwd = vim.fs.root(buf_id, '.git')
   if not cwd then
+    callback(nil)
     return
   end
 
   local cache_entry = git_status_cache[cwd]
   local currentTime = os.time()
+
+  local process_status_map = vim.schedule_wrap(function()
+    local escaped_cwd = escapePattern(cwd)
+    local parent_dir = require('oil').get_current_dir(buf_id) or ''
+    local entry_path = parent_dir .. file_name
+    local relative_path = entry_path:gsub('^' .. escaped_cwd .. '/', '')
+
+    local status = cache_entry.status_map[relative_path]
+    local highlight = status and map_status(status) or nil
+    callback(status and { status = status, highlight = highlight } or nil)
+  end)
+
   if
     not cache_entry or currentTime - git_status_cache[cwd].time < cacheTimeout
   then
-    local status_map = update_git_status(cwd)
-    cache_entry = {
-      time = currentTime,
-      status_map = status_map,
-    }
-    git_status_cache[cwd] = cache_entry
+    update_git_status(cwd, function(status_map)
+      if status_map then
+        cache_entry = {
+          time = currentTime,
+          status_map = status_map,
+        }
+        git_status_cache[cwd] = cache_entry
+      end
+      process_status_map()
+    end)
+  else
+    process_status_map()
   end
-
-  local escaped_cwd = escapePattern(cwd)
-  local parent_dir = require('oil').get_current_dir(buf_id) or ''
-  local entry_path = parent_dir .. file_name
-  local relative_path = entry_path:gsub('^' .. escaped_cwd .. '/', '')
-
-  local status = cache_entry.status_map[relative_path]
-  local highlight = status and map_status(status) or nil
-  return status and { status = status, highlight = highlight } or nil
 end
 
 ---@return nil
@@ -143,12 +156,13 @@ function M.setup()
 
       local highlight_default = { symbol = '  ', hl_group = 'NonText' }
       local highlights = {}
+      local update_is_running = false
 
       local function render()
         local nlines = vim.api.nvim_buf_line_count(buf_id)
         vim.api.nvim_buf_clear_namespace(buf_id, ns_id, 0, -1)
         for line = 0, nlines do
-          local highlight = highlights[line + 1] or highlight_default
+          local highlight = highlights[line + 2] or highlight_default
           vim.api.nvim_buf_set_extmark(buf_id, ns_id, line, 0, {
             virt_text = { { highlight.symbol, highlight.hl_group } },
             virt_text_pos = 'inline',
@@ -157,22 +171,37 @@ function M.setup()
       end
 
       local function update()
+        if update_is_running then
+          return
+        end
+        update_is_running = true
         local nlines = vim.api.nvim_buf_line_count(buf_id)
 
         -- Fast prerender
         render()
 
         -- Do the (slow) update
-        vim.schedule(function()
-          highlights = {}
-          for line = 0, nlines do
-            local entry = oil.get_entry_on_line(buf_id, line)
-            local status = entry and M.get_status(buf_id, entry.name)
-            local highlight = status and status.highlight or highlight_default
-            table.insert(highlights, highlight)
+        highlights = {}
+        local pending = nlines
+        local set_highlight = function(line, highlight)
+          highlights[line + 1] = highlight or highlight_default
+          pending = pending - 1
+          if pending == 0 then
+            render()
+            update_is_running = false
           end
-          render()
-        end)
+        end
+        for line = 0, nlines do
+          local entry = oil.get_entry_on_line(buf_id, line)
+          if entry then
+            M.get_status(buf_id, entry.name, function(status)
+              local highlight = status and status.highlight or highlight_default
+              set_highlight(line, highlight)
+            end)
+          else
+            set_highlight(line, highlight_default)
+          end
+        end
       end
 
       update()
