@@ -18,6 +18,7 @@ local plugin = {
       selectable_models = {
         { default = 'openai:gpt-4o', mini = 'openai:gpt-4o-mini' },
         { default = 'azure:gpt-4o', mini = 'azure:gpt-4o-mini' },
+        { default = 'azure:gpt-4o' },
         { default = 'azure:gpt-4o-mini' },
         {
           default = 'anthropic:claude-3-5-sonnet-latest',
