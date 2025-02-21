@@ -20,6 +20,7 @@ local plugin = {
         { default = 'azure:gpt-4o', mini = 'azure:gpt-4o-mini' },
         { default = 'azure:gpt-4o' },
         { default = 'azure:gpt-4o-mini' },
+        { default = 'azure:o3-mini' },
         {
           default = 'anthropic:claude-3-5-sonnet-latest',
           mini = 'anthropic:claude-3-5-haiku-latest',
