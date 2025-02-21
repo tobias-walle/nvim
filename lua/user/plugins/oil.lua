@@ -71,12 +71,12 @@ local plugin = {
       },
       view_options = {
         show_hidden = true,
-        -- is_hidden_file = function(name, bufnr)
-        --   local status = oil_git_status.get_status(bufnr, name)
-        --   local is_git_ignored = status and status.status == '!!' or false
-        --   local starts_with_dot = name:match('^%.') ~= nil
-        --   return starts_with_dot or is_git_ignored
-        -- end,
+        is_hidden_file = function(name, bufnr)
+          -- local status = oil_git_status.get_status(bufnr, name)
+          -- local is_git_ignored = status and status.status == '!!' or false
+          -- return is_git_ignored
+          return false
+        end,
       },
     })
   end,
