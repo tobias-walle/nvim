@@ -112,7 +112,12 @@ function M.get_status(buf_id, file_name, callback)
 
   local process_status_map = vim.schedule_wrap(function()
     local escaped_cwd = escapePattern(cwd)
-    local parent_dir = require('oil').get_current_dir(buf_id) or ''
+    local parent_dir_success, parent_dir =
+      pcall(require('oil').get_current_dir, buf_id)
+    if not parent_dir_success then
+      -- Buffer is probably invalid
+      return
+    end
     local entry_path = parent_dir .. file_name
     local relative_path = entry_path:gsub('^' .. escaped_cwd .. '/', '')
 
