@@ -22,7 +22,7 @@ local plugin = {
         { default = 'azure:gpt-4o-mini' },
         { default = 'azure:o3-mini' },
         {
-          default = 'anthropic:claude-3-5-sonnet-latest',
+          default = 'anthropic:claude-3-7-sonnet-latest',
           mini = 'anthropic:claude-3-5-haiku-latest',
         },
         { default = 'openrouter:deepseek/deepseek-chat' },
