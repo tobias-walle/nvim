@@ -39,6 +39,7 @@ local plugin = {
         end,
         ['taplo'] = L.setup_default,
         ['buf_ls'] = L.setup_default,
+        ['volar'] = L.setup_without_formatting, -- vue.js
         ['nil_ls'] = function(name)
           lspconfig[name].setup({
             on_attach = L.on_attach_with({ L.disable_semantic_tokens }),

@@ -74,6 +74,12 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   callback = function() vim.bo.filetype = 'sh' end,
 })
 
+-- Allow comments in json files
+vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
+  pattern = '*.json',
+  callback = function() vim.bo.filetype = 'jsonc' end,
+})
+
 -- Check for changes on focus/buffer enter
 vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter' }, {
   pattern = '*',

@@ -110,6 +110,7 @@ end
 
 function M.setup_typescript()
   local lspconfig = require('lspconfig')
+
   local ts_inlay_hint_options = {
     includeInlayParameterNameHints = 'all',
     includeInlayParameterNameHintsWhenArgumentMatchesName = false,
@@ -121,18 +122,24 @@ function M.setup_typescript()
   }
 
   require('typescript-tools').setup({
+    filetypes = {
+      'javascript',
+      'javascriptreact',
+      'typescript',
+      'typescriptreact',
+      'vue',
+    },
     on_attach = function(client, bufnr)
       M.disable_formatting(client)
 
       disable_typescript_lsp_renaming_if_angular_is_active()
       M.on_attach(client, bufnr)
     end,
-
     handlers = {
-      ['textDocument/definition'] = function(err, result, method, ...)
+      ['textdocument/definition'] = function(err, result, method, ...)
         if vim.tbl_islist(result) and #result > 1 then
           local filtered_result = ts_filter(result, ts_filter_react_dts)
-          return vim.lsp.handlers['textDocument/definition'](
+          return vim.lsp.handlers['textdocument/definition'](
             err,
             filtered_result,
             method,
@@ -140,7 +147,7 @@ function M.setup_typescript()
           )
         end
 
-        vim.lsp.handlers['textDocument/definition'](err, result, method, ...)
+        vim.lsp.handlers['textdocument/definition'](err, result, method, ...)
       end,
     },
 
@@ -151,19 +158,14 @@ function M.setup_typescript()
     single_file_support = false,
 
     settings = {
-      tsserver_file_preferences = ts_inlay_hint_options,
       tsserver_plugins = {
-        '@styled/typescript-styled-plugin',
+        '@vue/typescript-plugin',
       },
-      -- typescript = { inlayHints = ts_inlay_hint_options },
-      -- javascript = { inlayHints = ts_inlay_hint_options },
+      separate_diagnostic_server = true,
+      publish_diagnostic_on = 'insert_leave',
+      inlayHints = ts_inlay_hint_options,
     },
   })
-
-  -- Allow comments in json files
-  vim.cmd([[
-  autocmd BufNewFile,BufRead *.json setlocal filetype=jsonc
-  ]])
 end
 
 function M.setup_angular()
