@@ -6,9 +6,9 @@ local plugin = {
   config = function()
     local oil = require('oil')
     local show_detail = false
-    local oil_git_status = require('user.plugins.oil.git-status')
 
-    oil_git_status.setup()
+    -- local oil_git_status = require('user.plugins.oil.git-status')
+    -- oil_git_status.setup()
 
     oil.setup({
       default_file_explorer = true,
