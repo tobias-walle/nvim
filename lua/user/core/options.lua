@@ -36,6 +36,31 @@ opt.spell = true
 opt.spellcapcheck = ''
 opt.undofile = true
 
+-- START: Folding
+vim.o.foldlevelstart = 99
+vim.o.foldenable = false
+vim.o.foldmethod = 'expr'
+-- Default to treesitter folding
+vim.o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+-- Prefer LSP folding if client supports it
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client:supports_method('textDocument/foldingRange') then
+      local win = vim.api.nvim_get_current_win()
+      vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
+    end
+  end,
+})
+function _G.custom_fold_text()
+  local line = vim.fn.getline(vim.v.foldstart)
+  local line_count = vim.v.foldend - vim.v.foldstart + 1
+  return line .. ' ····· ' .. line_count .. ' lines '
+end
+vim.opt.foldtext = 'v:lua.custom_fold_text()'
+opt.fillchars = opt.fillchars + 'fold:·'
+-- END: Folding
+
 -- Enable the display of whitespace characters
 opt.list = true
 ---@diagnostic disable-next-line: missing-fields
@@ -59,10 +84,6 @@ vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufWinEnter' }, {
   group = general_options_au_group,
   callback = function()
     -- Folding
-    vim.opt.foldlevelstart = 99
-    vim.opt.foldenable = false
-    vim.wo.foldmethod = 'expr'
-    vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
     -- Disable autocomments
     vim.opt.formatoptions:remove('o')
   end,

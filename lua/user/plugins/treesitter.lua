@@ -1,6 +1,7 @@
+---@diagnostic disable-next-line: unused-local
 local disable_big_files = function(lang, buf)
   -- ignore big files
-  local max_filesize = 50 * 1024 -- 50 KB
+  local max_filesize = 1024 * 1024 -- 1 Mb
   local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
   if ok and stats and stats.size > max_filesize then
     return true
@@ -13,7 +14,10 @@ end
 local plugin = {
   'nvim-treesitter/nvim-treesitter',
   build = function() vim.cmd('TSUpdate') end,
-  dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects' },
+  dependencies = {
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    'nvim-treesitter/nvim-treesitter-context',
+  },
   config = function()
     require('nvim-treesitter.configs').setup({
       ensure_installed = 'all',
@@ -46,6 +50,10 @@ local plugin = {
           },
         },
       },
+    })
+    require('treesitter-context').setup({
+      enable = true,
+      mode = 'topline',
     })
   end,
 }

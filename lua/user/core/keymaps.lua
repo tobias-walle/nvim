@@ -291,8 +291,10 @@ local function toggle_virtual_lines()
   if config == nil then
     return
   end
-  vim.diagnostic.config({ virtual_lines = not config.virtual_lines })
-  vim.diagnostic.config({ virtual_text = not config.virtual_text })
+  vim.diagnostic.config({
+    virtual_lines = config.virtual_text,
+    virtual_text = not config.virtual_text,
+  })
 end
 
 M.attach_completion = function()
@@ -308,6 +310,7 @@ M.attach_completion = function()
   map('n', 'gi', function() vim.lsp.buf.implementation() end, 'Go to implementation')
   map('n', 'gr', function() vim.lsp.buf.references() end, 'Go to references')
 
+  map('n', '<leader><leader>i', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end, 'Toggle inlay hints')
   map('n', '<leader><leader>h', function() vim.lsp.buf.hover() end, 'Hover')
   map('n', '<leader><leader>s', function() vim.lsp.buf.signature_help() end, 'Signature Help')
   map('n', '<leader><leader>r', function() vim.lsp.buf.rename() end, 'Rename')

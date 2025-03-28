@@ -15,6 +15,13 @@ local plugin = {
     local lspconfig = require('lspconfig')
     local root_pattern = lspconfig.util.root_pattern
 
+    vim.lsp.inlay_hint.enable()
+    vim.diagnostic.config({
+      severity_sort = true,
+      virtual_text = true,
+      virtual_lines = false,
+    })
+
     --- NOTE: I am using nix to manager the installed language servers
     ---@type LspConfig
     local config = {
