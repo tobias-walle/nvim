@@ -18,6 +18,7 @@ local plugin = {
         style = 'minimal',
         timeout = 3000,
       },
+      image = {},
     })
 
     override_print()
