@@ -9,8 +9,7 @@ local plugin = {
       or vim.g.use_insecure_models == true
     require('ai').setup({
       default_models = use_insecure_models and {
-        default = 'anthropic:claude-3-5-sonnet-latest',
-        mini = 'anthropic:claude-3-5-haiku-latest',
+        default = 'openrouter:deepseek/deepseek-chat-v3-0324:free',
       } or {
         default = 'azure:gpt-4o',
         mini = 'azure:gpt-4o-mini',
@@ -19,14 +18,13 @@ local plugin = {
         { default = 'openai:gpt-4o', mini = 'openai:gpt-4o-mini' },
         { default = 'azure:gpt-4o', mini = 'azure:gpt-4o-mini' },
         { default = 'azure:gpt-4o' },
-        { default = 'azure:gpt-4o-mini' },
         { default = 'azure:o3-mini' },
         {
           default = 'anthropic:claude-3-7-sonnet-latest',
           mini = 'anthropic:claude-3-5-haiku-latest',
         },
-        { default = 'openrouter:deepseek/deepseek-chat' },
-        { default = 'openrouter:deepseek/deepseek-r1' },
+        { default = 'openrouter:deepseek/deepseek-chat-v3-0324:free' },
+        { default = 'openrouter:google/gemini-2.5-pro-exp-03-25:free' },
         { default = 'ollama:mistral-small:24b' },
         { default = 'ollama:qwen2.5-coder:32b' },
         { default = 'ollama:qwen2.5-coder:7b' },
@@ -40,12 +38,6 @@ local plugin = {
       function() require('lazy').reload({ plugins = { 'ai.nvim' } }) end
     )
   end,
-  -- keys = {
-  --   { '<C-x>', function() require('ai').trigger_completion() end, mode = 'i', desc = 'Trigger Ai Completion' },
-  --   { '<Leader>aa', '<cmd>AiChat<cr>', mode = 'n', desc = 'Toggle AI Chat' },
-  --   { '<Leader>ar', '<cmd>AiRewrite<cr>', mode = 'v', desc = 'Rewrite Selected Text' },
-  --   { '<Leader>am', '<cmd>AiChangeModels<cr>', mode = 'n', desc = 'Change AI Models' },
-  -- },
 }
 
 return plugin
