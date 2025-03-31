@@ -46,6 +46,7 @@ end
 function M.setup_default(server_name)
   local lspconfig = require('lspconfig')
   lspconfig[server_name].setup({
+    capabilities = require('blink.cmp').get_lsp_capabilities(),
     on_attach = M.on_attach,
   })
 end
