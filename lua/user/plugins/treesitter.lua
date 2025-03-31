@@ -54,6 +54,8 @@ local plugin = {
     require('treesitter-context').setup({
       enable = true,
       mode = 'topline',
+      max_lines = 5,
+      trim_scope = 'inner',
     })
   end,
 }
