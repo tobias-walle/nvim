@@ -5,6 +5,10 @@ local plugin = {
   config = function()
     require('dressing').setup({
       input = { insert_only = false },
+      select = {
+        enabled = true,
+        telescope = require('telescope.themes').get_ivy({}),
+      },
     })
   end,
 }
