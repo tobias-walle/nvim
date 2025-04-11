@@ -2,6 +2,7 @@
 local plugin = {
   'L3MON4D3/LuaSnip',
   event = 'VeryLazy',
+  version = 'v2.*',
   config = function()
     local ls = require('luasnip')
     local s = ls.snippet
