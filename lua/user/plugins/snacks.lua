@@ -20,12 +20,32 @@ local plugin = {
         style = 'minimal',
         timeout = 3000,
       },
+      -- https://github.com/folke/snacks.nvim/blob/main/docs/input.md
+      input = {},
       -- https://github.com/folke/snacks.nvim/blob/main/docs/image.md
       image = {},
       -- https://github.com/folke/snacks.nvim/blob/main/docs/lazygit.md
       lazygit = {},
       -- https://github.com/folke/snacks.nvim/blob/main/docs/statuscolumn.md
       statuscolumn = {},
+      -- https://github.com/folke/snacks.nvim/blob/main/docs/explorer.md
+      explorer = {
+        replace_netrw = true,
+      },
+      -- https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
+      picker = {
+        sources = {
+          explorer = {
+            win = {
+              list = {
+                keys = {
+                  ['-'] = 'explorer_close',
+                },
+              },
+            },
+          },
+        },
+      },
     })
     override_print()
   end,

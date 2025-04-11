@@ -22,11 +22,6 @@ map('n', '-', '<C-W><', 'Decrease width of window')
 -- Increment
 map('n', '<C-n>', '<C-a>', 'Increment number under cursor')
 
--- Files
-wk.add({ { '<leader>f', group = '+files' } })
-map('n', '<leader>fD', '<cmd>!rm %<cr><cmd>bd!<cr>', 'Delete file of current buffer')
-
-
 -- Profiler
 map('n', '<leader>p', '"+p', 'Paste from system clipboard')
 
@@ -93,7 +88,7 @@ map('n', '<leader>vg', 'GVgg', 'Highlight file')
 
 -- Notifications
 wk.add({ { '<leader>n', group = '+notifications' } })
-map('n', '<leader>nh', function () require('snacks').notifier.show_history() end, 'Show notify history')
+map('n', '<leader>nh', function() Snacks.picker.notifications() end, 'Notification History')
 
 -- Terminal
 wk.add({ { '<leader>x', group = '+terminal' } })
@@ -161,12 +156,22 @@ map('n', '<leader>bc', close_unused_buffers, 'Close unused buffers')
 
 -- Explorer (File/Outline)
 wk.add({ { '<leader>e', group = '+explorer' } })
-map('n', '<leader>ee', '<cmd>Neotree toggle<CR>', 'Open Explorer')
-map('n', '<leader>eo', '<cmd>AerialToggle<CR>', 'Toggle Outline Explorer')
-map('n', '<leader>ef', '<cmd>Neotree reveal<CR>', 'Open Explorer and focus current file')
-map('n', '<leader>eq', '<cmd>Neotree close<CR>', 'Close Explorer')
+map('n', '<leader>ee', function()
+  local explorer = Snacks.picker.get({ source = "explorer" })[1]
+  if not explorer then
+    Snacks.explorer()
+  else
+    explorer:close()
+  end
+end, 'File Explorer')
+map('n', '<leader>eo', '<cmd>AerialToggle<CR>', 'Outline Explorer')
 
-map('n', '-', '<cmd>Oil<CR>', 'Open Oil File Manager')
+map('n', '-', function ()
+  Snacks.picker.explorer({
+    auto_close = true,
+    layout = { preset = "default" },
+  })
+end, 'Open Explorer in full screen')
 
 -- Diffs
 wk.add({ { '<leader>d', group = '+diffs' } })
@@ -203,13 +208,6 @@ map('n', '<leader>js', function() require('user.utils.jira').selectJiraIssue() e
 map('n', '<leader>jm', function() require('user.utils.jira').selectJiraIssue('AND assignee = currentUser() AND status != \'Done\'') end, 'Select a jira issues of the current sprint assigned to me')
 
 new_cmd(
-  'DiffCommitLine',
-  "lua require('telescope').extensions.advanced_git_search.diff_commit_line()",
-  'Show diff of selected lines',
-  { range = true }
-)
-
-new_cmd(
   'DiffO',
   function(opts) vim.cmd('DiffviewOpen --base=LOCAL ' .. opts.args) end,
   'Open Diff from locale',
@@ -236,33 +234,56 @@ map({'i', 's'}, '<C-j>', function() require('luasnip').jump(-1) end, 'Next Snipp
 -- map('n', '<leader>bc', function() require('dap').continue() end, 'Continue')
 
 
--- Search
-map('n', '<C-p>', function() require('telescope.builtin').find_files() end, 'Find files')
+-- Search & Find
+map('n', '<leader>,', function() Snacks.picker.buffers() end, 'Buffers')
+map('n', '<leader>/', function() Snacks.picker.grep() end, 'Grep')
+map('n', '<leader>:', function() Snacks.picker.command_history() end, 'Command History')
+
+wk.add({ { '<leader>s', group = '+find' } })
+map('n', '<leader>fb', function() Snacks.picker.buffers() end, 'Buffers')
+map('n', '<leader>fc', function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, 'Find Config File')
+map('n', '<leader>ff', function() Snacks.picker.files() end, 'Find Files')
+map('n', '<leader>fs', function() Snacks.picker.smart() end, 'Smart Find Files')
+map('n', '<leader>fg', function() Snacks.picker.git_files() end, 'Find Git Files')
+map('n', '<leader>fp', function() Snacks.picker.projects() end, 'Projects')
+map('n', '<leader>fr', function() Snacks.picker.recent() end, 'Recent')
+map('n', '<C-p>', function() Snacks.picker.files() end, 'Find Files')
 
 wk.add({ { '<leader>s', group = '+search' } })
-map('n', '<leader>sb', function() require('user.utils.autoclose-unused-buffers').close_unused_buffers_and_find_buffer() end, 'Find buffer')
-map('n', '<leader>scc', function() require('telescope.builtin').commands() end, 'Find command')
-map('n', '<leader>sch', function() require('telescope.builtin').search_history() end, 'Search command history')
-map('n', '<leader>sd', function() require('telescope.builtin').diagnostics({ severity_limit = vim.diagnostic.severity.WARN }) end, 'Search lsp diagnostics messages/errors in workspace')
-map('n', '<leader>se', function() require('telescope').extensions.file_browser.file_browser({ path = vim.fn.expand('%:p:h') }) end, 'Open FileBrowser relative to current path')
-map('n', '<leader>sE', function() require('telescope').extensions.file_browser.file_browser() end, 'Open FileBrowser relative to cwd')
-map('n', '<leader>sf', function() require('telescope.builtin').find_files() end, 'Find files')
-map('n', '<leader>sF', function() require('user.utils.telescope').find_files_all() end, 'Find files (include ignored)')
-map('n', '<leader>sg', function() require('telescope.builtin').git_status() end, 'Find staged files')
-map('n', '<leader>shh', function() require('telescope').extensions.file_history.history() end, 'Find in file history')
-map('n', '<leader>she', function() require('telescope.builtin').help_tags() end, 'Help')
-map('n', '<leader>sk', function() require('telescope.builtin').keymaps() end, 'Find keymap')
-map('n', '<leader>sn', function() require('telescope').extensions.notify.notify() end, 'Find notifications')
-map('n', '<leader>sp', function() require('telescope.builtin').spell_suggest() end, 'Suggest spelling')
-map('n', '<leader>sr', function() require('telescope.builtin').lsp_references() end, 'Find references of symbol under cursor')
-map('n', '<leader>ss', function() require('user.utils.telescope').live_grep() end, 'Find text with options')
-map('n', '<leader>sS', function() require('telescope.builtin').grep_string() end, 'Find string under cursor')
-map('n', '<leader>su', function() require('telescope.builtin').resume() end, 'Resume')
-map('n', '<leader>sx', function() require('telescope.builtin').builtin() end, 'Prompt Picker')
-map('n', '<leader>sy', function() require('telescope').extensions.neoclip.neoclip() end, 'Search clipboard')
-map('n', '<leader>su', function() require('telescope').extensions.undo.undo() end, 'Undotree')
-map('n', '<leader>sz', function() require('telescope.builtin').lsp_workspace_symbols() end, 'Find workspace symbols')
+map('n', '<leader>s"', function() Snacks.picker.registers() end, 'Registers')
+map('n', '<leader>s/', function() Snacks.picker.search_history() end, 'Search History')
+map('n', '<leader>sa', function() Snacks.picker.autocmds() end, 'Autocmds')
+map('n', '<leader>sb', function() Snacks.picker.lines() end, 'Buffer Lines')
+map('n', '<leader>sc', function() Snacks.picker.command_history() end, 'Command History')
+map('n', '<leader>sC', function() Snacks.picker.commands() end, 'Commands')
+map('n', '<leader>sd', function() Snacks.picker.diagnostics() end, 'Diagnostics')
+map('n', '<leader>sD', function() Snacks.picker.diagnostics_buffer() end, 'Buffer Diagnostics')
+map('n', '<leader>sh', function() Snacks.picker.help() end, 'Help Pages')
+map('n', '<leader>sH', function() Snacks.picker.highlights() end, 'Highlights')
+map('n', '<leader>si', function() Snacks.picker.icons() end, 'Icons')
+map('n', '<leader>sj', function() Snacks.picker.jumps() end, 'Jumps')
+map('n', '<leader>sk', function() Snacks.picker.keymaps() end, 'Keymaps')
+map('n', '<leader>sl', function() Snacks.picker.loclist() end, 'Location List')
+map('n', '<leader>sm', function() Snacks.picker.marks() end, 'Marks')
+map('n', '<leader>sM', function() Snacks.picker.man() end, 'Man Pages')
+map('n', '<leader>sp', function() Snacks.picker.lazy() end, 'Search for Plugin Spec')
+map('n', '<leader>sq', function() Snacks.picker.qflist() end, 'Quickfix List')
+map('n', '<leader>sR', function() Snacks.picker.resume() end, 'Resume')
+map('n', '<leader>su', function() Snacks.picker.undo() end, 'Undo History')
+map('n', '<leader>uC', function() Snacks.picker.colorschemes() end, 'Colorschemes')
+map('n', '<leader>ss', function() Snacks.picker.grep() end, 'Grep')
+map('n', '<leader>so', function() Snacks.picker.lsp_symbols() end, 'LSP Symbols')
+map('n', '<leader>sO', function() Snacks.picker.lsp_workspace_symbols() end, 'LSP Workspace Symbols')
 
+map({ 'n', 'x' }, '<leader>sw', function() Snacks.picker.grep_word() end, 'Visual selection or word')
+wk.add({ { '<leader>sg', group = '+git' } })
+map('n', '<leader>sgb', function() Snacks.picker.git_branches() end, 'Git Branches')
+map('n', '<leader>sgl', function() Snacks.picker.git_log() end, 'Git Log')
+map('n', '<leader>sgL', function() Snacks.picker.git_log_line() end, 'Git Log Line')
+map('n', '<leader>sgs', function() Snacks.picker.git_status() end, 'Git Status')
+map('n', '<leader>sgS', function() Snacks.picker.git_stash() end, 'Git Stash')
+map('n', '<leader>sgd', function() Snacks.picker.git_diff() end, 'Git Diff (Hunks)')
+map('n', '<leader>sgf', function() Snacks.picker.git_log_file() end, 'Git Log File')
 
 -- Replace
 wk.add({ { '<leader>r', group = '+replace' } })
@@ -318,11 +339,11 @@ M.attach_completion = function()
     require('user.utils.refactor').rename(args.args)
   end, 'Rename syncronously (can be used in macros)', { nargs=1 });
 
-  map('n', 'gD', function() vim.lsp.buf.declaration() end, 'Go to declaration')
-  map('n', 'gd', function() vim.lsp.buf.definition() end, 'Go to definition')
-  map('n', 'gt', function() vim.lsp.buf.type_definition() end, 'Go to type definitions')
-  map('n', 'gi', function() vim.lsp.buf.implementation() end, 'Go to implementation')
-  map('n', 'gr', function() vim.lsp.buf.references() end, 'Go to references')
+  map('n', 'gd', function() Snacks.picker.lsp_definitions() end, 'Goto Definition')
+  map('n', 'gD', function() Snacks.picker.lsp_declarations() end, 'Goto Declaration')
+  map('n', 'gr', function() Snacks.picker.lsp_references() end, 'References', { nowait = true })
+  map('n', 'gI', function() Snacks.picker.lsp_implementations() end, 'Goto Implementation')
+  map('n', 'gy', function() Snacks.picker.lsp_type_definitions() end, 'Goto Type Definition')
 
   map('n', '<leader><leader>i', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end, 'Toggle inlay hints')
   map('n', '<leader><leader>h', function() vim.lsp.buf.hover() end, 'Hover')
