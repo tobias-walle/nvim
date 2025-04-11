@@ -345,6 +345,9 @@ M.attach_completion = function()
   map('n', 'gI', function() Snacks.picker.lsp_implementations() end, 'Goto Implementation')
   map('n', 'gy', function() Snacks.picker.lsp_type_definitions() end, 'Goto Type Definition')
 
+  map('n', ']r', function() Snacks.words.jump(1, true) end, 'Jump to next reference')
+  map('n', '[r', function() Snacks.words.jump(-1, true) end, 'Jump to prev reference')
+
   map('n', '<leader><leader>i', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end, 'Toggle inlay hints')
   map('n', '<leader><leader>h', function() vim.lsp.buf.hover() end, 'Hover')
   map('n', '<leader><leader>s', function() vim.lsp.buf.signature_help() end, 'Signature Help')

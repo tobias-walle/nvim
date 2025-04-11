@@ -20,6 +20,8 @@ local plugin = {
         style = 'minimal',
         timeout = 3000,
       },
+      -- https://github.com/folke/snacks.nvim/blob/main/docs/words.md
+      words = {},
       -- https://github.com/folke/snacks.nvim/blob/main/docs/indent.md
       indent = {
         animate = {
