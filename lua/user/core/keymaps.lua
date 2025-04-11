@@ -177,7 +177,6 @@ map('v', '<leader>dp', ':\'<,\'>diffput<cr>', 'diffput - Apply diff from other b
 
 -- Git
 wk.add({ { '<leader>g', group = '+git' } })
-map('n', '<leader>gs', '<cmd>Neogit<cr>', 'Git Status')
 map({ 'n', 'v' }, '<leader>gp', function() require('gitsigns').preview_hunk() end, 'Preview Hunk')
 map({ 'n', 'v' }, '<leader>gr', function() require('gitsigns').reset_hunk() end, 'Reset Hunk')
 map('n', '<leader>gR', '<cmd>silent !git checkout -- %<CR>', 'Reset file')
@@ -187,6 +186,17 @@ map('n', '<leader>gc', '<cmd>DiffviewOpen <C-r><C-w><cr>', 'Open diff between HE
 map({ 'n', 'v' }, '<leader>gb', function() require('gitsigns').blame_line({ full = true }) end, 'Blame Line')
 map('v', '<leader>gl', ':DiffCommitLine<CR>', 'Show diff of selected lines')
 map('n', '<leader>gm', function() require('user.utils.git').insert_git_log_message() end, 'Choose one of the last log messages and insert it to the buffer.')
+
+map('n', '<C-g>', function() Snacks.lazygit() end, 'Lazygit')
+vim.api.nvim_create_autocmd("TermOpen", {
+  pattern = "*",
+  callback = function()
+    local term_title = vim.b.term_title
+    if term_title and term_title:match("lazygit") then
+      vim.keymap.set("t", "<C-g>", "<cmd>close<cr>", { buffer = true })
+    end
+  end,
+})
 
 -- Jira
 map('n', '<leader>js', function() require('user.utils.jira').selectJiraIssue() end, 'Select a jira issue of the current sprint')
