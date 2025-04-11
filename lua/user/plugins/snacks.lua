@@ -20,6 +20,12 @@ local plugin = {
         style = 'minimal',
         timeout = 3000,
       },
+      -- https://github.com/folke/snacks.nvim/blob/main/docs/indent.md
+      indent = {
+        animate = {
+          enabled = false,
+        },
+      },
       -- https://github.com/folke/snacks.nvim/blob/main/docs/quickfile.md
       quickfile = {},
       -- https://github.com/folke/snacks.nvim/blob/main/docs/dashboard.md
