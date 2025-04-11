@@ -36,37 +36,11 @@ opt.spell = true
 opt.spellcapcheck = ''
 opt.undofile = true
 
--- START: Folding
--- Basic folding configuration
-vim.o.foldlevelstart = 99 -- Start with all folds open
-vim.o.foldenable = false -- Disable folding by default
-vim.o.foldmethod = 'expr' -- Use expression-based folding
-
--- Default to treesitter folding when available
-vim.o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-
--- Prefer LSP folding if client supports it
-vim.api.nvim_create_autocmd('LspAttach', {
-  callback = function(args)
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    if client and client:supports_method('textDocument/foldingRange') then
-      local win = vim.api.nvim_get_current_win()
-      vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
-    end
-  end,
-})
-
--- Custom fold text display
-function _G.custom_fold_text()
-  local line = vim.fn.getline(vim.v.foldstart)
-  local line_count = vim.v.foldend - vim.v.foldstart + 1
-  return line .. ' ····· ' .. line_count .. ' lines '
-end
-
--- Apply custom fold text and styling
-vim.opt.foldtext = 'v:lua.custom_fold_text()'
-opt.fillchars = opt.fillchars + 'fold:·' -- Custom fold character
--- END: Folding
+-- Folding configuration
+vim.o.foldcolumn = '0'
+vim.o.foldlevel = 99
+vim.o.foldlevelstart = 99
+vim.o.foldenable = true
 
 -- Enable the display of whitespace characters
 opt.list = true
