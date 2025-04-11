@@ -21,6 +21,7 @@ local plugin = {
         lua = { 'stylua' },
         javascript = prettier_or_deno,
         javascriptreact = prettier_or_deno,
+        vue = { 'prettier', lsp_format = 'last' },
         typescript = prettier_or_deno,
         typescriptreact = prettier_or_deno,
         markdown = prettier_or_deno,
