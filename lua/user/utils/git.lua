@@ -2,19 +2,20 @@ local M = {}
 
 function M.insert_git_log_message()
   -- Get git log messages with hash and subject
-  local handle = io.popen('git log --format="%h %s" -n 10')
+  local handle = io.popen('git log --format="%s" -n 100')
   if not handle then
     vim.notify('Failed to execute git log command', vim.log.levels.ERROR)
     return
   end
 
-  -- Read and parse the git log output
+  -- Read and parse the git log output, filtering out merge commits and duplicates
   local logs = {}
-  local log_messages = {}
+  local seen = {}
   for line in handle:lines() do
-    table.insert(logs, line)
-    -- Store just the commit message without hash for display
-    table.insert(log_messages, vim.trim(line:sub(8)))
+    if not line:match('^Merge') and not seen[line] then
+      table.insert(logs, line)
+      seen[line] = true
+    end
   end
   handle:close()
 
@@ -24,7 +25,7 @@ function M.insert_git_log_message()
   end
 
   -- Use vim.ui.select to choose a message
-  vim.ui.select(log_messages, {
+  vim.ui.select(logs, {
     prompt = 'Select git commit message:',
     format_item = function(item) return item end,
   }, function(choice, idx)
