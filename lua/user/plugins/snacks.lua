@@ -20,6 +20,10 @@ local plugin = {
         style = 'minimal',
         timeout = 3000,
       },
+      -- https://github.com/folke/snacks.nvim/blob/main/docs/quickfile.md
+      quickfile = {},
+      -- https://github.com/folke/snacks.nvim/blob/main/docs/dashboard.md
+      dashboard = {},
       -- https://github.com/folke/snacks.nvim/blob/main/docs/input.md
       input = {},
       -- https://github.com/folke/snacks.nvim/blob/main/docs/image.md
