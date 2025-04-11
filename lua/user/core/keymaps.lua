@@ -188,6 +188,10 @@ map({ 'n', 'v' }, '<leader>gb', function() require('gitsigns').blame_line({ full
 map('v', '<leader>gl', ':DiffCommitLine<CR>', 'Show diff of selected lines')
 map('n', '<leader>gm', function() require('user.utils.git').insert_git_log_message() end, 'Choose one of the last log messages and insert it to the buffer.')
 
+-- Jira
+map('n', '<leader>js', function() require('user.utils.jira').selectJiraIssue() end, 'Select a jira issue of the current sprint')
+map('n', '<leader>jm', function() require('user.utils.jira').selectJiraIssue('AND assignee = currentUser() AND status != \'Done\'') end, 'Select a jira issues of the current sprint assigned to me')
+
 new_cmd(
   'DiffCommitLine',
   "lua require('telescope').extensions.advanced_git_search.diff_commit_line()",
