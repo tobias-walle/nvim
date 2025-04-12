@@ -368,14 +368,8 @@ M.attach_completion = function()
 
   wk.add({ { '<leader><leader>t', group = '+typescript' } })
   map('n', '<leader><leader>tr', '<cmd>TSToolsRenameFile<CR>', 'Rename TS file')
-  map(
-    'n',
-    '<leader><leader>ti',
-    '<cmd>TSToolsAddMissingImports<CR>' ..
-    '<cmd>TSToolsRemoveUnusedImports<CR>' ..
-    '<cmd>TSToolsOrganizeImports<CR>',
-    'Import All & Organize Imports'
-  )
+  map('n', '<leader><leader>ti', '<cmd>TSToolsAddMissingImports<CR>', 'Import missing')
+  map('n', '<leader><leader>tu', '<cmd>TSToolsRemoveUnusedImports<CR>', 'Remove unused imports')
   map('n', '<leader><leader>tt', '<cmd>edit %:r.spec.%:e<CR>', 'Create TS Test')
 end
 
