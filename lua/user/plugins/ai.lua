@@ -9,7 +9,7 @@ local plugin = {
       or vim.g.use_insecure_models == true
     require('ai').setup({
       default_models = use_insecure_models and {
-        default = 'openrouter:deepseek/deepseek-chat-v3-0324:free',
+        default = 'anthropic:claude-3-7-sonnet-latest',
       } or {
         default = 'azure:gpt-4o',
         mini = 'azure:gpt-4o-mini',
@@ -19,12 +19,9 @@ local plugin = {
         { default = 'azure:gpt-4o', mini = 'azure:gpt-4o-mini' },
         { default = 'azure:gpt-4o' },
         { default = 'azure:o3-mini' },
-        {
-          default = 'anthropic:claude-3-7-sonnet-latest',
-          mini = 'anthropic:claude-3-5-haiku-latest',
-        },
-        { default = 'openrouter:deepseek/deepseek-chat-v3-0324:free' },
-        { default = 'openrouter:google/gemini-2.5-pro-exp-03-25:free' },
+        { default = 'anthropic:claude-3-7-sonnet-latest' },
+        { default = 'openrouter:deepseek/deepseek-chat-v3-0324' },
+        { default = 'openrouter:google/gemini-2.5-pro-preview-03-25' },
         { default = 'ollama:mistral-small:24b' },
         { default = 'ollama:qwen2.5-coder:32b' },
         { default = 'ollama:qwen2.5-coder:7b' },
