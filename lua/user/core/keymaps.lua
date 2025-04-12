@@ -88,7 +88,7 @@ map('n', '<leader>vg', 'GVgg', 'Highlight file')
 
 -- Notifications
 wk.add({ { '<leader>n', group = '+notifications' } })
-map('n', '<leader>nh', function() Snacks.picker.notifications() end, 'Notification History')
+map('n', '<leader>nh', '<cmd>Noice<cr>', 'Notification History')
 
 -- Terminal
 wk.add({ { '<leader>x', group = '+terminal' } })
