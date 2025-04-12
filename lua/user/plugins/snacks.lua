@@ -52,6 +52,7 @@ local plugin = {
               list = {
                 keys = {
                   ['-'] = 'explorer_close',
+                  ['<C-p>'] = false,
                 },
               },
             },
