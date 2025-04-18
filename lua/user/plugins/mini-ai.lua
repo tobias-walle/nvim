@@ -7,6 +7,8 @@ local plugin = {
     local ai = require('mini.ai')
     ai.setup({
       n_lines = 1000,
+      silent = true,
+      search_method = 'cover',
       custom_textobjects = {
         o = ai.gen_spec.treesitter({
           a = { '@block.outer', '@conditional.outer', '@loop.outer' },
