@@ -22,6 +22,8 @@ local plugin = {
       },
       -- https://github.com/folke/snacks.nvim/blob/main/docs/quickfile.md
       quickfile = {},
+      -- https://github.com/folke/snacks.nvim/blob/main/docs/scratch.md
+      scratch = {},
       -- https://github.com/folke/snacks.nvim/blob/main/docs/input.md
       input = {},
       -- https://github.com/folke/snacks.nvim/blob/main/docs/image.md

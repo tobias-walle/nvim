@@ -253,6 +253,9 @@ map({'i', 's'}, '<C-j>', function() require('luasnip').jump(-1) end, 'Next Snipp
 -- map('n', '<leader>bb', function() require('dap').toggle_breakpoint() end, 'Toggle Breakpoint')
 -- map('n', '<leader>bc', function() require('dap').continue() end, 'Continue')
 
+-- Scratch buffer
+map('n', '<leader>.', function () Snacks.scratch() end, 'Toggle scratch buffer')
+
 -- Search & Find
 map('n', '<leader>,', function() Snacks.picker.buffers() end, 'Buffers')
 map('n', '<leader>/', function() Snacks.picker.grep() end, 'Grep')
@@ -270,6 +273,7 @@ map('n', '<leader>fr', function() Snacks.picker.recent() end, 'Recent')
 map('n', '<C-p>', function() Snacks.picker.smart() end, 'Smart find Files')
 
 wk.add({ { '<leader>s', group = '+search' } })
+map('n', '<leader>sr', function() Snacks.picker.resume() end, 'Resume')
 map('n', '<leader>s"', function() Snacks.picker.registers() end, 'Registers')
 map('n', '<leader>s/', function() Snacks.picker.search_history() end, 'Search History')
 map('n', '<leader>sa', function() Snacks.picker.autocmds() end, 'Autocmds')
@@ -295,6 +299,7 @@ map('n', '<leader>ss', function() Snacks.picker.grep() end, 'Grep')
 map('n', '<leader>so', function() Snacks.picker.lsp_symbols() end, 'LSP Symbols')
 map('n', '<leader>sO', function() Snacks.picker.lsp_workspace_symbols() end, 'LSP Workspace Symbols')
 map('n', '<leader>sy', function() Snacks.picker.yanky() end, 'Open yank history')
+map('n', '<leader>s.', function() Snacks.scratch.select() end, 'Select scratch buffer')
 
 map({ 'n', 'x' }, '<leader>sw', function() Snacks.picker.grep_word() end, 'Visual selection or word')
 wk.add({ { '<leader>sg', group = '+git' } })

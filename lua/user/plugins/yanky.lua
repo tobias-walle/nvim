@@ -4,9 +4,9 @@ local plugin = {
   lazy = false,
   opts = {
     highlight = {
-      on_put = true,
+      on_put = false,
       on_yank = true,
-      timer = 100,
+      timer = 300,
     },
   },
   dependencies = { 'folke/snacks.nvim' },
