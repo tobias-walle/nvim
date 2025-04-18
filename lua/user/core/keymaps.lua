@@ -8,6 +8,21 @@ local new_cmd = require('user.utils.keymaps').new_cmd
 -- Copy/Pasta
 map({ 'v', 'n' }, '<leader>y', '"+y', 'Yank to system clipboard')
 map({ 'v', 'n' }, '<leader>p', '"+p', 'Paste from system clipboard')
+map({"n","x"}, "p", "<Plug>(YankyPutAfter)")
+map({"n","x"}, "P", "<Plug>(YankyPutBefore)")
+map({"n","x"}, "gp", "<Plug>(YankyGPutAfter)")
+map({"n","x"}, "gP", "<Plug>(YankyGPutBefore)")
+map("n", "]p", "<Plug>(YankyPutIndentAfterLinewise)")
+map("n", "[p", "<Plug>(YankyPutIndentBeforeLinewise)")
+map("n", "]P", "<Plug>(YankyPutIndentAfterLinewise)")
+map("n", "[P", "<Plug>(YankyPutIndentBeforeLinewise)")
+map("n", ">p", "<Plug>(YankyPutIndentAfterShiftRight)")
+map("n", "<p", "<Plug>(YankyPutIndentAfterShiftLeft)")
+map("n", ">P", "<Plug>(YankyPutIndentBeforeShiftRight)")
+map("n", "<P", "<Plug>(YankyPutIndentBeforeShiftLeft)")
+map("n", "=p", "<Plug>(YankyPutAfterFilter)")
+map("n", "=P", "<Plug>(YankyPutBeforeFilter)")
+
 
 -- Navigate
 map({'n', 't'}, '<C-j>', '<cmd>NavigatorDown<cr>', 'Navigate to a different split')
@@ -16,8 +31,8 @@ map({'n', 't'}, '<C-h>', '<cmd>NavigatorLeft<cr>', 'Navigate to a different spli
 map({'n', 't'}, '<C-l>', '<cmd>NavigatorRight<cr>', 'Navigate to a different split')
 
 -- Resize
-map('n', '+', '<C-W>>', 'Increase width of window')
-map('n', '-', '<C-W><', 'Decrease width of window')
+-- map('n', '+', '<C-W>>', 'Increase width of window')
+-- map('n', '-', '<C-W><', 'Decrease width of window')
 
 -- Increment
 map('n', '<C-n>', '<C-a>', 'Increment number under cursor')
@@ -155,23 +170,28 @@ wk.add({ { '<leader>b', group = '+buffers' } })
 map('n', '<leader>bc', close_unused_buffers, 'Close unused buffers')
 
 -- Explorer (File/Outline)
-wk.add({ { '<leader>e', group = '+explorer' } })
-map('n', '<leader>ee', function()
+local toggle_file_explorer =function()
   local explorer = Snacks.picker.get({ source = "explorer" })[1]
   if not explorer then
     Snacks.explorer()
   else
     explorer:close()
   end
-end, 'File Explorer')
-map('n', '<leader>eo', '<cmd>AerialToggle<CR>', 'Outline Explorer')
+end
 
-map('n', '-', function ()
-  Snacks.picker.explorer({
-    auto_close = true,
-    layout = { preset = "default" },
-  })
-end, 'Open Explorer in full screen')
+local open_persistent_file_explorer = function()
+  local explorer = Snacks.picker.get({ source = "explorer" })[1]
+  if explorer then
+    explorer:close()
+  end
+    Snacks.picker.pick({ source = "explorer", auto_close = false})
+end
+
+wk.add({ { '<leader>e', group = '+explorer' } })
+map('n', '<leader>ee', toggle_file_explorer, 'Toggle File Explorer')
+map('n', '<leader>eE', open_persistent_file_explorer, 'Open persistent File Explorer')
+map('n', '<leader>eo', '<cmd>AerialToggle<CR>', 'Open Outline Explorer')
+map('n', '-', '<cmd>Oil<cr>', 'Open Oil Explorer')
 
 -- Diffs
 wk.add({ { '<leader>d', group = '+diffs' } })
@@ -198,7 +218,7 @@ vim.api.nvim_create_autocmd("TermOpen", {
   callback = function()
     local term_title = vim.b.term_title
     if term_title and term_title:match("lazygit") then
-      vim.keymap.set("t", "<C-g>", "<cmd>close<cr>", { buffer = true })
+      vim.keymap.set("t", "<C-g>", "<cmd>q<cr>", { buffer = true })
     end
   end,
 })
@@ -232,7 +252,6 @@ map({'i', 's'}, '<C-j>', function() require('luasnip').jump(-1) end, 'Next Snipp
 -- wk.add({ { '<leader>b', group = '+debugging' } })
 -- map('n', '<leader>bb', function() require('dap').toggle_breakpoint() end, 'Toggle Breakpoint')
 -- map('n', '<leader>bc', function() require('dap').continue() end, 'Continue')
-
 
 -- Search & Find
 map('n', '<leader>,', function() Snacks.picker.buffers() end, 'Buffers')
@@ -274,6 +293,7 @@ map('n', '<leader>uC', function() Snacks.picker.colorschemes() end, 'Colorscheme
 map('n', '<leader>ss', function() Snacks.picker.grep() end, 'Grep')
 map('n', '<leader>so', function() Snacks.picker.lsp_symbols() end, 'LSP Symbols')
 map('n', '<leader>sO', function() Snacks.picker.lsp_workspace_symbols() end, 'LSP Workspace Symbols')
+map('n', '<leader>sy', function() Snacks.picker.yanky() end, 'Open yank history')
 
 map({ 'n', 'x' }, '<leader>sw', function() Snacks.picker.grep_word() end, 'Visual selection or word')
 wk.add({ { '<leader>sg', group = '+git' } })

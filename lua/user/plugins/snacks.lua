@@ -20,18 +20,8 @@ local plugin = {
         style = 'minimal',
         timeout = 3000,
       },
-      -- https://github.com/folke/snacks.nvim/blob/main/docs/words.md
-      words = {},
-      -- https://github.com/folke/snacks.nvim/blob/main/docs/indent.md
-      indent = {
-        animate = {
-          enabled = false,
-        },
-      },
       -- https://github.com/folke/snacks.nvim/blob/main/docs/quickfile.md
       quickfile = {},
-      -- https://github.com/folke/snacks.nvim/blob/main/docs/dashboard.md
-      dashboard = {},
       -- https://github.com/folke/snacks.nvim/blob/main/docs/input.md
       input = {},
       -- https://github.com/folke/snacks.nvim/blob/main/docs/image.md
@@ -42,12 +32,13 @@ local plugin = {
       statuscolumn = {},
       -- https://github.com/folke/snacks.nvim/blob/main/docs/explorer.md
       explorer = {
-        replace_netrw = true,
+        replace_netrw = false,
       },
       -- https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
       picker = {
         sources = {
           explorer = {
+            auto_close = true,
             win = {
               list = {
                 keys = {
