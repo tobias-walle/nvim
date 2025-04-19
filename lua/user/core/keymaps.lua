@@ -30,6 +30,15 @@ map({'n', 't'}, '<C-k>', '<cmd>NavigatorUp<cr>', 'Navigate to a different split'
 map({'n', 't'}, '<C-h>', '<cmd>NavigatorLeft<cr>', 'Navigate to a different split')
 map({'n', 't'}, '<C-l>', '<cmd>NavigatorRight<cr>', 'Navigate to a different split')
 
+-- Haarpoon
+wk.add({ { '<leader>h', group = '+harpoon' } })
+map('n', '<leader>hh', function() require('harpoon'):list():add() end, 'Add file')
+map('n', '<leader>hm', function() require('harpoon').ui:toggle_quick_menu(require('harpoon'):list()) end, 'Quick Menu')
+map('n', '<Leader>ha', function() require('harpoon'):list():select(1) end, 'Go to File 1')
+map('n', '<Leader>hs', function() require('harpoon'):list():select(2) end, 'Go to File 2')
+map('n', '<Leader>hd', function() require('harpoon'):list():select(3) end, 'Go to File 3')
+map('n', '<Leader>hf', function() require('harpoon'):list():select(4) end, 'Go to File 4')
+
 -- Resize
 -- map('n', '+', '<C-W>>', 'Increase width of window')
 -- map('n', '-', '<C-W><', 'Decrease width of window')
