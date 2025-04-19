@@ -168,7 +168,7 @@ map(
     if path:match('^oil:///') then
       path = path:gsub('oil:///', '/')
     else
-      path = vim.fn.expand("%:p")
+      path = vim.fn.expand("%:h")
     end
     vim.cmd('silent !wezterm cli split-pane --bottom --cells 10 --cwd ' .. path)
   end,

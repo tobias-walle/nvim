@@ -31,6 +31,7 @@ local plugin = {
         ['r_language_server'] = L.setup_default,
         ['gopls'] = L.setup_default,
         ['terraformls'] = L.setup_default,
+        ['nushell'] = L.setup_default,
         ['kotlin_language_server'] = L.setup_without_formatting,
         ['jdtls'] = function(name)
           lspconfig[name].setup({
