@@ -207,6 +207,7 @@ map('n', '-', '<cmd>Oil<cr>', 'Open Oil Explorer')
 
 -- Diffs
 wk.add({ { '<leader>d', group = '+diffs' } })
+map('n', '<leader>dd', '<cmd>diffthis<cr>', 'diffthis')
 map('n', '<leader>dg', '<cmd>diffget<cr>', 'diffget - Apply diff from other buffer')
 map('v', '<leader>dg', ':\'<,\'>diffget<cr>', 'diffget - Apply diff from other buffer')
 map('n', '<leader>dp', '<cmd>diffput<cr>', 'diffput - Apply diff to other buffer')
