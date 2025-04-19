@@ -154,23 +154,26 @@ map('n', '<leader>w', function()
 end, 'Write Window')
 
 -- Tabs & Testing
-wk.add({ { '<leader>t', group = '+tabs+testing' } })
+wk.add({ { '<leader>t', group = '+tabs+terminal' } })
 map('n', '<leader>th', ':tabprev<CR>', 'Previous Tab')
 map('n', '<leader>tl', ':tabnext<CR>', 'Next Tab')
 map('n', '<leader>tn', ':tabnew<CR>', 'New Tab')
 map('n', '<leader>te', ':tab split<CR>', 'Edit current buffer in a tab')
 map('n', '<leader>tq', ':tabclose<CR>', 'Close Tab')
 map('n', '<leader>tb', '<C-W>T', 'Open Current Buffer as Tab')
-
--- Testing
-wk.add({ { '<leader>tt', group = '+testing' } })
-map('n', '<leader>ttl', '<cmd>Tclear!<cr><cmd>TestLast<cr>', 'Run previous test again')
-map('n', '<leader>ttt', '<cmd>Tclear!<cr><cmd>TestFile<cr>', 'Run tests in file')
-map('n', '<leader>ttn', '<cmd>Tclear!<cr><cmd>TestNearest<cr>', 'Run test close to cursor')
-map('n', '<leader>ttv', '<cmd>Tclear!<cr><cmd>TestVisit<cr>', 'Open test close to cursor')
-map('n', '<leader>ttu', ':Ultest<cr>', 'Run tests in file (Ultitest)')
-map('n', '<leader>ttdt', ':UltestDebug<cr>', 'Debug tests in file')
-map('n', '<leader>ttdn', ':UltestDebugNearest<cr>', 'Debug test close to cursor')
+map(
+  'n', '<leader>tt',
+  function()
+    local path = vim.fn.expand("%")
+    if path:match('^oil:///') then
+      path = path:gsub('oil:///', '/')
+    else
+      path = vim.fn.expand("%:p")
+    end
+    vim.cmd('silent !wezterm cli split-pane --bottom --cells 10 --cwd ' .. path)
+  end,
+  'Terminal at current path'
+)
 
 -- Buffers
 local close_unused_buffers = require('user.utils.autoclose-unused-buffers').close_unused_buffers
