@@ -313,10 +313,15 @@ map('n', '<leader>sgf', function() Snacks.picker.git_log_file() end, 'Git Log Fi
 
 -- Replace
 wk.add({ { '<leader>r', group = '+replace' } })
-map('n', '<leader>rr', function() require('spectre').toggle() end, 'Toggle Spectre')
-map('n', '<leader>rw', function() require('spectre').open_visual({select_word=true}) end, 'Search current word')
-map('v', '<leader>rw', function() vim.cmd('esc') require('spectre').open_visual() end, 'Search current word')
-map('n', '<leader>rf', function() require('spectre').open_file_search({select_word=true}) end, 'Search on current file')
+local get_current_path = function()
+local p = vim.fn.expand("%"):gsub('oil:///', '/')
+  return p
+end
+map('n', '<leader>rr', function() require('grug-far').open() end, 'Open Replace')
+map('v', '<leader>rr', function() require('grug-far').with_visual_selection() end, 'Replace selection')
+map('n', '<leader>rf', function() require('grug-far').open({ prefills = { paths = get_current_path() } }) end, 'Replace on current file')
+map('v', '<leader>rf', function() require('grug-far').with_visual_selection({ prefills = { paths = get_current_path() } }) end, 'Replace on current file')
+map('n', '<leader>rw', function() require('grug-far').open({ prefills = { search = vim.fn.expand("<cword>") } }) end, 'Replace current word under cursor')
 
 --- AI
 local map = require('user.utils.keymaps').map
