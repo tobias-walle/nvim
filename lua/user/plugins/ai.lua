@@ -11,13 +11,13 @@ local plugin = {
       default_models = use_insecure_models and {
         default = 'anthropic:claude-3-7-sonnet-latest',
       } or {
-        default = 'azure:gpt-4o',
-        mini = 'azure:gpt-4o-mini',
+        default = 'azure:gpt-4.1',
+        mini = 'azure:gpt-4.1-mini',
       },
       selectable_models = {
-        { default = 'openai:gpt-4o', mini = 'openai:gpt-4o-mini' },
-        { default = 'azure:gpt-4o', mini = 'azure:gpt-4o-mini' },
-        { default = 'azure:gpt-4o' },
+        { default = 'openai:gpt-4.1', mini = 'openai:gpt-4.1-mini' },
+        { default = 'azure:gpt-4.1', mini = 'azure:gpt-4.1-mini' },
+        { default = 'azure:gpt-4.1' },
         { default = 'azure:o3-mini' },
         { default = 'anthropic:claude-3-7-sonnet-latest' },
         { default = 'openrouter:deepseek/deepseek-chat-v3-0324' },
