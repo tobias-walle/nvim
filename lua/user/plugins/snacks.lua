@@ -10,6 +10,9 @@ local plugin = {
   priority = 1000,
   lazy = false,
   config = function()
+    local lsp_picker_config_override = {
+      jump = { tagstack = true, reuse_win = false },
+    }
     require('snacks').setup({
       -- https://github.com/folke/snacks.nvim/blob/main/docs/debug.md
       debug = { enabled = true },
@@ -22,6 +25,8 @@ local plugin = {
       },
       -- https://github.com/folke/snacks.nvim/blob/main/docs/quickfile.md
       quickfile = {},
+      -- https://github.com/folke/snacks.nvim/blob/main/docs/rename.md
+      rename = {},
       -- https://github.com/folke/snacks.nvim/blob/main/docs/scratch.md
       scratch = {},
       -- https://github.com/folke/snacks.nvim/blob/main/docs/input.md
@@ -39,6 +44,11 @@ local plugin = {
       -- https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
       picker = {
         sources = {
+          lsp_declarations = lsp_picker_config_override,
+          lsp_definitions = lsp_picker_config_override,
+          lsp_implementations = lsp_picker_config_override,
+          lsp_references = lsp_picker_config_override,
+          lsp_type_definitions = lsp_picker_config_override,
           explorer = {
             auto_close = true,
             win = {
