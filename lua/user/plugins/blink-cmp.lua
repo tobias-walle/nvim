@@ -53,7 +53,7 @@ local plugin = {
 
     fuzzy = {
       implementation = 'prefer_rust_with_warning',
-      max_typos = function() return 1 end,
+      max_typos = function() return 0 end,
       sorts = {
         'exact', -- Always prioritize exact matches
         'score',
