@@ -4,16 +4,10 @@ local plugin = {
   lazy = false,
   dependencies = {
     'b0o/schemastore.nvim',
-    'jose-elias-alvarez/typescript.nvim',
-    'simrat39/rust-tools.nvim',
-    'folke/neodev.nvim',
-    'pmizio/typescript-tools.nvim',
+    'saghen/blink.cmp',
   },
   config = function()
     local L = require('user.utils.lsp')
-
-    local lspconfig = require('lspconfig')
-    local root_pattern = lspconfig.util.root_pattern
 
     vim.lsp.inlay_hint.enable()
     vim.diagnostic.config({
@@ -22,193 +16,199 @@ local plugin = {
       virtual_lines = false,
     })
 
-    --- NOTE: I am using nix to manager the installed language servers
-    ---@type LspConfig
-    local config = {
-      lsp = {
-        ['pyright'] = L.setup_default,
-        ['ruff'] = L.setup_default,
-        ['r_language_server'] = L.setup_default,
-        ['gopls'] = L.setup_default,
-        ['terraformls'] = L.setup_default,
-        ['nushell'] = L.setup_default,
-        ['kotlin_language_server'] = L.setup_without_formatting,
-        ['jdtls'] = function(name)
-          lspconfig[name].setup({
-            on_attach = L.on_attach,
-            settings = {
-              java = {
-                format = {
-                  enabled = false,
-                },
-              },
+    -- Default config
+    vim.lsp.config('*', {
+      capabilities = require('blink.cmp').get_lsp_capabilities(),
+    })
+
+    -- Python
+    vim.lsp.enable('pyright')
+    -- Python Linting
+    vim.lsp.enable('ruff')
+    -- R
+    vim.lsp.enable('r_language_server')
+    -- Go
+    vim.lsp.enable('gopls')
+    -- Terraform
+    vim.lsp.enable('terraformls')
+    -- Nushell
+    vim.lsp.enable('nushell')
+    -- Kotlin
+    vim.lsp.enable('kotlin_language_server')
+    -- Java
+    vim.lsp.config('jdtls', {
+      settings = {
+        java = {
+          format = {
+            enabled = false,
+          },
+        },
+      },
+    })
+    vim.lsp.enable('jdtls')
+    -- TOML
+    vim.lsp.enable('taplo')
+    -- Nix
+    vim.lsp.config('nil_ls', {
+      settings = {
+        ['nil'] = {
+          formatting = {
+            command = { 'nixpkgs-fmt' },
+          },
+        },
+      },
+    })
+    vim.lsp.enable('nil_ls')
+    -- JSONNet
+    -- vim.lsp.enable('jsonnet_ls')
+    -- Haskell
+    -- vim.lsp.config('hls', {
+    --   capabilities = no_formatting_capabilities,
+    -- })
+    -- vim.lsp.enable('hls')
+    -- Helm Charts
+    vim.lsp.enable('helm_ls')
+    -- YAML
+    vim.lsp.config('yamlls', {
+      settings = {
+        keyOrdering = false,
+        yaml = {
+          schemas = require('schemastore').yaml.schemas(),
+          schemaStore = {
+            enable = false,
+            url = '', -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+          },
+        },
+      },
+    })
+    vim.lsp.enable('yamlls')
+    -- Angular
+    -- vim.lsp.enable('angularls')
+    -- Deno
+    vim.lsp.config('denols', {
+      root_dir = L.deno_root_pattern(),
+    })
+    vim.lsp.enable('denols')
+    -- CSS
+    vim.lsp.enable('cssls')
+    -- HTML
+    vim.lsp.enable('html')
+    -- JSON
+    vim.lsp.config('jsonls', {
+      settings = {
+        json = {
+          schemas = require('schemastore').json.schemas(),
+          validate = { enable = true },
+        },
+      },
+    })
+    vim.lsp.enable('jsonls')
+    -- Graphql
+    vim.lsp.config('graphql', {
+      filetypes = {
+        'javascript',
+        'javascriptreact',
+        'javascript.jsx',
+        'typescript',
+        'typescriptreact',
+        'typescript.tsx',
+      },
+    })
+    vim.lsp.enable('graphql')
+    -- ESLint
+    vim.lsp.config('eslint', {
+      filetypes = {
+        'javascript',
+        'javascriptreact',
+        'javascript.jsx',
+        'typescript',
+        'typescriptreact',
+        'typescript.tsx',
+        'vue',
+        'svelte',
+        'astro',
+        'html',
+      },
+    })
+    vim.lsp.enable('eslint')
+    -- Svelte
+    vim.lsp.enable('svelte')
+    -- C#
+    -- vim.lsp.enable('csharp_ls')
+    -- Rust
+    vim.lsp.config('rust_analyzer', {
+      standalone = false,
+      settings = {
+        ['rust-analyzer'] = {
+          rustfmt = {
+            extraArgs = { '+nightly' },
+          },
+          checkOnSave = { command = 'clippy' },
+          cargo = {
+            allFeatures = true,
+          },
+          completion = {
+            callable = {
+              snippets = 'none',
             },
-          })
-        end,
-        ['taplo'] = L.setup_default,
-        ['buf_ls'] = L.setup_default,
-        ['volar'] = L.setup_without_formatting, -- vue.js
-        ['nil_ls'] = function(name)
-          lspconfig[name].setup({
-            on_attach = L.on_attach_with({ L.disable_semantic_tokens }),
-            settings = {
-              ['nil'] = {
-                formatting = {
-                  command = { 'nixpkgs-fmt' },
-                },
-              },
-            },
-          })
-        end,
-        ['jsonnet_ls'] = L.setup_default,
-        ['hls'] = L.setup_without_formatting,
-        ['helm_ls'] = L.setup_default,
-        ['yamlls'] = function(name)
-          lspconfig[name].setup({
-            on_attach = L.on_attach_with({ L.disable_formatting }),
-            settings = {
-              keyOrdering = false,
-              yaml = {
-                schemas = require('schemastore').json.schemas(),
-              },
-            },
-          })
-        end,
-        ['angularls'] = L.setup_angular,
-        ['tsserver'] = L.setup_typescript,
-        ['denols'] = function(name)
-          lspconfig[name].setup({
-            on_attach = L.on_attach,
-            root_dir = L.deno_root_pattern(),
-          })
-        end,
-        ['cssls'] = function(name)
-          lspconfig[name].setup({
-            on_attach = L.on_attach_with({ L.disable_formatting }),
-            capabilities = L.snippet_capabilities,
-          })
-        end,
-        ['html'] = function(name)
-          lspconfig[name].setup({
-            on_attach = L.on_attach_with({ L.disable_formatting }),
-            capabilities = L.snippet_capabilities,
-          })
-        end,
-        ['jsonls'] = function(name)
-          lspconfig[name].setup({
-            on_attach = L.on_attach_with({ L.disable_formatting }),
-            capabilities = L.snippet_capabilities,
-            settings = {
-              json = { schemas = require('schemastore').json.schemas() },
-            },
-          })
-        end,
-        ['graphql'] = function(name)
-          lspconfig[name].setup({
-            on_attach = L.on_attach,
-            filetypes = {
-              'javascript',
-              'javascriptreact',
-              'javascript.jsx',
-              'typescript',
-              'typescriptreact',
-              'typescript.tsx',
-            },
-          })
-        end,
-        ['eslint'] = function(name)
-          lspconfig[name].setup({
-            on_attach = L.on_attach,
-            filetypes = {
-              'javascript',
-              'javascriptreact',
-              'javascript.jsx',
-              'typescript',
-              'typescriptreact',
-              'typescript.tsx',
-              'vue',
-              'svelte',
-              'astro',
-              'html',
-            },
-          })
-        end,
-        ['svelte'] = function(name)
-          L.setup_default(name)
-          lspconfig[name].setup({
-            on_attach = function(client, bufnr)
-              L.on_attach(client, bufnr)
-              --- Workaround for https://github.com/sveltejs/language-tools/issues/2008
-              vim.api.nvim_create_autocmd('BufWritePost', {
-                pattern = { '*.js', '*.ts' },
-                callback = function(ctx)
-                  client.notify('$/onDidChangeTsOrJsFile', { uri = ctx.match })
-                end,
-                group = vim.api.nvim_create_augroup(
-                  'svelte_file_watcher',
-                  { clear = true }
-                ),
-              })
-            end,
-          })
-        end,
-        ['csharp_ls'] = function(name)
-          lspconfig[name].setup({
-            on_attach = L.on_attach,
-            root_dir = function(startpath)
-              return root_pattern('*.sln')(startpath)
-                or root_pattern('*.csproj')(startpath)
-                or root_pattern('*.fsproj')(startpath)
-                or root_pattern('.git')(startpath)
-            end,
-          })
-        end,
-        ['rust_analyzer'] = function()
-          require('rust-tools').setup({
-            tools = { autoSetHints = false, hover_with_actions = false },
-            reload_workspace_from_cargo_toml = false,
-            server = {
-              standalone = false,
-              on_attach = L.on_attach,
-              settings = {
-                ['rust-analyzer'] = {
-                  rustfmt = {
-                    extraArgs = { '+nightly' },
-                  },
-                  checkOnSave = { command = 'clippy' },
-                  cargo = {
-                    allFeatures = true,
-                  },
-                  completion = {
-                    callable = {
-                      snippets = 'none',
-                    },
-                  },
-                },
-              },
-            },
-          })
-        end,
-        ['lua_ls'] = function(name)
-          require('neodev').setup({})
-          lspconfig[name].setup({
-            on_attach = L.on_attach_with({ L.disable_formatting }),
-            settings = {
-              Lua = {
-                hint = { enable = true },
-                diagnostics = {
-                  globals = { 'MiniTest' },
-                },
-              },
-              workspace = { checkThirdParty = false },
-              telemetry = { enable = false },
-            },
-          })
-        end,
+          },
+        },
+      },
+    })
+    vim.lsp.enable('rust_analyzer')
+    -- Lua
+    vim.lsp.config('lua_ls', {
+      settings = {
+        Lua = {
+          hint = { enable = true },
+          diagnostics = {
+            globals = { 'MiniTest' },
+          },
+        },
+        workspace = { checkThirdParty = false },
+        telemetry = { enable = false },
+      },
+    })
+    vim.lsp.enable('lua_ls')
+    -- Typescript
+    local ts_settings = {
+      inlayHints = {
+        includeInlayParameterNameHints = 'all', -- 'none' | 'literals' | 'all'
+        includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayEnumMemberValueHints = true,
       },
     }
-
-    L.apply_config(config)
+    vim.lsp.config('ts_ls', {
+      filetypes = {
+        'javascript',
+        'javascriptreact',
+        'typescript',
+        'typescriptreact',
+        'vue',
+      },
+      init_options = {
+        plugins = {
+          {
+            name = '@vue/typescript-plugin',
+            location = vim.fn.trim(vim.fn.system('pnpm root -g'))
+              .. '/@vue/typescript-plugin',
+            languages = { 'javascript', 'typescript', 'vue' },
+          },
+        },
+      },
+      settings = {
+        typescript = ts_settings,
+        javascript = ts_settings,
+      },
+    })
+    vim.lsp.enable('ts_ls')
+    -- Vue.js
+    vim.lsp.enable('volar')
   end,
 }
 

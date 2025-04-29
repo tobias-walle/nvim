@@ -376,46 +376,48 @@ local function toggle_virtual_lines()
   })
 end
 
-M.attach_completion = function()
-  wk.add({ { '<leader><leader>', group = '+lsp' } })
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function()
+    wk.add({ { '<leader><leader>', group = '+lsp' } })
 
-  new_cmd('LspRename', function(args)
-    require('user.utils.refactor').rename(args.args)
-  end, 'Rename syncronously (can be used in macros)', { nargs=1 });
+    new_cmd('LspRename', function(args)
+      require('user.utils.refactor').rename(args.args)
+    end, 'Rename syncronously (can be used in macros)', { nargs=1 });
 
-  map('n', 'gd', function() Snacks.picker.lsp_definitions() end, 'Goto Definition')
-  map('n', 'gD', function() Snacks.picker.lsp_declarations() end, 'Goto Declaration')
-  map('n', 'gr', function() Snacks.picker.lsp_references() end, 'References', { nowait = true })
-  map('n', 'gI', function() Snacks.picker.lsp_implementations() end, 'Goto Implementation')
-  map('n', 'gy', function() Snacks.picker.lsp_type_definitions() end, 'Goto Type Definition')
+    map('n', 'gd', function() Snacks.picker.lsp_definitions() end, 'Goto Definition')
+    map('n', 'gD', function() Snacks.picker.lsp_declarations() end, 'Goto Declaration')
+    map('n', 'gr', function() Snacks.picker.lsp_references() end, 'References', { nowait = true })
+    map('n', 'gI', function() Snacks.picker.lsp_implementations() end, 'Goto Implementation')
+    map('n', 'gy', function() Snacks.picker.lsp_type_definitions() end, 'Goto Type Definition')
 
-  map('n', ']r', function() Snacks.words.jump(1, true) end, 'Jump to next reference')
-  map('n', '[r', function() Snacks.words.jump(-1, true) end, 'Jump to prev reference')
+    map('n', ']r', function() Snacks.words.jump(1, true) end, 'Jump to next reference')
+    map('n', '[r', function() Snacks.words.jump(-1, true) end, 'Jump to prev reference')
 
-  map('n', '<leader><leader>i', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end, 'Toggle inlay hints')
-  map('n', '<leader><leader>h', function() vim.lsp.buf.hover() end, 'Hover')
-  map('n', '<leader><leader>s', function() vim.lsp.buf.signature_help() end, 'Signature Help')
-  map('n', '<leader><leader>r', function() vim.lsp.buf.rename() end, 'Rename')
-  map('n', '<leader><leader>R', require('user.utils.refactor').rename_prefix, 'Rename Prefix')
-  map({ 'n', 'v' }, '<leader><leader>a', function() vim.lsp.buf.code_action() end, 'Code Actions')
-  map('n', '<leader><leader>e', function() vim.diagnostic.open_float() end, 'Show Errors')
-  map('n', '<leader><leader>E', '<cmd>RustOpenExternalDocs<cr>', 'Rust External Docs')
-  map('n', '<leader><leader>q', function() vim.diagnostic.setloclist() end, 'Save Errors to Loclist')
-  map('n', '<leader><leader>f', function() require('user.utils.lsp').format() end, 'Format Buffer')
-  map('n', '<leader><leader>d', function() vim.lsp.buf.type_definition() end, 'Type Definition')
-  map('n', '<leader><leader>l', function() toggle_virtual_lines() end, 'Toggle diagnostic lines')
+    map('n', '<leader><leader>i', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end, 'Toggle inlay hints')
+    map('n', '<leader><leader>h', function() vim.lsp.buf.hover() end, 'Hover')
+    map('n', '<leader><leader>s', function() vim.lsp.buf.signature_help() end, 'Signature Help')
+    map('n', '<leader><leader>r', function() vim.lsp.buf.rename() end, 'Rename')
+    map('n', '<leader><leader>R', require('user.utils.refactor').rename_prefix, 'Rename Prefix')
+    map({ 'n', 'v' }, '<leader><leader>a', function() vim.lsp.buf.code_action() end, 'Code Actions')
+    map('n', '<leader><leader>e', function() vim.diagnostic.open_float() end, 'Show Errors')
+    map('n', '<leader><leader>E', '<cmd>RustOpenExternalDocs<cr>', 'Rust External Docs')
+    map('n', '<leader><leader>q', function() vim.diagnostic.setloclist() end, 'Save Errors to Loclist')
+    map('n', '<leader><leader>f', function() require('user.utils.lsp').format() end, 'Format Buffer')
+    map('n', '<leader><leader>d', function() vim.lsp.buf.type_definition() end, 'Type Definition')
+    map('n', '<leader><leader>l', function() toggle_virtual_lines() end, 'Toggle diagnostic lines')
 
-  wk.add({ { '<leader><leader>w', group = '+workspaces' } })
-  map('n', '<leader><leader>wa', function() vim.lsp.buf.add_workspace_folder() end, 'Add Workspace')
-  map('n', '<leader><leader>wd', function() vim.lsp.buf.remove_workspace_folder() end, 'Remove Workspace')
-  map('n', '<leader><leader>wl', function() dbg(vim.lsp.buf.list_workspace_folders()) end, 'List Workspaces')
+    wk.add({ { '<leader><leader>w', group = '+workspaces' } })
+    map('n', '<leader><leader>wa', function() vim.lsp.buf.add_workspace_folder() end, 'Add Workspace')
+    map('n', '<leader><leader>wd', function() vim.lsp.buf.remove_workspace_folder() end, 'Remove Workspace')
+    map('n', '<leader><leader>wl', function() dbg(vim.lsp.buf.list_workspace_folders()) end, 'List Workspaces')
 
-  wk.add({ { '<leader><leader>t', group = '+typescript' } })
-  map('n', '<leader><leader>tr', '<cmd>TSToolsRenameFile<CR>', 'Rename TS file')
-  map('n', '<leader><leader>ti', '<cmd>TSToolsAddMissingImports<CR>', 'Import missing')
-  map('n', '<leader><leader>tu', '<cmd>TSToolsRemoveUnusedImports<CR>', 'Remove unused imports')
-  map('n', '<leader><leader>tt', '<cmd>edit %:r.spec.%:e<CR>', 'Create TS Test')
-end
+    wk.add({ { '<leader><leader>t', group = '+typescript' } })
+    map('n', '<leader><leader>ta', '<cmd>LspTypescriptSourceAction<CR>', 'Typescript source actions')
+    map('n', '<leader><leader>tu', function() vim.lsp.buf.code_action({ context = { only = { "source.removeUnusedImports.ts" } }, apply = true }) end, 'Remove unused imports')
+    map('n', '<leader><leader>ti', function() vim.lsp.buf.code_action({ context = { only = { "source.addMissingImports.ts" } }, apply = true }) end, 'Add missing imports')
+    map('n', '<leader><leader>tt', '<cmd>edit %:r.spec.%:e<CR>', 'Create TS Test')
+  end,
+})
 
 return M
 -- stylua: ignore end

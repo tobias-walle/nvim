@@ -24,9 +24,10 @@ local plugin = {
     snippets = { preset = 'luasnip' },
     sources = {
       default = {
+        'snippets',
+        'lazydev',
         'lsp',
         'path',
-        'snippets',
         'buffer',
         'filename',
         'ai_chat',
@@ -47,6 +48,12 @@ local plugin = {
         },
         lsp = {
           fallbacks = {},
+        },
+        lazydev = {
+          name = 'LazyDev',
+          module = 'lazydev.integrations.blink',
+          -- make lazydev completions top priority (see `:h blink.cmp`)
+          score_offset = 100,
         },
       },
     },

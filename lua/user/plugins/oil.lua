@@ -1,13 +1,28 @@
--- local function save_unsaved_buffers()
---   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
---     if
---       vim.api.nvim_buf_get_option(buf, 'modified')
---       and vim.api.nvim_buf_get_option(buf, 'buftype') == ''
---     then
---       vim.api.nvim_buf_call(buf, function() vim.cmd('write') end)
---     end
---   end
--- end
+local function save_unsaved_buffers()
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if
+      vim.api.nvim_get_option_value('modified', { buf = buf })
+      and vim.api.nvim_get_option_value('buftype', { buf = buf }) == ''
+    then
+      vim.api.nvim_buf_call(buf, function() vim.cmd('write') end)
+    end
+  end
+end
+
+local function oil_event_to_lsp_changes(event)
+  local changes = { files = {} }
+  for _, action in ipairs(event.data.actions) do
+    if action.type == 'move' then
+      local src = action.src_url:gsub('^oil://', '')
+      local dest = action.dest_url:gsub('^oil://', '')
+      table.insert(changes.files, {
+        oldUri = vim.uri_from_fname(src),
+        newUri = vim.uri_from_fname(dest),
+      })
+    end
+  end
+  return changes
+end
 
 ---@type LazySpec
 local plugin = {
@@ -56,63 +71,47 @@ local plugin = {
       },
       columns = { 'icon' },
       lsp_file_methods = {
-        enabled = true,
+        enabled = false,
       },
       view_options = {
         show_hidden = true,
       },
     })
-    --
-    -- local function oil_event_to_lsp_changes(event)
-    --   local changes = { files = {} }
-    --   for _, action in ipairs(event.data.actions) do
-    --     if action.type == 'move' then
-    --       local src = action.src_url:gsub('^oil://', '')
-    --       local dest = action.dest_url:gsub('^oil://', '')
-    --       table.insert(changes.files, {
-    --         oldUri = vim.uri_from_fname(src),
-    --         newUri = vim.uri_from_fname(dest),
-    --       })
-    --     end
-    --   end
-    --   return changes
-    -- end
-    --
-    -- vim.api.nvim_create_autocmd('User', {
-    --   pattern = 'OilActionsPre',
-    --   callback = function(event)
-    --     local changes = oil_event_to_lsp_changes(event)
-    --
-    --     local clients = vim.lsp.get_clients()
-    --     for _, client in ipairs(clients) do
-    --       if client:supports_method('workspace/willRenameFiles') then
-    --         local resp =
-    --           client:request_sync('workspace/willRenameFiles', changes, 1000, 0)
-    --         if resp and resp.result ~= nil then
-    --           dbg(resp.result)
-    --           vim.lsp.util.apply_workspace_edit(
-    --             resp.result,
-    --             client.offset_encoding
-    --           )
-    --         end
-    --       end
-    --     end
-    --     save_unsaved_buffers()
-    --   end,
-    -- })
-    --
-    -- vim.api.nvim_create_autocmd('User', {
-    --   pattern = 'OilActionsPost',
-    --   callback = function(event)
-    --     local changes = oil_event_to_lsp_changes(event)
-    --     local clients = vim.lsp.get_clients()
-    --     for _, client in ipairs(clients) do
-    --       if client:supports_method('workspace/didRenameFiles') then
-    --         client:notify('workspace/didRenameFiles', changes)
-    --       end
-    --     end
-    --   end,
-    -- })
+
+    vim.api.nvim_create_autocmd('User', {
+      pattern = 'OilActionsPre',
+      callback = function(event)
+        local changes = oil_event_to_lsp_changes(event)
+
+        local clients = vim.lsp.get_clients()
+        for _, client in ipairs(clients) do
+          if client:supports_method('workspace/willRenameFiles') then
+            local resp =
+              client:request_sync('workspace/willRenameFiles', changes, 1000, 0)
+            if resp and resp.result ~= nil then
+              vim.lsp.util.apply_workspace_edit(
+                resp.result,
+                client.offset_encoding
+              )
+            end
+          end
+        end
+        save_unsaved_buffers()
+      end,
+    })
+
+    vim.api.nvim_create_autocmd('User', {
+      pattern = 'OilActionsPost',
+      callback = function(event)
+        local changes = oil_event_to_lsp_changes(event)
+        local clients = vim.lsp.get_clients()
+        for _, client in ipairs(clients) do
+          if client:supports_method('workspace/didRenameFiles') then
+            client:notify('workspace/didRenameFiles', changes)
+          end
+        end
+      end,
+    })
   end,
 }
 
