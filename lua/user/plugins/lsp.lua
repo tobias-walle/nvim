@@ -9,6 +9,7 @@ local plugin = {
   config = function()
     local L = require('user.utils.lsp')
 
+    -- Config of visuals
     vim.lsp.inlay_hint.enable()
     vim.diagnostic.config({
       severity_sort = true,
@@ -20,6 +21,9 @@ local plugin = {
     vim.lsp.config('*', {
       capabilities = require('blink.cmp').get_lsp_capabilities(),
     })
+
+    -- Conflicting lsps
+    L.setup_aucmd_preventing_lsp_conflicts({ { 'denols', 'ts_ls' } })
 
     -- Python
     vim.lsp.enable('pyright')
@@ -49,6 +53,7 @@ local plugin = {
     -- TOML
     vim.lsp.enable('taplo')
     -- Nix
+    vim.lsp.enable('nil_ls')
     vim.lsp.config('nil_ls', {
       settings = {
         ['nil'] = {
@@ -58,7 +63,6 @@ local plugin = {
         },
       },
     })
-    vim.lsp.enable('nil_ls')
     -- JSONNet
     -- vim.lsp.enable('jsonnet_ls')
     -- Haskell
@@ -85,15 +89,17 @@ local plugin = {
     -- Angular
     -- vim.lsp.enable('angularls')
     -- Deno
-    vim.lsp.config('denols', {
-      root_dir = L.deno_root_pattern(),
-    })
     vim.lsp.enable('denols')
+    vim.lsp.config('denols', {
+      root_dir = L.root_dir({ 'deno.json', 'deno.jsonc' }),
+    })
     -- CSS
     vim.lsp.enable('cssls')
     -- HTML
     vim.lsp.enable('html')
     -- JSON
+    vim.lsp.enable('jsonls')
+    L.ignore_lsp_formatting('jsonls')
     vim.lsp.config('jsonls', {
       settings = {
         json = {
@@ -102,8 +108,8 @@ local plugin = {
         },
       },
     })
-    vim.lsp.enable('jsonls')
     -- Graphql
+    vim.lsp.enable('graphql')
     vim.lsp.config('graphql', {
       filetypes = {
         'javascript',
@@ -114,8 +120,8 @@ local plugin = {
         'typescript.tsx',
       },
     })
-    vim.lsp.enable('graphql')
     -- ESLint
+    vim.lsp.enable('eslint')
     vim.lsp.config('eslint', {
       filetypes = {
         'javascript',
@@ -130,12 +136,13 @@ local plugin = {
         'html',
       },
     })
-    vim.lsp.enable('eslint')
     -- Svelte
     vim.lsp.enable('svelte')
+    L.ignore_lsp_formatting('svelte')
     -- C#
     -- vim.lsp.enable('csharp_ls')
     -- Rust
+    vim.lsp.enable('rust_analyzer')
     vim.lsp.config('rust_analyzer', {
       standalone = false,
       settings = {
@@ -155,8 +162,9 @@ local plugin = {
         },
       },
     })
-    vim.lsp.enable('rust_analyzer')
     -- Lua
+    vim.lsp.enable('lua_ls')
+    L.ignore_lsp_formatting('lua_ls')
     vim.lsp.config('lua_ls', {
       settings = {
         Lua = {
@@ -169,46 +177,13 @@ local plugin = {
         telemetry = { enable = false },
       },
     })
-    vim.lsp.enable('lua_ls')
     -- Typescript
-    local ts_settings = {
-      inlayHints = {
-        includeInlayParameterNameHints = 'all', -- 'none' | 'literals' | 'all'
-        includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-        includeInlayVariableTypeHints = true,
-        includeInlayFunctionParameterTypeHints = true,
-        includeInlayVariableTypeHintsWhenTypeMatchesName = true,
-        includeInlayPropertyDeclarationTypeHints = true,
-        includeInlayFunctionLikeReturnTypeHints = true,
-        includeInlayEnumMemberValueHints = true,
-      },
-    }
-    vim.lsp.config('ts_ls', {
-      filetypes = {
-        'javascript',
-        'javascriptreact',
-        'typescript',
-        'typescriptreact',
-        'vue',
-      },
-      init_options = {
-        plugins = {
-          {
-            name = '@vue/typescript-plugin',
-            location = vim.fn.trim(vim.fn.system('pnpm root -g'))
-              .. '/@vue/typescript-plugin',
-            languages = { 'javascript', 'typescript', 'vue' },
-          },
-        },
-      },
-      settings = {
-        typescript = ts_settings,
-        javascript = ts_settings,
-      },
-    })
+    vim.lsp.config('ts_ls', L.ts_configure())
     vim.lsp.enable('ts_ls')
+    L.ignore_lsp_formatting('ts_ls')
     -- Vue.js
     vim.lsp.enable('volar')
+    L.ignore_lsp_formatting('volar')
   end,
 }
 

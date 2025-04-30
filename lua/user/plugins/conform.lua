@@ -12,7 +12,7 @@ local plugin = {
       if is_deno_project(bufnr) then
         return { 'deno_fmt' }
       else
-        return { 'prettier', lsp_format = 'last' }
+        return { 'prettier', lsp_format = 'first' }
       end
     end
 
@@ -21,7 +21,7 @@ local plugin = {
         lua = { 'stylua' },
         javascript = prettier_or_deno,
         javascriptreact = prettier_or_deno,
-        vue = { 'prettier', lsp_format = 'last' },
+        vue = { 'prettier', lsp_format = 'first' },
         typescript = prettier_or_deno,
         typescriptreact = prettier_or_deno,
         markdown = prettier_or_deno,

@@ -413,8 +413,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     wk.add({ { '<leader><leader>t', group = '+typescript' } })
     map('n', '<leader><leader>ta', '<cmd>LspTypescriptSourceAction<CR>', 'Typescript source actions')
-    map('n', '<leader><leader>tu', function() vim.lsp.buf.code_action({ context = { only = { "source.removeUnusedImports.ts" } }, apply = true }) end, 'Remove unused imports')
-    map('n', '<leader><leader>ti', function() vim.lsp.buf.code_action({ context = { only = { "source.addMissingImports.ts" } }, apply = true }) end, 'Add missing imports')
+    map('n', '<leader><leader>tu', require('user.utils.lsp').ts_remove_unused_imports, 'Remove unused imports')
+    map('n', '<leader><leader>ti', require('user.utils.lsp').ts_add_missing_imports, 'Add missing imports')
+    map('n', '<leader><leader>tf', require('user.utils.lsp').ts_fix_imports, 'Add missing imports')
     map('n', '<leader><leader>tt', '<cmd>edit %:r.spec.%:e<CR>', 'Create TS Test')
   end,
 })
