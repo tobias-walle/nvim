@@ -7,6 +7,7 @@ local plugin = {
   opts = {
     modes = {
       char = {
+        enabled = false,
         highlight = { backdrop = false },
       },
     },

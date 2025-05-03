@@ -86,7 +86,6 @@ function M.format()
   require('conform').format({
     timeout_ms = 5000,
     filter = function(client)
-      vim.notify(client.name)
       local any_client_ignored = vim.iter(M.__lsp_ignore_formatting):any(
         function(client_name) return client.name == client_name end
       )
