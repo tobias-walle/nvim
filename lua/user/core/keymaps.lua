@@ -344,8 +344,8 @@ map('n', '<Leader>am', '<cmd>AiChangeModels<cr>')
 map('n', '<Leader>aa', '<cmd>AiChat<cr>')
 map('v', '<Leader>aa', "<esc><cmd>'<,'>AiChat<cr>")
 map('n', '<Leader>ar', "<cmd>%AiRewrite<cr>")
-map('v', '<Leader>ar', "<cmd>'<,'>AiRewrite<cr>")
-map('v', '<Leader>as', "<cmd>'<,'>AiRewriteSelection<cr>")
+map('v', '<Leader>ar', "<esc><cmd>'<,'>AiRewrite<cr>")
+map('v', '<Leader>as', "<esc><cmd>'<,'>AiRewriteSelection<cr>")
 
 -- Completion
 local function toggle_virtual_lines()

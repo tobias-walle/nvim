@@ -5,24 +5,15 @@ local plugin = {
   enabled = true,
   event = 'BufEnter',
   config = function()
+    local default_models = {
+      default = 'azure:gpt-4.1',
+      mini = 'azure:gpt-4.1-mini',
+      nano = 'azure:gpt-4.1-nano',
+      thinking = 'azure:o4-mini',
+    }
     require('ai').setup({
-      default_models = {
-        default = 'azure:gpt-4.1',
-        mini = 'azure:gpt-4.1-nano',
-        nano = 'azure:gpt-4.1-nano',
-      },
-      selectable_models = {
-        {
-          default = 'azure:gpt-4.1',
-          mini = 'azure:gpt-4.1-mini',
-          nano = 'azure:gpt-4.1-nano',
-        },
-        {
-          default = 'azure:o4-mini',
-          mini = 'azure:gpt-4.1-mini',
-          nano = 'azure:gpt-4.1-nano',
-        },
-      },
+      default_models = default_models,
+      selectable_models = { default_models },
     })
 
     -- Reload for development
