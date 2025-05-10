@@ -1,5 +1,8 @@
 local opt = vim.opt
 
+-- Bultin plugins
+vim.cmd.packadd('cfilter')
+
 -- Options
 opt.encoding = 'utf-8'
 opt.hidden = true
