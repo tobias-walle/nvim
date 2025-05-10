@@ -4,12 +4,12 @@ local plugin = {
   dependencies = { 'nvim-treesitter/nvim-treesitter' },
   keys = {
     {
-      'gj',
+      '<leader>j',
       function() require('treesj').toggle() end,
       desc = 'Join/Split line',
     },
     {
-      'gJ',
+      '<leader>J',
       function() require('treesj').toggle({ split = { recursive = true } }) end,
       desc = 'Join/Split line recursive',
     },
