@@ -237,8 +237,9 @@ vim.api.nvim_create_autocmd("TermOpen", {
 })
 
 -- Jira
-map('n', '<leader>js', function() require('user.utils.jira').selectJiraIssue() end, 'Select a jira issue of the current sprint')
-map('n', '<leader>jm', function() require('user.utils.jira').selectJiraIssue('AND assignee = currentUser() AND status != \'Done\'') end, 'Select a jira issues of the current sprint assigned to me')
+wk.add({ { '<leader>i', group = '+jira' } })
+map('n', '<leader>is', function() require('user.utils.jira').selectJiraIssue() end, 'Select a jira issue of the current sprint')
+map('n', '<leader>im', function() require('user.utils.jira').selectJiraIssue('AND assignee = currentUser() AND status != \'Done\'') end, 'Select a jira issues of the current sprint assigned to me')
 
 new_cmd(
   'DiffO',
@@ -339,30 +340,12 @@ map('n', '<leader>rw', function() require('grug-far').open({ prefills = { search
 --- AI
 local map = require('user.utils.keymaps').map
 map({'i'}, '<C-z>', function() require('ai').trigger_completion() end)
-map('n', '<Leader>aa', '<cmd>AiChat<cr>')
 map('n', '<Leader>am', '<cmd>AiChangeModels<cr>')
-map('n', '<Leader>ap', function()
-  vim.ui.input({ prompt = "Prompt" }, function(input)
-    if input then
-      vim.cmd("AiChat " .. input)
-    end
-  end)
-end)
+map('n', '<Leader>aa', '<cmd>AiChat<cr>')
 map('v', '<Leader>aa', "<esc><cmd>'<,'>AiChat<cr>")
-map('v', '<Leader>ap', function()
-  vim.ui.input({ prompt = "Prompt" }, function(input)
-    if input then
-      vim.cmd("'<,'>AiChat " .. input)
-    end
-  end)
-end)
-map('v', '<Leader>ar', function()
-  vim.ui.input({ prompt = "Prompt" }, function(input)
-    if input then
-      vim.cmd("'<,'>AiRewrite " .. input)
-    end
-  end)
-end)
+map('n', '<Leader>ar', "<cmd>%AiRewrite<cr>")
+map('v', '<Leader>ar', "<cmd>'<,'>AiRewrite<cr>")
+map('v', '<Leader>as', "<cmd>'<,'>AiRewriteSelection<cr>")
 
 -- Completion
 local function toggle_virtual_lines()
