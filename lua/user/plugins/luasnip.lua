@@ -110,7 +110,7 @@ public <name> = observePropertyAsSignal(this, '_<name>');<end_pos>
           [[
 import React from "react";
 
-export const {name}: React.FC = () => {{
+export function {name}(): {{
   return (
     <div>{content}</div>
   );
@@ -129,11 +129,11 @@ export const {name}: React.FC = () => {{
           [[
 import React from "react";
 
-export interface {props} {{
+export type {props} = {{
   {props_content}
 }}
 
-export const {name}: React.FC<{props}> = ({{{props_destructure}}}) => {{
+export function {name}({{{props_destructure}}}: {props}) {{
   return (
     <div>{content}</div>
   );
