@@ -31,6 +31,9 @@ function M.ts_configure()
       'vue',
     },
     init_options = {
+      preferences = {
+        jsxAttributeCompletionStyle = 'none',
+      },
       plugins = {
         {
           name = '@vue/typescript-plugin',
