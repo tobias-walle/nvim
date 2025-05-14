@@ -38,6 +38,12 @@ map('n', '<Leader>ha', function() require('harpoon'):list():select(1) end, 'Go t
 map('n', '<Leader>hs', function() require('harpoon'):list():select(2) end, 'Go to File 2')
 map('n', '<Leader>hd', function() require('harpoon'):list():select(3) end, 'Go to File 3')
 map('n', '<Leader>hf', function() require('harpoon'):list():select(4) end, 'Go to File 4')
+map('n', '<Leader>hg', function() require('harpoon'):list():select(5) end, 'Go to File 5')
+map('n', '<Leader>hz', function() require('harpoon'):list():select(6) end, 'Go to File 6')
+map('n', '<Leader>hx', function() require('harpoon'):list():select(7) end, 'Go to File 7')
+map('n', '<Leader>hc', function() require('harpoon'):list():select(8) end, 'Go to File 8')
+map('n', '<Leader>hv', function() require('harpoon'):list():select(9) end, 'Go to File 9')
+map('n', '<Leader>hb', function() require('harpoon'):list():select(10) end, 'Go to File 10')
 
 -- Resize
 -- map('n', '+', '<C-W>>', 'Increase width of window')
