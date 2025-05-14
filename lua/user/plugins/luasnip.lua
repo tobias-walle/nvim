@@ -47,6 +47,16 @@ return plugin
       ),
     })
 
+    ls.add_snippets('lua', {
+      s(
+        'fun',
+        fmt([[function({args}) {end_pos} end]], {
+          args = i(1),
+          end_pos = i(0),
+        })
+      ),
+    })
+
     ls.add_snippets('typescript', {
       s(
         'fun',
