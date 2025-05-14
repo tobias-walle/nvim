@@ -264,10 +264,6 @@ map('n', '<leader>mlB', '<cmd>MergetoolToggleLayout BLR,m<cr>', 'Toggle BLR,m la
 map('n', '<leader>mpl', require('user.utils.mergetool').prefer_local, 'Prefer local revision')
 map('n', '<leader>mpr', require('user.utils.mergetool').prefer_remote, 'Prefer remote revision')
 
--- Luasnip
-map({'i', 's'}, '<C-l>', function() require('luasnip').jump(1) end, 'Next Snippet')
-map({'i', 's'}, '<C-j>', function() require('luasnip').jump(-1) end, 'Next Snippet')
-
 -- Debugging (WIP)
 -- wk.add({ { '<leader>b', group = '+debugging' } })
 -- map('n', '<leader>bb', function() require('dap').toggle_breakpoint() end, 'Toggle Breakpoint')
