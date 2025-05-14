@@ -8,6 +8,8 @@ local plugin = {
     keymap = {
       preset = 'default', -- https://cmp.saghen.dev/configuration/keymap.html#default
       ['<C-d>'] = { 'show', 'show_documentation', 'hide_documentation' },
+      ['<C-p>'] = { 'select_prev', 'snippet_backward', 'fallback_to_mappings' },
+      ['<C-n>'] = { 'select_next', 'snippet_forward', 'fallback_to_mappings' },
     },
 
     appearance = { nerd_font_variant = 'mono' },
@@ -33,10 +35,19 @@ local plugin = {
         'ai_chat',
       },
       providers = {
-        ai_chat = { module = 'ai.cmp.chat' },
-        filename = { module = 'user.cmp-sources.filename' },
+        snippets = {
+          -- Give snippets a little bit priority
+          score_offset = 1,
+        },
+        filename = {
+          module = 'user.cmp-sources.filename',
+          -- Slight deprioritize filename completions
+          score_offset = -1,
+        },
         -- see https://cmp.saghen.dev/recipes.html#buffer-completion-from-all-open-buffers
         buffer = {
+          -- Deprioritize buffer completions
+          score_offset = -2,
           opts = {
             get_bufnrs = function()
               return vim.tbl_filter(
@@ -55,6 +66,7 @@ local plugin = {
           -- make lazydev completions top priority (see `:h blink.cmp`)
           score_offset = 100,
         },
+        ai_chat = { module = 'ai.cmp.chat' },
       },
     },
 
@@ -62,7 +74,6 @@ local plugin = {
       implementation = 'prefer_rust_with_warning',
       max_typos = function() return 0 end,
       sorts = {
-        'exact', -- Always prioritize exact matches
         'score',
         'sort_text',
       },
