@@ -343,11 +343,17 @@ map('n', '<leader>rw', function() require('grug-far').open({ prefills = { search
 local map = require('user.utils.keymaps').map
 map({'i'}, '<C-z>', function() require('ai').trigger_completion() end)
 map('n', '<Leader>am', '<cmd>AiChangeModels<cr>')
-map('n', '<Leader>aa', '<cmd>AiChat<cr>')
-map('v', '<Leader>aa', "<esc><cmd>'<,'>AiChat<cr>")
+-- map('n', '<Leader>aa', '<cmd>AiChat<cr>')
+-- map('v', '<Leader>aa', "<esc><cmd>'<,'>AiChat<cr>")
 map('n', '<Leader>ar', "<cmd>%AiRewrite<cr>")
 map('v', '<Leader>ar', "<esc><cmd>'<,'>AiRewrite<cr>")
 map('v', '<Leader>as', "<esc><cmd>'<,'>AiRewriteSelection<cr>")
+
+map('n', '<Leader>af', function() require('ai.utils.files_context').toggle_menu() end)
+map('n', '<Leader>aa', function() require('ai.utils.files_context').add_current() end)
+map('n', '<Leader>ad', function() require('ai.utils.files_context').remove_current() end)
+map('n', '<Leader>ac', function() require('ai.utils.files_context').clear() end)
+map('n', '<Leader>ae', function() require('ai.utils.files_context').toggle_enabled() end)
 
 -- Completion
 local function toggle_virtual_lines()
