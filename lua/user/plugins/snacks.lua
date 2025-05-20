@@ -61,35 +61,66 @@ local plugin = {
             },
           },
         },
-      },
-      win = {
-        input = {
-          keys = {
-            ['s'] = { 'flash' },
-            ['ss'] = { 'flash' },
+        layout = {
+          preset = 'vertical',
+        },
+        formatters = {
+          file = {
+            truncate = 99,
           },
         },
-      },
-      actions = {
-        flash = function(picker)
-          require('flash').jump({
-            pattern = '^',
-            label = { after = { 0, 0 } },
-            search = {
-              mode = 'search',
-              exclude = {
-                function(win)
-                  return vim.bo[vim.api.nvim_win_get_buf(win)].filetype
-                    ~= 'snacks_picker_list'
-                end,
+        layouts = {
+          vertical = {
+            layout = {
+              backdrop = false,
+              width = 0.8,
+              min_width = 99,
+              height = 0.8,
+              min_height = 30,
+              box = 'vertical',
+              border = 'rounded',
+              title = '{title} {live} {flags}',
+              title_pos = 'center',
+              { win = 'input', height = 1, border = 'bottom' },
+              { win = 'list', border = 'none' },
+              {
+                win = 'preview',
+                title = '{preview}',
+                height = 0.5,
+                border = 'top',
               },
             },
-            action = function(match)
-              local idx = picker.list:row2idx(match.pos[1])
-              picker.list:_move(idx, true, true)
-            end,
-          })
-        end,
+          },
+        },
+        win = {
+          input = {
+            keys = {
+              ['s'] = { 'flash' },
+              ['ss'] = { 'flash' },
+            },
+          },
+        },
+        actions = {
+          flash = function(picker)
+            require('flash').jump({
+              pattern = '^',
+              label = { after = { 0, 0 } },
+              search = {
+                mode = 'search',
+                exclude = {
+                  function(win)
+                    return vim.bo[vim.api.nvim_win_get_buf(win)].filetype
+                      ~= 'snacks_picker_list'
+                  end,
+                },
+              },
+              action = function(match)
+                local idx = picker.list:row2idx(match.pos[1])
+                picker.list:_move(idx, true, true)
+              end,
+            })
+          end,
+        },
       },
     })
     override_print()

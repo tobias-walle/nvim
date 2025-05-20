@@ -9,6 +9,7 @@ function M.pick_oil()
 
   Snacks.picker.pick({
     title = 'folders',
+    format = 'file',
     finder = function()
       local cmd = {
         'fd',
@@ -31,10 +32,9 @@ function M.pick_oil()
       end
       return vim
         .iter(result)
-        :map(function(text) return { text = text } end)
+        :map(function(text) return { file = text, text = text } end)
         :totable()
     end,
-    format = 'text',
     preview = function(ctx)
       local cmd = {
         'eza',
@@ -44,7 +44,7 @@ function M.pick_oil()
         '--no-user',
         '--no-time',
         '--icons=always',
-        ctx.item.text,
+        ctx.item.file,
       }
       vim.system(
         cmd,
@@ -60,7 +60,7 @@ function M.pick_oil()
     end,
     confirm = function(picker, item)
       picker:close()
-      vim.cmd('Oil ' .. item.text)
+      vim.cmd('Oil ' .. item.file)
     end,
   })
 end
