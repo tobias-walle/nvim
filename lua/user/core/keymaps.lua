@@ -286,6 +286,7 @@ map('n', '<leader>fo', function() require('user.plugins.snacks.picker').pick_oil
 map('n', '<leader>fg', function() Snacks.picker.git_files() end, 'Find Git Files')
 map('n', '<leader>fp', function() Snacks.picker.projects() end, 'Projects')
 map('n', '<leader>fr', function() Snacks.picker.recent() end, 'Recent')
+map('n', '<leader>fy', require('user.utils.clipboard').copy_relative_path, 'Copy relative path of current file/folder')
 map('n', '<C-p>', function() Snacks.picker.smart() end, 'Smart find Files')
 
 wk.add({ { '<leader>s', group = '+search' } })
@@ -348,6 +349,8 @@ map('n', '<Leader>am', '<cmd>AiChangeModels<cr>')
 map('n', '<Leader>ar', "<cmd>%AiRewrite<cr>")
 map('v', '<Leader>ar', "<esc><cmd>'<,'>AiRewrite<cr>")
 map('v', '<Leader>as', "<esc><cmd>'<,'>AiRewriteSelection<cr>")
+map('n', '<Leader>ag', "<cmd>%AiAgent<cr>")
+map('v', '<Leader>ag', "<esc><cmd>'<,'>AiAgent<cr>")
 
 map('n', '<Leader>af', function() require('ai.utils.files_context').toggle_menu() end)
 map('n', '<Leader>aa', function() require('ai.utils.files_context').add_current() end)

@@ -182,8 +182,8 @@ local plugin = {
     vim.lsp.enable('ts_ls')
     L.ignore_lsp_formatting('ts_ls')
     -- Vue.js
-    vim.lsp.enable('volar')
-    L.ignore_lsp_formatting('volar')
+    vim.lsp.enable('vue_ls')
+    L.ignore_lsp_formatting('vue_ls')
   end,
 }
 

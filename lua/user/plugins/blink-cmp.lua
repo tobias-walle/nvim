@@ -10,6 +10,8 @@ local plugin = {
       ['<C-d>'] = { 'show', 'show_documentation', 'hide_documentation' },
       ['<C-p>'] = { 'select_prev', 'snippet_backward', 'fallback_to_mappings' },
       ['<C-n>'] = { 'select_next', 'snippet_forward', 'fallback_to_mappings' },
+      ['<C-h>'] = { 'snippet_backward', 'fallback_to_mappings' },
+      ['<C-l>'] = { 'snippet_forward', 'fallback_to_mappings' },
     },
 
     appearance = { nerd_font_variant = 'mono' },
@@ -37,17 +39,17 @@ local plugin = {
       providers = {
         snippets = {
           -- Give snippets a little bit priority
-          score_offset = 1,
+          score_offset = 5,
         },
         filename = {
           module = 'user.cmp-sources.filename',
           -- Slight deprioritize filename completions
-          score_offset = -1,
+          score_offset = -10,
         },
         -- see https://cmp.saghen.dev/recipes.html#buffer-completion-from-all-open-buffers
         buffer = {
           -- Deprioritize buffer completions
-          score_offset = -2,
+          score_offset = -15,
           opts = {
             get_bufnrs = function()
               return vim.tbl_filter(

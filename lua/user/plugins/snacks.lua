@@ -49,6 +49,9 @@ local plugin = {
           lsp_implementations = lsp_picker_config_override,
           lsp_references = lsp_picker_config_override,
           lsp_type_definitions = lsp_picker_config_override,
+          buffers = { hidden = true },
+          files = { hidden = true },
+          grep = { hidden = true },
           explorer = {
             auto_close = true,
             win = {
@@ -62,32 +65,32 @@ local plugin = {
           },
         },
         layout = {
-          preset = 'vertical',
+          preset = 'default',
         },
         formatters = {
           file = {
-            truncate = 99,
+            truncate = 70,
           },
         },
         layouts = {
-          vertical = {
+          default = {
             layout = {
-              backdrop = false,
-              width = 0.8,
-              min_width = 99,
+              box = 'horizontal',
+              width = 0.9,
+              min_width = 120,
               height = 0.8,
-              min_height = 30,
-              box = 'vertical',
-              border = 'rounded',
-              title = '{title} {live} {flags}',
-              title_pos = 'center',
-              { win = 'input', height = 1, border = 'bottom' },
-              { win = 'list', border = 'none' },
+              {
+                box = 'vertical',
+                border = 'rounded',
+                title = '{title} {live} {flags}',
+                { win = 'input', height = 1, border = 'bottom' },
+                { win = 'list', border = 'none' },
+                width = 75,
+              },
               {
                 win = 'preview',
                 title = '{preview}',
-                height = 0.5,
-                border = 'top',
+                border = 'rounded',
               },
             },
           },

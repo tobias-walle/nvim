@@ -9,11 +9,16 @@ local plugin = {
       default = 'azure:gpt-4.1',
       mini = 'azure:gpt-4.1-mini',
       nano = 'azure:gpt-4.1-nano',
-      thinking = 'azure:o4-mini',
+      thinking = 'azure:o3',
+    }
+    local anthropic = {
+      default = 'anthropic:claude-sonnet-4-0',
+      mini = 'anthropic:claude-3-5-haiku-latest',
+      nano = 'anthropic:claude-3-5-haiku-latest',
     }
     require('ai').setup({
       default_models = default_models,
-      selectable_models = { default_models },
+      selectable_models = { default_models, anthropic },
     })
 
     -- Reload for development
