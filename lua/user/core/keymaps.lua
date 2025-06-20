@@ -46,8 +46,8 @@ map('n', '<Leader>hv', function() require('harpoon'):list():select(9) end, 'Go t
 map('n', '<Leader>hb', function() require('harpoon'):list():select(10) end, 'Go to File 10')
 
 -- Resize
--- map('n', '+', '<C-W>>', 'Increase width of window')
--- map('n', '-', '<C-W><', 'Decrease width of window')
+map('n', '+', '<C-W>>', 'Increase width of window')
+map('n', '=', '<C-W><', 'Decrease width of window')
 
 -- Increment
 map('n', '<C-n>', '<C-a>', 'Increment number under cursor')
@@ -119,6 +119,7 @@ map('n', '<leader>vg', 'GVgg', 'Highlight file')
 -- Notifications
 wk.add({ { '<leader>n', group = '+notifications' } })
 map('n', '<leader>nh', '<cmd>Noice<cr>', 'Notification History')
+map('n', '<leader>nd', '<cmd>NoiceDismiss<cr>', 'Dismiss Notifications')
 
 -- Terminal
 wk.add({ { '<leader>x', group = '+terminal' } })

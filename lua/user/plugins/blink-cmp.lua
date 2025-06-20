@@ -37,10 +37,6 @@ local plugin = {
         'ai_chat',
       },
       providers = {
-        snippets = {
-          -- Give snippets a little bit priority
-          score_offset = 5,
-        },
         filename = {
           module = 'user.cmp-sources.filename',
           -- Slight deprioritize filename completions

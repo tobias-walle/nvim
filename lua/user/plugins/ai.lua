@@ -16,9 +16,12 @@ local plugin = {
       mini = 'anthropic:claude-3-5-haiku-latest',
       nano = 'anthropic:claude-3-5-haiku-latest',
     }
+    local ollama = {
+      default = 'ollama:qwen3:4b',
+    }
     require('ai').setup({
       default_models = default_models,
-      selectable_models = { default_models, anthropic },
+      selectable_models = { default_models, anthropic, ollama },
     })
 
     -- Reload for development
