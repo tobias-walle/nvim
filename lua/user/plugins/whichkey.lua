@@ -2,7 +2,9 @@
 local plugin = {
   'folke/which-key.nvim',
   event = 'VeryLazy',
-  config = function() require('which-key').setup({ delay = 300 }) end,
+  config = function()
+    require('which-key').setup({ preset = 'modern', delay = 300 })
+  end,
 }
 
 return plugin
