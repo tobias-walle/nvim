@@ -55,7 +55,7 @@ local plugin = {
         },
         ['<C-c>'] = 'actions.close',
         ['<C-r>'] = 'actions.refresh',
-        ['P'] = 'actions.preview',
+        ['<localleader>p'] = 'actions.preview',
         ['-'] = 'actions.parent',
         ['H'] = 'actions.parent',
         ['_'] = 'actions.open_cwd',
