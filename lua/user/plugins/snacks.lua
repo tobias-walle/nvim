@@ -85,7 +85,7 @@ local plugin = {
                 title = '{title} {live} {flags}',
                 { win = 'input', height = 1, border = 'bottom' },
                 { win = 'list', border = 'none' },
-                width = 75,
+                width = 99,
               },
               {
                 win = 'preview',
