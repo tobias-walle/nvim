@@ -37,6 +37,8 @@ local plugin = {
     vim.lsp.enable('terraformls')
     -- Nushell
     vim.lsp.enable('nushell')
+    -- Swift
+    vim.lsp.enable('sourcekit')
     -- Kotlin
     vim.lsp.enable('kotlin_language_server')
     -- Java
