@@ -25,10 +25,19 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+local spec = {}
+if not vim.g.vscode then
+  table.insert(spec, { import = 'user.plugins' })
+else
+  table.insert(spec, { import = 'user.plugins.whichkey' })
+  table.insert(spec, { import = 'user.plugins.flash' })
+  table.insert(spec, { import = 'user.plugins.theme' })
+  table.insert(spec, { import = 'user.plugins.mini-trailspace' })
+  table.insert(spec, { import = 'user.plugins.conform' })
+end
+
 require('lazy').setup({
-  spec = {
-    { import = 'user.plugins' },
-  },
+  spec = spec,
   defaults = {
     lazy = true,
   },
